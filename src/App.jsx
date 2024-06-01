@@ -1,24 +1,23 @@
-import axios from "axios";
-import { useState, useEffect } from "react";
-import "froala-editor/css/froala_style.min.css";
-import "froala-editor/css/froala_editor.pkgd.min.css";
-import FroalaEditorComponent from "react-froala-wysiwyg";
-import FroalaEditorView from "react-froala-wysiwyg/FroalaEditorView";
+import { AuthProvider } from "./context/authContext";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Home, NotFound } from "./pages";
+
+const queryClient = new QueryClient();
 
 function App() {
-  const [data, setData] = useState("");
-
-  console.log(data);
-
   return (
     <>
-      <FroalaEditorComponent
-        tag="textarea"
-        model={data}
-        onModelChange={(e) => setData(e)}
-      />
-
-      <FroalaEditorView model={data} />
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </AuthProvider>
+      </QueryClientProvider>
     </>
   );
 }

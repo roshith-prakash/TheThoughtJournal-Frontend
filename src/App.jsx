@@ -1,7 +1,7 @@
 import { AuthProvider } from "./context/authContext";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Home, NotFound } from "./pages";
+import { Home, NotFound, Signup } from "./pages";
 
 const queryClient = new QueryClient();
 
@@ -13,6 +13,7 @@ function App() {
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/signup" element={<Signup />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>

@@ -4,7 +4,8 @@ import Navbar from "./Navbar";
 import OutlineButton from "./OutlineButton";
 import Footer from "./Footer";
 import Input from "./Input";
+import PasswordInput from "./PasswordInput";
 
 export {
-    CTAButton, Editor, Navbar, OutlineButton, Footer, Input
+    CTAButton, Editor, Navbar, OutlineButton, Footer, Input, PasswordInput
 }

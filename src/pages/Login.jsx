@@ -14,7 +14,7 @@ import google from "../assets/google.png";
 
 const provider = new GoogleAuthProvider();
 
-const Signup = () => {
+const Login = () => {
   const navigate = useNavigate();
 
   const handleGoogleLogin = () => {
@@ -45,14 +45,17 @@ const Signup = () => {
     <>
       <Navbar />
 
-      <div className="lg:min-h-[89vh] flex w-full">
-        {/* Left Div */}
+      <div className="lg:min-h-[89vh]  flex w-full">
+        {/* Image Div - displayed only on laptop */}
+        <div className="flex-1 min-h-[100%] bg-login bg-cover origin-center hidden lg:block"></div>
+
+        {/* Right Div */}
         <div className="bg-paper min-h-[88vh] pb-10 bg-cover lg:bg-none lg:bg-[#fcfafa] flex-1 h-[100%] flex justify-center items-center">
-          {/* Signup Form Div */}
-          <div className="bg-white mt-5 p-5 px-20 shadow-xl rounded-xl pb-10">
+          {/* Login Form Div */}
+          <div className="bg-white mt-14 p-5 px-20 shadow-xl rounded-xl pb-10">
             {/* Title */}
-            <h1 className="text-ink font-bold text-2xl italic text-center">
-              Sign Up to The Journal
+            <h1 className="text-ink font-bold text-2xl mt-5 italic text-center">
+              Log in to The Journal
             </h1>
 
             {/* Email Input field */}
@@ -67,15 +70,9 @@ const Signup = () => {
               <PasswordInput placeholder={"Enter your password"} />
             </div>
 
-            {/* Confirm Password Input field */}
-            <div className="mt-6 px-2">
-              <p className="font-medium">Confirm Password</p>
-              <PasswordInput placeholder={"Confirm your password"} />
-            </div>
-
             {/* Submit Button */}
             <div className="mt-12">
-              <OutlineButton text={"Sign Up"} />
+              <OutlineButton text={"Log in"} />
             </div>
 
             {/* OR */}
@@ -85,22 +82,19 @@ const Signup = () => {
               <div className="flex-1 h-0 border-[1px] border-greyText"></div>
             </div>
 
-            {/* Google Sign Up Button */}
+            {/* Google Sign In Button */}
             <button
               onClick={handleGoogleLogin}
               className="flex gap-x-5 py-4 justify-center items-center px-14 shadow-md rounded-lg font-medium active:shadow transition-all"
             >
-              <p>Sign up with Google</p>
+              <p>Log in with Google</p>
               <img src={google} className="max-h-6 max-w-6" />
             </button>
           </div>
         </div>
-
-        {/* Image Div - displayed only on laptop */}
-        <div className="flex-1 bg-signup bg-cover origin-center hidden lg:block"></div>
       </div>
     </>
   );
 };
 
-export default Signup;
+export default Login;

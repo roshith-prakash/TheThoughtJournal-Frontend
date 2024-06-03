@@ -4,17 +4,19 @@ import logo from "../assets/logo.jpg";
 // import CTAButton from "./CTAButton";
 import { RxCross2, RxHamburgerMenu } from "react-icons/rx";
 import { Link } from "react-router-dom";
+import { useAuth } from "../context/authContext";
 // import { GoDownload } from "react-icons/go";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const { currentUser } = useAuth();
 
   return (
     <>
       <div
         className={`font-inter ${
           !open && "shadow-md"
-        } lg:shadow-md flex justify-between items-center px-10 py-5 z-2 relative`}
+        } lg:shadow-md bg-white flex justify-between items-center px-10 py-5 z-2 relative`}
       >
         <Link className="flex items-center" to="/">
           <img src={logo} alt="Logo" className="h-12 w-12 cursor-pointer"></img>
@@ -23,18 +25,30 @@ const Navbar = () => {
           </p>
         </Link>
         <div className="hidden lg:flex gap-x-8 font-medium items-center">
-          <Link
-            to="/signup"
-            className="hover:text-cta cursor-pointer  transition-all"
-          >
-            Sign Up
-          </Link>
-          <Link
-            to="/login"
-            className="hover:text-cta cursor-pointer  transition-all"
-          >
-            Log in
-          </Link>
+          {!currentUser && (
+            <Link
+              to="/signup"
+              className="hover:text-cta cursor-pointer  transition-all"
+            >
+              Sign Up
+            </Link>
+          )}
+          {!currentUser && (
+            <Link
+              to="/login"
+              className="hover:text-cta cursor-pointer  transition-all"
+            >
+              Log in
+            </Link>
+          )}
+          {currentUser && (
+            <Link
+              to="/signout"
+              className="hover:text-cta cursor-pointer  transition-all"
+            >
+              Log Out
+            </Link>
+          )}
         </div>
         <div className="lg:hidden">
           {open ? (
@@ -61,22 +75,36 @@ const Navbar = () => {
               Home
             </Link>
           </p>
-          <p className="my-2">
-            <Link
-              to="/signup"
-              className="hover:text-cta cursor-pointer transition-all"
-            >
-              Signup
-            </Link>
-          </p>
-          <p className="my-2">
-            <Link
-              to="/login"
-              className="hover:text-cta cursor-pointer transition-all"
-            >
-              Log in
-            </Link>
-          </p>
+          {!currentUser && (
+            <p className="my-2">
+              <Link
+                to="/signup"
+                className="hover:text-cta cursor-pointer transition-all"
+              >
+                Signup
+              </Link>
+            </p>
+          )}
+          {!currentUser && (
+            <p className="my-2">
+              <Link
+                to="/login"
+                className="hover:text-cta cursor-pointer transition-all"
+              >
+                Log in
+              </Link>
+            </p>
+          )}
+          {currentUser && (
+            <p className="my-2">
+              <Link
+                to="/signout"
+                className="hover:text-cta cursor-pointer transition-all"
+              >
+                Log Out
+              </Link>
+            </p>
+          )}
           <br />
           {/* <CTAButton
             onClick={() => {

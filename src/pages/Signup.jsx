@@ -105,10 +105,16 @@ const Signup = () => {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        // Display error
-        toast.error("Something went wrong!");
+        console.log(errorMessage);
         // Enable button
         setDisabled(false);
+        if (String(errorMessage).includes("(auth/email-already-in-use)")) {
+          // Display error
+          toast.error("Email is already registered!");
+        } else {
+          // Display error
+          toast.error("Something went wrong!");
+        }
       });
   };
 
@@ -236,7 +242,7 @@ const Signup = () => {
             <button
               disabled={disabled}
               onClick={handleGoogleSignup}
-              className="flex gap-x-5 py-4 justify-center items-center px-14 shadow-md rounded-lg font-medium active:shadow transition-all disabled:text-greyText"
+              className="flex w-full gap-x-5 py-4 justify-center items-center px-14 shadow-md rounded-lg font-medium active:shadow transition-all disabled:text-greyText"
             >
               <p>Sign up with Google</p>
               <img src={google} className="max-h-6 max-w-6" />

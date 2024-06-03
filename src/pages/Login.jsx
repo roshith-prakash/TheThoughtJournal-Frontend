@@ -1,21 +1,82 @@
-import React from "react";
+import React, { useState } from "react";
 import {
-  CTAButton,
+  ErrorStatement,
   Input,
   Navbar,
   OutlineButton,
   PasswordInput,
 } from "../components";
 import { auth } from "../firebase/firebase";
-import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import {
+  signInWithPopup,
+  GoogleAuthProvider,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 
 import google from "../assets/google.png";
+import { isValidEmail, isValidPassword } from "../functions/regexFunctions";
+import toast, { Toaster } from "react-hot-toast";
+import { axiosInstance } from "../utils/axios";
 
 const provider = new GoogleAuthProvider();
 
 const Login = () => {
   const navigate = useNavigate();
+  const [disabled, setDisabled] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState({
+    email: 0,
+    pw: 0,
+  });
+
+  const handleLogin = () => {
+    setError({
+      email: 0,
+      pw: 0,
+    });
+
+    if (email == null || email == undefined || email.length == 0) {
+      setError((prev) => ({ ...prev, email: 1 }));
+      return;
+    } else if (!isValidEmail(email)) {
+      setError((prev) => ({ ...prev, email: 2 }));
+      return;
+    } else if (
+      password == null ||
+      password == undefined ||
+      password.length == 0
+    ) {
+      setError((prev) => ({ ...prev, pw: 1 }));
+      return;
+    } else if (!isValidPassword(password)) {
+      setError((prev) => ({ ...prev, pw: 2 }));
+      return;
+    }
+
+    setDisabled(true);
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        console.log(user);
+        setDisabled(false);
+        navigate("/");
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorMessage);
+        setDisabled(false);
+        if (String(errorMessage).includes("(auth/invalid-credential)")) {
+          toast.error("Invalid Credentials.");
+        } else {
+          toast.error("Something went wrong.");
+        }
+      });
+  };
 
   const handleGoogleLogin = () => {
     signInWithPopup(auth, provider)
@@ -46,7 +107,7 @@ const Login = () => {
         const errorCode = error.code;
         const errorMessage = error.message;
         // The email of the user's account used.
-        const email = error.customData.email;
+        // const email = error.customData.email;
         // The AuthCredential type that was used.
         const credential = GoogleAuthProvider.credentialFromError(error);
         console.log(errorMessage);
@@ -56,7 +117,7 @@ const Login = () => {
   return (
     <>
       <Navbar />
-
+      <Toaster />
       <div className="lg:min-h-[89vh]  flex w-full">
         {/* Image Div - displayed only on laptop */}
         <div className="flex-1 min-h-[100%] bg-login bg-cover origin-center hidden lg:block"></div>
@@ -64,7 +125,7 @@ const Login = () => {
         {/* Right Div */}
         <div className="bg-paper min-h-[88vh] pb-10 bg-cover lg:bg-none lg:bg-[#fcfafa] flex-1 h-[100%] flex justify-center items-center">
           {/* Login Form Div */}
-          <div className="bg-white mt-14 p-5 px-20 shadow-xl rounded-xl pb-10">
+          <div className="bg-white w-[65%] mt-14 p-5 px-20 shadow-xl rounded-xl pb-10">
             {/* Title */}
             <h1 className="text-ink font-bold text-2xl mt-5 italic text-center">
               Log in to The Journal
@@ -73,18 +134,47 @@ const Login = () => {
             {/* Email Input field */}
             <div className="mt-8 px-2">
               <p className="font-medium">Email</p>
-              <Input placeholder={"Enter your email address"} />
+              <Input
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder={"Enter your email address"}
+              />
+              {error.email == 1 && (
+                <ErrorStatement text={"Please enter your email."} />
+              )}
+              {error.email == 2 && (
+                <ErrorStatement text={"Please enter a valid email address."} />
+              )}
             </div>
 
             {/* Password Input field */}
             <div className="mt-6 px-2">
               <p className="font-medium">Password</p>
-              <PasswordInput placeholder={"Enter your password"} />
+              <PasswordInput
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder={"Enter your password"}
+              />
+              {error.pw == 1 && (
+                <ErrorStatement text={"Please enter a password."} />
+              )}
+              {error.pw == 2 && (
+                <ErrorStatement
+                  text={
+                    "Password must be 8 characters long and must contain an uppercase letter, lowercase letter, number and special character."
+                  }
+                />
+              )}
             </div>
 
             {/* Submit Button */}
             <div className="mt-12">
-              <OutlineButton text={"Log in"} />
+              <OutlineButton
+                onClick={handleLogin}
+                disabled={disabled}
+                disabledText="Please Wait..."
+                text={"Log in"}
+              />
             </div>
 
             {/* OR */}
@@ -96,8 +186,9 @@ const Login = () => {
 
             {/* Google Sign In Button */}
             <button
+              disabled={disabled}
               onClick={handleGoogleLogin}
-              className="flex gap-x-5 py-4 justify-center items-center px-14 shadow-md rounded-lg font-medium active:shadow transition-all"
+              className="flex w-full gap-x-5 py-4 justify-center items-center px-14 shadow-md rounded-lg font-medium active:shadow transition-all disabled:text-greyText"
             >
               <p>Log in with Google</p>
               <img src={google} className="max-h-6 max-w-6" />

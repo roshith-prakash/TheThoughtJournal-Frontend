@@ -19,7 +19,7 @@ const Navbar = () => {
         <Link className="flex items-center" to="/">
           <img src={logo} alt="Logo" className="h-12 w-12 cursor-pointer"></img>
           <p className="mx-2 italic font-medium text-lg text-ink">
-            The Journal
+            The Thoughts Journal
           </p>
         </Link>
         <div className="hidden lg:flex gap-x-8 font-medium items-center">

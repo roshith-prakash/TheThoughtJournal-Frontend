@@ -25,9 +25,21 @@ const Login = () => {
         const token = credential.accessToken;
         // The signed-in user info.
         const user = result.user;
-        navigate("/");
-        // IdP data available using getAdditionalUserInfo(result)
-        // ...
+
+        // Add user in DB if not already present
+        axiosInstance
+          .post("/auth/create-user", {
+            user: user,
+          })
+          .then((res) => {
+            navigate("/");
+          })
+          .catch((err) => {
+            // Display error
+            toast.error("Something went wrong!");
+            // Enable button
+            setDisabled(false);
+          });
       })
       .catch((error) => {
         // Handle Errors here.

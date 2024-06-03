@@ -10,7 +10,8 @@ module.exports = {
       },
       colors: {
         'greyText': "#9c9b9a",
-        "ink": "#16264c"
+        "ink": "#16264c",
+        "error": "#f72a2a"
       }
     },
   },

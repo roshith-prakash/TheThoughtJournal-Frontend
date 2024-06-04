@@ -1,10 +1,11 @@
-const CTAButton = ({ text, onClick }) => {
+const CTAButton = ({ text, onClick, disabled, disabledText }) => {
   return (
     <button
+      disabled={disabled}
       onClick={onClick}
-      className="border-cta min-w-14 bg-cta border-2 py-2 px-5 rounded-xl w-full hover:bg-hovercta hover:border-hovercta transition-all "
+      className="border-blueink text-white min-w-14 bg-blueink border-2 py-2 px-5 shadow rounded-xl w-full hover:bg-hovercta hover:border-hovercta transition-all "
     >
-      {text}
+      {disabled ? disabledText : text}
     </button>
   );
 };

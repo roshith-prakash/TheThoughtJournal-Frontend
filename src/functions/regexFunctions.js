@@ -5,3 +5,9 @@ export const isValidEmail = (email) => {
 export const isValidPassword = (password) => {
     return /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/.test(password)
 }
+
+export const isEditorEmpty = (value) => {
+    return String(value)
+        .replace(/<(.|\n)*?>/g, "")
+        .trim().length === 0
+}

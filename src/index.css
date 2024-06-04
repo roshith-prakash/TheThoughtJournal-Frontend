@@ -15,3 +15,7 @@ body::-webkit-scrollbar-thumb {
   outline: 1px solid slategrey;
   border-radius: 5px;
 }
+
+.postdisplay > .ql-container.ql-snow {
+  border: none !important;
+}

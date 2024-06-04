@@ -16,12 +16,12 @@ const Navbar = () => {
       <div
         className={`font-inter ${
           !open && "shadow-md"
-        } lg:shadow-md bg-white flex justify-between items-center px-10 py-5 z-2 relative`}
+        } lg:shadow-md bg-white flex justify-between items-center px-5 lg:px-10  py-5 z-2 relative`}
       >
         <Link className="flex items-center" to="/">
           <img src={logo} alt="Logo" className="h-12 w-12 cursor-pointer"></img>
           <p className="mx-2 italic font-medium text-lg text-ink">
-            The Thoughts Journal
+            The Thought Journal
           </p>
         </Link>
         <div className="hidden lg:flex gap-x-8 font-medium items-center">

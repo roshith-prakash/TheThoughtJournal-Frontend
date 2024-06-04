@@ -1,5 +1,5 @@
 <h1>BLOG Frontend</h1>
-<br/><hr/><br/>
+<hr/>
 <p>
 <ul>
 <li>This is the vite project for the frontend aspect of the ongoing Blog project. </li>

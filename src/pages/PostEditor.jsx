@@ -137,11 +137,14 @@ const PostEditor = () => {
       <Toaster />
 
       {/* Editor box */}
-      <div className="p-10 pb-20 m-10 bg-white shadow-md rounded-xl">
+      <div className="p-10 pb-20 m-10 bg-white shadow-xl border-[1px] rounded-xl">
         {/* Title */}
         <h1 className="text-2xl lg:text-4xl text-center font-medium">
-          Create a new Journal post
+          Create a new Journal post{" "}
         </h1>
+        <p className="text-base mt-2 lg:text-xl text-center">
+          (You can preview your post below!)
+        </p>
 
         {/* Input fields */}
         {/* Horizontal Flex on larger screens */}
@@ -259,7 +262,7 @@ const PostEditor = () => {
       </div>
 
       {/* Preview Post */}
-      <div className="p-10 pb-20 m-10 bg-white shadow-md rounded-xl">
+      <div className="p-10 pb-20 m-10 bg-white shadow-xl border-[1px] rounded-xl">
         {/* Title */}
         <h1 className="text-2xl lg:text-4xl text-center font-medium flex justify-center gap-x-2 items-center">
           Preview your Journal post! <FaArrowDown />

@@ -42,7 +42,9 @@ module.exports = {
         'greyText': "#9c9b9a",
         "ink": "#16264c",
         "error": "#f72a2a",
-        "blueink": "#004e98"
+        "blueink": "#004e98",
+        "disabledBlueink": "#476c8f",
+        "bgwhite": "#fcfafa"
       }
     },
   },

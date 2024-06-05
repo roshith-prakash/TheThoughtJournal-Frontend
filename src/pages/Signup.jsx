@@ -165,7 +165,7 @@ const Signup = () => {
       <Toaster />
       <div className="lg:min-h-[89vh] flex w-full">
         {/* Left Div */}
-        <div className="bg-paper min-h-[88vh] pb-10 bg-cover lg:bg-none lg:bg-[#fcfafa] flex-1 h-[100%] flex justify-center items-center">
+        <div className="bg-paper min-h-[88vh] pb-10 bg-cover lg:bg-none lg:bg-bgwhite flex-1 h-[100%] flex justify-center items-center">
           {/* Signup Form Div */}
           <div className="bg-white w-[65%] mt-5 p-5 px-20 shadow-xl rounded-xl pb-10">
             {/* Title */}

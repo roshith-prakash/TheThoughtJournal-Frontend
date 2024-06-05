@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import {
@@ -21,22 +21,40 @@ import { categories } from "../data/categories";
 import { FaArrowDown } from "react-icons/fa6";
 import { axiosInstance } from "../utils/axios";
 import { useAuth } from "../context/authContext";
+import { toast, Toaster } from "react-hot-toast";
 
 const PostEditor = () => {
+  // Current user from firebase auth
   const { currentUser } = useAuth();
+  // Ref for file input
   const fileRef = useRef();
+  // State for text editor input
   const [value, setValue] = useState();
+  // State for disabling button
   const [disabled, setDisabled] = useState(false);
+  // State for adding image
   const [imageFile, setImageFile] = useState();
+  // State for adding title of post
   const [title, setTitle] = useState();
+  // State for selecting post category
   const [category, setCategory] = useState();
+  // State for adding category if "other" was selected
+  const [otherCategory, setOtherCategory] = useState();
+  // Error states
   const [error, setError] = useState({
     title: 0,
     category: 0,
     image: 0,
     content: 0,
+    other: 0,
   });
 
+  // Scroll to top of page
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
+
+  // To save the post
   const handleSave = () => {
     setError({
       title: 0,
@@ -45,30 +63,49 @@ const PostEditor = () => {
       content: 0,
     });
 
+    // Check if title is empty
     if (title == null || title == undefined || title.length <= 0) {
       setError((prev) => ({ ...prev, title: 1 }));
       return;
-    } else if (imageFile == null || imageFile == undefined) {
+    }
+    // Check if image has been added
+    else if (imageFile == null || imageFile == undefined) {
       setError((prev) => ({ ...prev, image: 1 }));
       return;
-    } else if (category == null || category == undefined) {
+    }
+    // Check if category has been selected
+    else if (category == null || category == undefined) {
       setError((prev) => ({ ...prev, category: 1 }));
       return;
-    } else if (isEditorEmpty(value)) {
+    }
+    // Check if category has been added if "OTHER" was selected
+    else if (category == "OTHER") {
+      if (
+        otherCategory == null ||
+        otherCategory == undefined ||
+        otherCategory.length <= 0
+      ) {
+        setError((prev) => ({ ...prev, other: 1 }));
+        return;
+      }
+    }
+
+    // Check if content has been added for blog
+    if (isEditorEmpty(value)) {
       setError((prev) => ({ ...prev, content: 1 }));
       return;
     }
 
-    console.log("OK");
-    setDisabled(true);
-
+    // Adding data to FormData object
     const formData = new FormData();
     formData.append("file", imageFile);
     formData.append("title", title);
     formData.append("category", category);
     formData.append("content", String(value));
     formData.append("user", JSON.stringify(currentUser));
+    setDisabled(true);
 
+    // Sending request to server
     axiosInstance
       .post("/post/create-post", formData, {
         headers: {
@@ -77,14 +114,17 @@ const PostEditor = () => {
       })
       .then((res) => {
         console.log(res.data);
+        toast.success("Post created!");
         setDisabled(false);
       })
       .catch((err) => {
+        toast.error("Something went wrong!");
         console.log(err);
         setDisabled(false);
       });
   };
 
+  // To get image input
   const handleFileChange = (e) => {
     console.log(e.target.files[0]);
     setImageFile(e.target.files[0]);
@@ -94,6 +134,7 @@ const PostEditor = () => {
   return (
     <div className="bg-bgwhite">
       <Navbar />
+      <Toaster />
 
       {/* Editor box */}
       <div className="p-10 pb-20 m-10 bg-white shadow-md rounded-xl">
@@ -152,8 +193,10 @@ const PostEditor = () => {
             )}
           </div>
         </div>
+
         {/* Category select */}
-        <div className="my-5">
+        <div className="my-8 flex flex-col gap-y-5 lg:gap-y-0 lg:flex-row lg:items-center lg:gap-x-5">
+          <p className="font-medium">Post Category</p>
           <Select
             onValueChange={(selectedCategory) => setCategory(selectedCategory)}
           >
@@ -171,6 +214,24 @@ const PostEditor = () => {
             <ErrorStatement text={"Please select a category for your post."} />
           )}
         </div>
+
+        {/* Other Category */}
+        {category == "OTHER" && (
+          <div className="lg:max-w-[48%]">
+            <p className="font-medium">Specify the Category</p>
+            <Input
+              value={otherCategory}
+              onChange={(e) => setOtherCategory(e.target.value)}
+              placeholder={"Enter the category for your post"}
+            />
+            {error.other == 1 && (
+              <ErrorStatement
+                text={"Please enter the category for your post."}
+              />
+            )}
+          </div>
+        )}
+
         {/* Quill Editor */}
         <div className="mt-10">
           {error.content == 1 && (
@@ -184,6 +245,7 @@ const PostEditor = () => {
           />
         </div>
 
+        {/* Save Button */}
         <div className="mt-36 lg:mt-20 flex justify-center">
           <div className="w-[45%] lg:w-[30%]">
             <CTAButton

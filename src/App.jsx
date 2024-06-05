@@ -3,12 +3,15 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Home, NotFound, Signup, Login, Signout, PostEditor } from "./pages";
 
+// Creating Tanstack query client
 const queryClient = new QueryClient();
 
 function App() {
   return (
     <>
+      {/* Provinding client to children */}
       <QueryClientProvider client={queryClient}>
+        {/* Providing auth context to children */}
         <AuthProvider>
           <BrowserRouter>
             <Routes>

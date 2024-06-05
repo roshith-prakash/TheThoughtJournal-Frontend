@@ -3,9 +3,14 @@ import { auth } from "../firebase/firebase";
 import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import logout from "../assets/signout.jpg";
+import { useEffect } from "react";
 
 const Signout = () => {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
 
   const handleLogout = () => {
     signOut(auth)

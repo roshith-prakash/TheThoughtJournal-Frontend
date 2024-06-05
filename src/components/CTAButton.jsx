@@ -1,3 +1,4 @@
+// Primary button - colored background and white text
 const CTAButton = ({ text, onClick, disabled, disabledText }) => {
   return (
     <button

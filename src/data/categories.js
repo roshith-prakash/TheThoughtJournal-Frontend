@@ -1,3 +1,4 @@
+// Categories to be used while creating a post
 export const categories = [
     "NEWS",
     "SPORTS",

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   ErrorStatement,
   Input,
@@ -31,31 +31,46 @@ const Login = () => {
     pw: 0,
   });
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
+
+  // Login using email and password
   const handleLogin = () => {
     setError({
       email: 0,
       pw: 0,
     });
 
+    // Check if email has been entered
     if (email == null || email == undefined || email.length == 0) {
       setError((prev) => ({ ...prev, email: 1 }));
       return;
-    } else if (!isValidEmail(email)) {
+    }
+    // Check if email is a valid email
+    else if (!isValidEmail(email)) {
       setError((prev) => ({ ...prev, email: 2 }));
       return;
-    } else if (
+    }
+    // Check if password has been entered
+    else if (
       password == null ||
       password == undefined ||
       password.length == 0
     ) {
       setError((prev) => ({ ...prev, pw: 1 }));
       return;
-    } else if (!isValidPassword(password)) {
+    }
+    // Check if password is a valid password
+    else if (!isValidPassword(password)) {
       setError((prev) => ({ ...prev, pw: 2 }));
       return;
     }
 
+    // Disable buttons
     setDisabled(true);
+
+    // Sign in using firebase
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in
@@ -70,14 +85,18 @@ const Login = () => {
         const errorMessage = error.message;
         console.log(errorMessage);
         setDisabled(false);
+        // Display invalid credentials toast error
         if (String(errorMessage).includes("(auth/invalid-credential)")) {
           toast.error("Invalid Credentials.");
-        } else {
+        }
+        // Display error
+        else {
           toast.error("Something went wrong.");
         }
       });
   };
 
+  // Login using google
   const handleGoogleLogin = () => {
     signInWithPopup(auth, provider)
       .then((result) => {

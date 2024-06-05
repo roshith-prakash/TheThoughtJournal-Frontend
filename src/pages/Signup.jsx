@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   ErrorStatement,
   Input,
@@ -33,6 +33,10 @@ const Signup = () => {
     pw: 0,
     confirmpw: 0,
   });
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
 
   // Handle Email Signup
   const handleEmailSignup = () => {

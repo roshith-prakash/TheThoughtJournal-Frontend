@@ -16,6 +16,7 @@ body::-webkit-scrollbar-thumb {
   border-radius: 5px;
 }
 
+/* To remove editor border in post display component */
 .postdisplay > .ql-container.ql-snow {
   border: none !important;
 }

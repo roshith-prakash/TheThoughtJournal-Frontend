@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Footer, Navbar, OutlineButton } from "../components";
 import { useNavigate } from "react-router-dom";
-import logout from "../assets/think.jpg";
+import notfound from "../assets/notfound.svg";
 
 const NotFound = () => {
   const navigate = useNavigate();
@@ -28,8 +28,8 @@ const NotFound = () => {
           <div className="mt-10 flex flex-col gap-10 justify-center items-center">
             {/* Image */}
             <img
-              src={logout}
-              className="max-w-[35%] lg:max-w-[20%] pointer-events-none"
+              src={notfound}
+              className="max-w-[50%] lg:max-w-[40%] pointer-events-none"
             />
             {/* Button to navigate back to home page */}
             <div className="w-[40%] lg:w-[30%]">

@@ -35,6 +35,11 @@ const Login = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 
+  // Set window title.
+  useEffect(() => {
+    document.title = "Login | The Thought Journal";
+  }, []);
+
   // Login using email and password
   const handleLogin = () => {
     setError({

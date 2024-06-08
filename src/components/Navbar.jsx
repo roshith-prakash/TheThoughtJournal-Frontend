@@ -5,6 +5,11 @@ import { RxCross2, RxHamburgerMenu } from "react-icons/rx";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/authContext";
 import { useLocation } from "react-router-dom";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "../components/ui/popover";
 
 const Navbar = () => {
   const location = useLocation();
@@ -61,10 +66,19 @@ const Navbar = () => {
               Log Out
             </Link>
           )}
+          <Popover>
+            <PopoverTrigger>Open</PopoverTrigger>
+            <PopoverContent>Place content for the popover here.</PopoverContent>
+          </Popover>
         </div>
 
         {/* Hamburger button - displayed on smaller screens */}
-        <div className="lg:hidden">
+        <div className="lg:hidden flex items-center gap-x-5">
+          <Popover>
+            <PopoverTrigger>O</PopoverTrigger>
+            <PopoverContent>Place content for the popover here.</PopoverContent>
+          </Popover>
+
           {open ? (
             <RxCross2
               onClick={() => setOpen(false)}

@@ -12,6 +12,11 @@ const Signout = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 
+  // Set window title.
+  useEffect(() => {
+    document.title = "Logout | The Thought Journal";
+  }, []);
+
   const handleLogout = () => {
     signOut(auth)
       .then(() => {

@@ -23,7 +23,7 @@ import { axiosInstance } from "../utils/axios";
 import { useAuth } from "../context/authContext";
 import { toast, Toaster } from "react-hot-toast";
 
-const PostEditor = () => {
+const CreatePost = () => {
   // Current user from firebase auth
   const { currentUser } = useAuth();
   // Ref for file input
@@ -52,6 +52,11 @@ const PostEditor = () => {
   // Scroll to top of page
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
+
+  // Set window title.
+  useEffect(() => {
+    document.title = "Create a new Post | The Thought Journal";
   }, []);
 
   // To save the post
@@ -101,6 +106,7 @@ const PostEditor = () => {
     formData.append("file", imageFile);
     formData.append("title", title);
     formData.append("category", category);
+    formData.append("otherCategory", otherCategory);
     formData.append("content", String(value));
     formData.append("user", JSON.stringify(currentUser));
     setDisabled(true);
@@ -278,14 +284,14 @@ const PostEditor = () => {
           </div>
         )}
         {/* Post Title */}{" "}
-        <h1 className="mt-20 text-3xl lg:text-4xl font-medium text-ink">
+        <h1 className="mt-20 text-4xl lg:text-6xl font-bold text-ink">
           {title}
         </h1>
         {/* Post Content */}
         <div className="mt-10">
           <ReactQuill
             value={value}
-            className="border-none postdisplay"
+            className="border-none text-blueink postdisplay"
             theme="snow"
             readOnly
             modules={{ toolbar: null }}
@@ -296,4 +302,4 @@ const PostEditor = () => {
   );
 };
 
-export default PostEditor;
+export default CreatePost;

@@ -38,6 +38,11 @@ const Signup = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 
+  // Set window title.
+  useEffect(() => {
+    document.title = "Sign up | The Thought Journal";
+  }, []);
+
   // Handle Email Signup
   const handleEmailSignup = () => {
     setError({
@@ -124,6 +129,7 @@ const Signup = () => {
 
   // Handle Google Signup
   const handleGoogleSignup = () => {
+    setDisabled(true);
     signInWithPopup(auth, provider)
       .then((result) => {
         // This gives you a Google Access Token. You can use it to access the Google API.
@@ -138,6 +144,7 @@ const Signup = () => {
             user: user,
           })
           .then((res) => {
+            setDisabled(false);
             navigate("/");
           })
           .catch((err) => {
@@ -148,6 +155,7 @@ const Signup = () => {
           });
       })
       .catch((error) => {
+        setDisabled(false);
         // Handle Errors here.
         const errorCode = error.code;
         const errorMessage = error.message;

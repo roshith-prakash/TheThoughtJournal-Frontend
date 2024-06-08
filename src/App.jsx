@@ -10,6 +10,7 @@ import {
   Signout,
   CreatePost,
   Post,
+  User,
 } from "./pages";
 import { useEffect } from "react";
 import { io } from "socket.io-client";
@@ -46,6 +47,7 @@ function App() {
                 <Route path="/signout" element={<Signout />} />
                 <Route path="/addPost" element={<CreatePost />} />
                 <Route path="/post/:postId" element={<Post />} />
+                <Route path="/user/:username" element={<User />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </BrowserRouter>

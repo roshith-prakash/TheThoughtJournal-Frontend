@@ -291,7 +291,7 @@ const CreatePost = () => {
         <div className="mt-10">
           <ReactQuill
             value={value}
-            className="border-none text-blueink postdisplay"
+            className="border-none postdisplay"
             theme="snow"
             readOnly
             modules={{ toolbar: null }}

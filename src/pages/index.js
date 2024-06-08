@@ -5,5 +5,6 @@ import Login from "./Login";
 import Signout from "./Signout";
 import CreatePost from "./CreatePost";
 import Post from "./Post";
+import User from "./User"
 
-export { Home, NotFound, Signup, Login, Signout, CreatePost, Post }
+export { Home, NotFound, Signup, Login, Signout, CreatePost, Post, User }

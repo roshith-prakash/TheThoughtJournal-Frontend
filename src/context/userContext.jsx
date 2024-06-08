@@ -15,10 +15,11 @@ export function UserProvider({ children }) {
   const [dbUser, setDbUser] = useState(null);
   const { currentUser } = useAuth();
 
+  // Fetch current user information from database
   const fetchUser = () => {
     if (currentUser) {
       axiosInstance
-        .post("/auth/get-user", { user: currentUser })
+        .post("/auth/get-current-user", { user: currentUser })
         .then((res) => {
           setDbUser(res?.data?.user);
         })

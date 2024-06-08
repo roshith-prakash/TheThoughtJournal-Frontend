@@ -10,6 +10,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "../components/ui/popover";
+import Avvvatars from "avvvatars-react";
 
 const Navbar = () => {
   const location = useLocation();
@@ -59,25 +60,33 @@ const Navbar = () => {
           )}
           {/* Link to logout page */}
           {currentUser && (
-            <Link
-              to="/signout"
-              className="hover:text-cta cursor-pointer  transition-all"
-            >
-              Log Out
-            </Link>
+            <Popover>
+              <PopoverTrigger>
+                <Avvvatars style="shape" value="tim@apple.com" />
+              </PopoverTrigger>
+              <PopoverContent>
+                <Link to="/signout" className=" cursor-pointer  transition-all">
+                  Log Out
+                </Link>
+              </PopoverContent>
+            </Popover>
           )}
-          <Popover>
-            <PopoverTrigger>Open</PopoverTrigger>
-            <PopoverContent>Place content for the popover here.</PopoverContent>
-          </Popover>
         </div>
 
         {/* Hamburger button - displayed on smaller screens */}
         <div className="lg:hidden flex items-center gap-x-5">
-          <Popover>
-            <PopoverTrigger>O</PopoverTrigger>
-            <PopoverContent>Place content for the popover here.</PopoverContent>
-          </Popover>
+          {!open && (
+            <Popover>
+              <PopoverTrigger>
+                <Avvvatars style="shape" value="tim@apple.com" />
+              </PopoverTrigger>
+              <PopoverContent>
+                <Link to="/signout" className=" cursor-pointer  transition-all">
+                  Log Out
+                </Link>
+              </PopoverContent>
+            </Popover>
+          )}
 
           {open ? (
             <RxCross2

@@ -16,7 +16,7 @@ const Home = () => {
     document.title = "Home | The Thought Journal";
   }, []);
 
-  // Get the DB user
+  // // Get the DB user
   const { dbUser } = useDBUser();
 
   console.log("DB USER", dbUser);
@@ -49,7 +49,13 @@ const Home = () => {
                       className="h-40 w-full object-center object-contain mb-5"
                     />
                     <p>{post?.title}</p>
-                    <p>{post?.User?.name ? post?.User?.name : "Anonymous"}</p>
+                    <p className="break-all">
+                      <Link to={`/user/${post?.User?.username}`}>
+                        {post?.User?.name
+                          ? post?.User?.name
+                          : "@" + String(post?.User?.username)}
+                      </Link>
+                    </p>
                     <p>
                       {post?.category != "OTHER"
                         ? post?.category

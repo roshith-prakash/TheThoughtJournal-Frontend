@@ -6,10 +6,12 @@ import ReactQuill from "react-quill";
 import { Navbar } from "../components";
 
 const Post = () => {
+  // Get Post Id from params.
   let { postId } = useParams();
 
+  // Fetch data from server.
   const { data, isLoading, error } = useQuery({
-    queryKey: ["todos", postId],
+    queryKey: ["post", postId],
     queryFn: async () => {
       return axiosInstance.post("/post/get-post", { postId: postId });
     },
@@ -19,8 +21,6 @@ const Post = () => {
   useEffect(() => {
     document.title = `${data?.data?.post?.title} | The Thought Journal`;
   }, [data]);
-
-  console.log(data);
 
   return (
     <div className="bg-bgwhite">

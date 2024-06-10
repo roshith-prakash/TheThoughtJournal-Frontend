@@ -11,6 +11,7 @@ import {
   CreatePost,
   Post,
   User,
+  Onboarding,
 } from "./pages";
 import { useEffect } from "react";
 import { io } from "socket.io-client";
@@ -44,6 +45,7 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/onboarding" element={<Onboarding />} />
                 <Route path="/signout" element={<Signout />} />
                 <Route path="/addPost" element={<CreatePost />} />
                 <Route path="/post/:postId" element={<Post />} />

@@ -58,7 +58,7 @@ export function UserProvider({ children }) {
   });
 
   useEffect(() => {
-    if (data) {
+    if (data?.data?.user) {
       setDbUser(data?.data?.user);
     } else {
       setDbUser(null);

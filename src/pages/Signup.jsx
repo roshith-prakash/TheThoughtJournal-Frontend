@@ -35,6 +35,7 @@ const Signup = () => {
     confirmpw: 0,
   });
 
+  // Scroll to top of page.
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
@@ -51,6 +52,8 @@ const Signup = () => {
       pw: 0,
       confirmpw: 0,
     });
+
+    // Validation Checks
 
     if (email == null || email == undefined || email.length == 0) {
       setError((prev) => ({ ...prev, email: 1 }));
@@ -89,28 +92,35 @@ const Signup = () => {
         const user = userCredential.user;
         console.log(user);
 
+        sendEmailVerification(user).then((res) => {
+          toast.success("Profile Created.");
+          toast("Email Verification Link sent.");
+          // Enable button
+          setDisabled(false);
+        });
+
         // Add user in DB
-        axiosInstance
-          .post("/auth/create-user", {
-            user: user,
-          })
-          .then((res) => {
-            // Send email verification link.
-            sendEmailVerification(user).then((res) => {
-              toast.success("Profile Created.");
-              toast("Email Verification Link sent.");
-              // Enable button
-              setDisabled(false);
-              // Navigate to home
-              setTimeout(() => navigate("/"), 4000);
-            });
-          })
-          .catch((err) => {
-            // Display error
-            toast.error("Something went wrong!");
-            // Enable button
-            setDisabled(false);
-          });
+        // axiosInstance
+        //   .post("/auth/create-user", {
+        //     user: user,
+        //   })
+        //   .then((res) => {
+        //     // Send email verification link.
+        //     sendEmailVerification(user).then((res) => {
+        //       toast.success("Profile Created.");
+        //       toast("Email Verification Link sent.");
+        //       // Enable button
+        //       setDisabled(false);
+        //       // Navigate to home
+        //       setTimeout(() => navigate("/"), 4000);
+        //     });
+        //   })
+        //   .catch((err) => {
+        //     // Display error
+        //     toast.error("Something went wrong!");
+        //     // Enable button
+        //     setDisabled(false);
+        //   });
       })
       .catch((error) => {
         const errorCode = error.code;

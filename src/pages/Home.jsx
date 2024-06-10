@@ -4,6 +4,7 @@ import { axiosInstance } from "../utils/axios";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { useDBUser } from "../context/userContext";
+import { useAuth } from "../context/authContext";
 
 const Home = () => {
   // Scroll to the top of page
@@ -18,16 +19,18 @@ const Home = () => {
 
   // // Get the DB user
   const { dbUser } = useDBUser();
+  const { currentUser } = useAuth();
 
+  console.log("Firebase user", currentUser);
   console.log("DB USER", dbUser);
 
   // Query to get posts
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["todos"],
-    queryFn: async () => {
-      return axiosInstance.get("/post/get-recent-posts");
-    },
-  });
+  // const { data, isLoading, error } = useQuery({
+  //   queryKey: ["todos"],
+  //   queryFn: async () => {
+  //     return axiosInstance.get("/post/get-recent-posts");
+  //   },
+  // });
 
   return (
     <>
@@ -38,7 +41,7 @@ const Home = () => {
           Welcome {dbUser?.name ? String(dbUser?.name).split(" ")[0] : "User"}!
         </h1>
       </div>
-      <div>
+      {/* <div>
         {isLoading && <p>Loading</p>}
         {error && <p>Error</p>}
 
@@ -70,7 +73,7 @@ const Home = () => {
               );
             })}
         </div>
-      </div>
+      </div> */}
     </>
   );
 };

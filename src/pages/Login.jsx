@@ -148,9 +148,9 @@ const Login = () => {
         <div className="flex-1 min-h-[100%] bg-login bg-cover origin-center hidden lg:block"></div>
 
         {/* Right Div */}
-        <div className="h-[95vh] lg:min-h-[88vh] pb-10 bg-cover lg:bg-none lg:bg-[#fcfafa] flex-1 flex justify-center items-center">
+        <div className="h-[95vh] lg:h-full lg:min-h-[88vh] pb-10 bg-cover lg:bg-none lg:bg-[#fcfafa] flex-1 flex justify-center items-center">
           {/* Login Form Div */}
-          <div className="bg-white border-[1px] -translate-y-5 md:-translate-y-0 px-8 md:w-[65%] mt-5 md:mt-14 lg:mt-0 p-5 md:px-20 shadow-xl rounded-xl pb-10">
+          <div className="bg-white border-[1px] -translate-y-5 md:-translate-y-0 px-8 md:w-[65%] mt-5 md:mt-14 lg:mt-5 p-5 md:px-20 shadow-xl rounded-xl pb-10">
             {/* Title */}
             <h1 className="text-ink font-bold text-2xl mt-5 italic text-center">
               Log in to The Journal

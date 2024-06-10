@@ -19,7 +19,7 @@ const NotFound = () => {
   return (
     <>
       <Navbar />
-      <div className="min-h-[60vh] flex items-center justify-center pt-12 pb-32">
+      <div className="min-h-[70vh] md:min-h-[65vh] lg:min-h-[60vh] flex items-center justify-center pt-12 pb-32">
         <div>
           {/* Title for page */}
           <p className="text-3xl lg:text-4xl px-5 text-center mt-14">

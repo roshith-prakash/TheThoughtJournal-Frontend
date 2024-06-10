@@ -75,7 +75,7 @@ const Navbar = () => {
 
         {/* Hamburger button - displayed on smaller screens */}
         <div className="lg:hidden flex items-center gap-x-5">
-          {!open && (
+          {!open && currentUser && (
             <Popover>
               <PopoverTrigger>
                 <Avvvatars style="shape" value="tim@apple.com" />

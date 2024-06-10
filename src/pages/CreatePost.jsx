@@ -143,7 +143,7 @@ const CreatePost = () => {
       <Toaster />
 
       {/* Editor box */}
-      <div className="p-10 pb-20 m-10 bg-white shadow-xl border-[1px] rounded-xl">
+      <div className="p-10 pb-20 m-5 lg:m-10 bg-white shadow-xl border-[1px] rounded-xl">
         {/* Title */}
         <h1 className="text-2xl lg:text-4xl text-center font-medium">
           Create a new Journal post{" "}
@@ -180,9 +180,9 @@ const CreatePost = () => {
               onChange={handleFileChange}
             />
             {/* Flex div - button & image name */}
-            <div className="mt-3 flex gap-x-5 items-center">
-              <div className="flex-1">
-                {/* Bu  */}
+            <div className="mt-3 flex flex-col gap-y-2 md:gap-y-0 md:flex-row md:gap-x-5 items-center">
+              <div className="w-full md:flex-1">
+                {/* Button to open file input  */}
                 <OutlineButton
                   text={
                     <p className="flex gap-x-3 justify-center items-center">
@@ -209,7 +209,7 @@ const CreatePost = () => {
           <Select
             onValueChange={(selectedCategory) => setCategory(selectedCategory)}
           >
-            <SelectTrigger className="w-[180px]">
+            <SelectTrigger className="md:w-[180px]">
               <SelectValue placeholder="Select a Category" />
             </SelectTrigger>
             <SelectContent>
@@ -268,7 +268,7 @@ const CreatePost = () => {
       </div>
 
       {/* Preview Post */}
-      <div className="p-10 pb-20 m-10 bg-white shadow-xl border-[1px] rounded-xl">
+      <div className="p-10 pb-20 m-5 lg:m-10 bg-white shadow-xl border-[1px] rounded-xl">
         {/* Title */}
         <h1 className="text-2xl lg:text-4xl text-center font-medium flex justify-center gap-x-2 items-center">
           Preview your Journal post! <FaArrowDown />

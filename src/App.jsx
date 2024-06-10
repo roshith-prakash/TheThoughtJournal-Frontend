@@ -33,7 +33,7 @@ function App() {
 
   return (
     <>
-      {/* Provinding client to children */}
+      {/* Providing client to children */}
       <QueryClientProvider client={queryClient}>
         {/* Providing auth context to children */}
         <AuthProvider>

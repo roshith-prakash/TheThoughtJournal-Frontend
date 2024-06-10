@@ -33,7 +33,11 @@ const Home = () => {
     <>
       {/* Navbar */}
       <Navbar />
-      <div className="p-5">Home</div>
+      <div className="p-5">
+        <h1 className="text-4xl font-semibold px-10 py-5">
+          Welcome {dbUser?.name ? String(dbUser?.name).split(" ")[0] : "User"}!
+        </h1>
+      </div>
       <div>
         {isLoading && <p>Loading</p>}
         {error && <p>Error</p>}
@@ -43,7 +47,7 @@ const Home = () => {
             data?.data?.posts?.map((post, index) => {
               return (
                 <Link key={index} to={`/post/${post?.id}`}>
-                  <div className="my-5 mx-5 p-5 rounded-xl border-2 cursor-pointer hover:shadow-xl transition-all">
+                  <div className="my-5 mx-5 p-5 rounded-xl border-2 cursor-pointer hover:shadow-xl hover:scale-105 transition-all">
                     <img
                       src={post?.thumbnail}
                       className="h-40 w-full object-center object-contain mb-5"

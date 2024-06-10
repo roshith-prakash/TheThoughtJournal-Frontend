@@ -93,7 +93,6 @@ const Signup = () => {
         console.log(user);
 
         sendEmailVerification(user).then((res) => {
-          toast.success("Profile Created.");
           toast("Email Verification Link sent.");
           // Enable button
           setDisabled(false);
@@ -150,20 +149,20 @@ const Signup = () => {
         const user = result.user;
 
         // Add user in DB
-        axiosInstance
-          .post("/auth/create-user", {
-            user: user,
-          })
-          .then((res) => {
-            setDisabled(false);
-            navigate("/");
-          })
-          .catch((err) => {
-            // Display error
-            toast.error("Something went wrong!");
-            // Enable button
-            setDisabled(false);
-          });
+        // axiosInstance
+        //   .post("/auth/create-user", {
+        //     user: user,
+        //   })
+        //   .then((res) => {
+        //     setDisabled(false);
+        //     navigate("/");
+        //   })
+        //   .catch((err) => {
+        //     // Display error
+        //     toast.error("Something went wrong!");
+        //     // Enable button
+        //     setDisabled(false);
+        //   });
       })
       .catch((error) => {
         setDisabled(false);

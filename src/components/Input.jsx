@@ -1,5 +1,3 @@
-import React from "react";
-
 // Styled Text input
 const Input = ({ value, placeholder, onChange }) => {
   return (

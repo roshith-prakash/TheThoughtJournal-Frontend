@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { Footer, Navbar, OutlineButton } from "../components";
 import { useNavigate } from "react-router-dom";
 import notfound from "../assets/notfound.svg";

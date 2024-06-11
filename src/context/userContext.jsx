@@ -1,10 +1,10 @@
-import React, { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect, createContext } from "react";
 import { useAuth } from "./authContext";
 import { axiosInstance } from "../utils/axios";
 import { useQuery } from "@tanstack/react-query";
 
 // Creating Context
-const UserContext = React.createContext();
+const UserContext = createContext();
 
 // Hook to consume the context
 export function useDBUser() {

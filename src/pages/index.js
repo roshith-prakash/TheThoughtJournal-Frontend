@@ -7,5 +7,6 @@ import CreatePost from "./CreatePost";
 import Post from "./Post";
 import User from "./User"
 import Onboarding from "./Onboarding";
+import Profile from "./Profile";
 
-export { Home, NotFound, Signup, Login, Signout, CreatePost, Post, User, Onboarding }
+export { Home, NotFound, Signup, Login, Signout, CreatePost, Post, User, Onboarding, Profile }

@@ -1,9 +1,9 @@
-import React, { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect, createContext } from "react";
 import { auth } from "../firebase/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 
 // Creating Context
-const AuthContext = React.createContext();
+const AuthContext = createContext();
 
 // Hook to consume the context
 export function useAuth() {

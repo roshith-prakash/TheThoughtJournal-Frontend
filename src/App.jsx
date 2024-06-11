@@ -12,9 +12,11 @@ import {
   Post,
   User,
   Onboarding,
+  Profile,
 } from "./pages";
 import { useEffect } from "react";
 import { io } from "socket.io-client";
+import { Protector } from "./components";
 
 // Creating Tanstack query client
 const queryClient = new QueryClient();
@@ -42,14 +44,41 @@ function App() {
           <UserProvider>
             <BrowserRouter>
               <Routes>
+                {/* Home Page */}
                 <Route path="/" element={<Home />} />
+
+                {/* Signup route */}
                 <Route path="/signup" element={<Signup />} />
+
+                {/* Login route */}
                 <Route path="/login" element={<Login />} />
+
+                {/* Route to onboard a new user */}
                 <Route path="/onboarding" element={<Onboarding />} />
+
+                {/* Log out route */}
                 <Route path="/signout" element={<Signout />} />
-                <Route path="/addPost" element={<CreatePost />} />
+
+                {/* Route to create a new post. */}
+                <Route
+                  path="/addPost"
+                  element={
+                    <Protector>
+                      <CreatePost />
+                    </Protector>
+                  }
+                />
+
+                {/* Logged in User's Profile */}
+                <Route path="/profile" element={<Profile />} />
+
+                {/* View a Post */}
                 <Route path="/post/:postId" element={<Post />} />
+
+                {/* View a User's Profile (Non Logged in user) */}
                 <Route path="/user/:username" element={<User />} />
+
+                {/* 404 error page */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </BrowserRouter>

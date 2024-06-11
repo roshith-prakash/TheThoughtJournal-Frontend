@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAuth } from "../context/authContext";
 import { useDBUser } from "../context/userContext";
 import {
@@ -177,80 +177,6 @@ const Onboarding = () => {
                 <OutlineButton
                   onClick={() => navigate("/")}
                   text="Go Back Home"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  // If user hasn't signed in using firebase
-  if (!currentUser) {
-    return (
-      <div>
-        <Navbar />
-        <div className="min-h-[70vh] md:min-h-[65vh] lg:min-h-[60vh] flex items-center justify-center pt-12 pb-32">
-          <div>
-            {/* Title for page */}
-            <p className="text-3xl lg:text-4xl px-5 text-center mt-14">
-              You have not signed in!
-            </p>
-            <div className="mt-10 flex flex-col gap-10 justify-center items-center">
-              {/* Image */}
-              <img
-                src={notfound}
-                className="max-w-[50%] lg:max-w-[40%] pointer-events-none"
-              />
-              {/* Button to navigate back to home page */}
-              <div className="w-[40%] lg:w-[30%]">
-                <OutlineButton
-                  onClick={() => navigate("/signup")}
-                  text="Sign Up"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  // If user has signed up via email but has not verified their email.
-  if (!currentUser?.emailVerified) {
-    return (
-      <div>
-        <Navbar />
-        <Toaster />
-        <div className="min-h-[70vh] md:min-h-[65vh] lg:min-h-[60vh] flex items-center justify-center pt-12 pb-32">
-          <div>
-            {/* Title for page */}
-            <p className="text-3xl lg:text-4xl px-5 text-center mt-14">
-              Oops! Your email isn't verified.
-            </p>
-            <div className="mt-10 flex flex-col gap-10 justify-center items-center">
-              {/* Image */}
-              <img
-                src={notfound}
-                className="max-w-[50%] lg:max-w-[40%] pointer-events-none"
-              />
-              {/* Button to navigate back to home page */}
-              <div className="w-[40%] lg:w-[30%]">
-                <OutlineButton
-                  onClick={sendVerification}
-                  text="Resend Verification Link"
-                />
-              </div>
-              <div className="w-[40%] lg:w-[30%]">
-                <OutlineButton
-                  onClick={() => window.location.reload()}
-                  text={
-                    <>
-                      <p>Already verified?</p>
-                      <p> Reload the page</p>
-                    </>
-                  }
                 />
               </div>
             </div>

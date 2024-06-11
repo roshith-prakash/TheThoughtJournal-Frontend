@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ErrorStatement,
-  Footer,
   Input,
   Navbar,
   OutlineButton,
@@ -161,7 +160,7 @@ const Signup = () => {
       <Toaster />
       <div className="lg:min-h-[89vh] flex w-full">
         {/* Left Div */}
-        <div className=" h-[95vh] lg:h-full lg:min-h-[88vh] pb-10 bg-cover lg:bg-none lg:bg-bgwhite flex-1 flex justify-center items-center">
+        <div className="min-h-[95vh] lg:h-full lg:min-h-[88vh] pb-10 bg-cover lg:bg-none lg:bg-bgwhite flex-1 flex justify-center items-center">
           {/* Signup Form Div */}
           <div className="bg-white border-[1px] px-8 md:w-[65%] md:mt-5 lg:mt-5 p-5 md:px-20 shadow-xl rounded-xl pb-10">
             {/* Title */}

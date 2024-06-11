@@ -44,7 +44,9 @@ module.exports = {
         "error": "#f72a2a",
         "blueink": "#004e98",
         "disabledBlueink": "#476c8f",
-        "bgwhite": "#fcfafa"
+        "bgwhite": "#fcfafa",
+        "cta": "#9b0ced",
+        "hovercta": "#7123b0",
       }
     },
   },

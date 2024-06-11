@@ -5,7 +5,8 @@ import Footer from "./Footer";
 import Input from "./Input";
 import PasswordInput from "./PasswordInput";
 import ErrorStatement from "./ErrorStatement";
+import Protector from "./Protector";
 
 export {
-    CTAButton, Navbar, OutlineButton, Footer, Input, PasswordInput, ErrorStatement
+    CTAButton, Navbar, OutlineButton, Footer, Input, PasswordInput, ErrorStatement, Protector
 }

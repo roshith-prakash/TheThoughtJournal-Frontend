@@ -15,6 +15,8 @@ import { CgProfile, CgLogOut } from "react-icons/cg";
 import { BsPen } from "react-icons/bs";
 import { RiAccountPinCircleLine } from "react-icons/ri";
 import defaultAccount from "../assets/account.png";
+import { FaUserPlus } from "react-icons/fa6";
+import { RxCross2, RxHamburgerMenu } from "react-icons/rx";
 
 const Navbar = () => {
   const location = useLocation();
@@ -25,14 +27,16 @@ const Navbar = () => {
   return (
     <>
       <div
-        className={`font-inter ${
-          !open && "shadow-md"
-        } lg:shadow-md bg-white flex justify-between items-center px-5 lg:px-10 py-5 z-2 relative`}
+        className={`relative font-inter shadow-md overflow-hidden bg-white flex justify-between items-center px-5 lg:px-10 py-5 z-10 max-w-screen`}
       >
         {/* Logo on the left side - linked to home page */}
-        <Link className="flex items-center" to="/">
-          <img src={logo} alt="Logo" className="h-10 w-10 cursor-pointer"></img>
-          <p className="mx-2 italic font-medium text-lg text-ink">
+        <Link className="flex items-center gap-x-2 hover:animate-pulse" to="/">
+          <img
+            src={logo}
+            alt="Logo"
+            className="h-10 w-10 cursor-pointer rounded-full shadow-xl"
+          ></img>
+          <p className="gmx-2 italic font-medium text-lg text-ink transition-all">
             The Thought Journal
           </p>
         </Link>
@@ -45,226 +49,233 @@ const Navbar = () => {
               <CTAButton text={"Create a Post"} />
             </Link>
           )}
-
-          <Popover>
-            <PopoverTrigger className="flex items-center">
-              {dbUser?.photoURL ? (
-                <div className="border-2 border-cta rounded-full p-1">
-                  <img
-                    src={dbUser?.photoURL}
-                    className="rounded-full h-8"
-                  ></img>
-                </div>
-              ) : (
-                <>
-                  {dbUser ? (
-                    <Avvvatars size={40} value={dbUser?.name} />
-                  ) : (
+          <div className="flex items-center gap-x-5">
+            <Popover>
+              <PopoverTrigger className="flex items-center">
+                {dbUser?.photoURL ? (
+                  <div className=" bg-gradient-to-br  from-[#ec8cff] to-cta rounded-full p-1 flex items-center justify-center">
                     <img
-                      src={defaultAccount}
-                      className="rounded-full h-9"
+                      src={dbUser?.photoURL}
+                      className="rounded-full h-9 border-2 border-white"
                     ></img>
+                  </div>
+                ) : (
+                  <>
+                    {dbUser ? (
+                      <Avvvatars size={40} value={dbUser?.name} />
+                    ) : (
+                      <img
+                        src={defaultAccount}
+                        className="rounded-full h-9"
+                      ></img>
+                    )}
+                  </>
+                )}
+              </PopoverTrigger>
+              <PopoverContent className="w-auto mt-2 mr-4 py-0 px-1">
+                <div className="py-1 min-w-48 flex flex-col gap-y-1">
+                  {/* View Profile */}
+                  {dbUser && (
+                    <>
+                      <Link
+                        to="/profile"
+                        className={`flex flex-col gap-y-2 font-medium text-cta hover:bg-slate-50 hover:text-hovercta text-lg py-2 px-5 rounded  w-full transition-all`}
+                      >
+                        <p className="text-center">{dbUser?.name}</p>
+                        <p className="text-center">@{dbUser?.username}</p>
+                      </Link>
+
+                      <hr />
+                    </>
                   )}
-                </>
-              )}
-            </PopoverTrigger>
-            <PopoverContent className="w-auto mt-2 mr-4 py-0 px-1">
-              <div className="py-1 w-48 flex flex-col gap-y-1">
-                {/* Profile */}
-                {dbUser && (
-                  <>
+
+                  {/* Edit Profile */}
+                  {dbUser && (
+                    <>
+                      <NavLink
+                        to="/editProfile"
+                        className={({ isActive, isPending }) =>
+                          `flex gap-x-5 items-center font-medium text-lg py-2 px-5 rounded hover:bg-slate-50 w-full transition-all ${
+                            isActive && "bg-slate-100"
+                          }`
+                        }
+                      >
+                        <CgProfile className="text-xl" />
+                        Edit Profile
+                      </NavLink>
+                      <hr />
+                    </>
+                  )}
+
+                  {/* Create Post */}
+                  {dbUser && (
+                    <>
+                      <NavLink
+                        to="/addPost"
+                        className={({ isActive, isPending }) =>
+                          `flex gap-x-5 items-center font-medium text-lg py-2 px-5 rounded hover:bg-slate-50 w-full transition-all ${
+                            isActive && "bg-slate-100"
+                          }`
+                        }
+                      >
+                        <BsPen className="text-lg" />
+                        Create a Post
+                      </NavLink>
+                      <hr />
+                    </>
+                  )}
+
+                  {/* Onboarding */}
+                  {currentUser && !dbUser && (
+                    <>
+                      <NavLink
+                        to="/onboarding"
+                        className={({ isActive, isPending }) =>
+                          `flex gap-x-5 items-center font-medium bg-purple-100 text-lg py-2 px-5 rounded w-full transition-all ${
+                            isActive && "bg-slate-100"
+                          }`
+                        }
+                      >
+                        <RiAccountPinCircleLine className="text-xl animate-pulse" />
+                        <p className="animate-pulse">Profile</p>
+                      </NavLink>
+                      <hr />
+                    </>
+                  )}
+
+                  {/* Log Out */}
+                  {currentUser && (
                     <NavLink
-                      to="/profile"
+                      to="/signout"
                       className={({ isActive, isPending }) =>
-                        `flex gap-x-5 items-center font-medium text-lg py-2 px-5 rounded hover:bg-slate-50 w-full ${
+                        `flex gap-x-5 items-center font-medium text-lg py-2 px-5 rounded hover:bg-slate-50 w-full transition-all ${
                           isActive && "bg-slate-100"
                         }`
                       }
                     >
-                      <CgProfile className="text-xl" />
-                      Profile
+                      <CgLogOut className="text-xl" />
+                      Log Out
                     </NavLink>
-                    <hr />
-                  </>
-                )}
+                  )}
 
-                {/* Create Post */}
-                {dbUser && (
-                  <>
+                  {/* Sign up */}
+                  {!currentUser && (
+                    <>
+                      <NavLink
+                        to="/signup"
+                        className={({ isActive, isPending }) =>
+                          `flex gap-x-5 items-center font-medium text-lg py-2 px-5 rounded hover:bg-slate-50 w-full transition-all ${
+                            isActive && "bg-slate-100"
+                          }`
+                        }
+                      >
+                        <FaUserPlus className="text-xl" />
+                        Sign Up
+                      </NavLink>
+                      <hr />
+                    </>
+                  )}
+
+                  {/* Log in */}
+                  {!currentUser && (
                     <NavLink
-                      to="/addPost"
+                      to="/login"
                       className={({ isActive, isPending }) =>
-                        `flex gap-x-5 items-center font-medium text-lg py-2 px-5 rounded hover:bg-slate-50 w-full ${
-                          isActive && "bg-slate-100"
-                        }`
-                      }
-                    >
-                      <BsPen className="text-lg" />
-                      Create a Post
-                    </NavLink>
-                    <hr />
-                  </>
-                )}
-
-                {/* Onboarding */}
-                {currentUser && !dbUser && (
-                  <>
-                    <NavLink
-                      to="/onboarding"
-                      className={({ isActive, isPending }) =>
-                        `flex gap-x-5 items-center font-medium bg-purple-100 text-lg py-2 px-5 rounded  w-full ${
-                          isActive && "bg-slate-100"
-                        }`
-                      }
-                    >
-                      <RiAccountPinCircleLine className="text-xl" />
-                      Profile
-                    </NavLink>
-                    <hr />
-                  </>
-                )}
-
-                {/* Log Out */}
-                {currentUser && (
-                  <NavLink
-                    to="/signout"
-                    className={({ isActive, isPending }) =>
-                      `flex gap-x-5 items-center font-medium text-lg py-2 px-5 rounded hover:bg-slate-50 transition-all w-full ${
-                        isActive && "bg-slate-100"
-                      }`
-                    }
-                  >
-                    <CgLogOut className="text-xl" />
-                    Log Out
-                  </NavLink>
-                )}
-
-                {/* Sign up */}
-                {!currentUser && (
-                  <>
-                    <NavLink
-                      to="/signup"
-                      className={({ isActive, isPending }) =>
-                        `flex gap-x-5 items-center font-medium text-lg py-2 px-5 rounded hover:bg-slate-50 w-full  ${
+                        `flex gap-x-5 items-center font-medium text-lg py-2 px-5 rounded hover:bg-slate-50 w-full transition-all ${
                           isActive && "bg-slate-100"
                         }`
                       }
                     >
                       <CgLogOut className="text-xl rotate-180" />
-                      Sign Up
+                      Log in
                     </NavLink>
-                    <hr />
-                  </>
-                )}
+                  )}
+                </div>
+              </PopoverContent>
+            </Popover>
 
-                {/* Log in */}
-                {!currentUser && (
-                  <NavLink
-                    to="/login"
-                    className={({ isActive, isPending }) =>
-                      `flex gap-x-5 items-center font-medium text-lg py-2 px-5 rounded hover:bg-slate-50 w-full ${
-                        isActive && "bg-slate-100"
-                      }`
-                    }
-                  >
-                    <CgLogOut className="text-xl rotate-180" />
-                    Log in
-                  </NavLink>
-                )}
-              </div>
-            </PopoverContent>
-          </Popover>
+            <div className="lg:hidden flex items-center gap-x-5">
+              <RxHamburgerMenu
+                onClick={() => setOpen(true)}
+                className="cursor-pointer text-xl text-ink"
+              />
+            </div>
+          </div>
         </div>
 
         {/* Hamburger button - displayed on smaller screens */}
-        {/* <div className="lg:hidden flex items-center gap-x-5">
-          {!open && currentUser && (
-            <Popover>
-              <PopoverTrigger>
-                <Avvvatars style="shape" value="tim@apple.com" />
-              </PopoverTrigger>
-              <PopoverContent>
-                <Link to="/signout" className=" cursor-pointer  transition-all">
-                  Log Out
-                </Link>
-              </PopoverContent>
-            </Popover>
-          )}
+      </div>
 
-          {open ? (
+      {/* Pop out div - displayed when hamburger is clicked  */}
+      <div
+        className={`lg:hidden h-screen text-xl md:text-lg fixed top-0 right-0 z-10 bg-white pb-6 text-center shadow-md ${
+          open ? "translate-x-0" : "translate-x-[100%]"
+        } transition-all`}
+      >
+        {open && (
+          <div className="flex justify-end pt-8 px-5 mb-14">
             <RxCross2
               onClick={() => setOpen(false)}
               className="cursor-pointer text-xl text-ink"
             />
-          ) : (
-            <RxHamburgerMenu
-              onClick={() => setOpen(true)}
-              className="cursor-pointer text-xl text-ink"
-            />
+          </div>
+        )}
+        <div className="px-8">
+          {/* Link to Home */}
+          <p className="my-2">
+            <Link
+              to="/"
+              className="hover:text-cta cursor-pointer transition-all"
+            >
+              Home
+            </Link>
+          </p>
+          {/* Link to create post page - not shown if already on create post page */}
+          {location.pathname != "/addPost" && (
+            <p className="my-2">
+              <Link
+                to="/addPost"
+                className="hover:text-cta cursor-pointer transition-all"
+              >
+                Create Post
+              </Link>
+            </p>
           )}
-        </div> */}
+          {/* Link to signup page */}
+          {!currentUser && (
+            <p className="my-2">
+              <Link
+                to="/signup"
+                className="hover:text-cta cursor-pointer transition-all"
+              >
+                Sign up
+              </Link>
+            </p>
+          )}
+          {/* Link to login page */}
+          {!currentUser && (
+            <p className="my-2">
+              <Link
+                to="/login"
+                className="hover:text-cta cursor-pointer transition-all"
+              >
+                Log in
+              </Link>
+            </p>
+          )}
+          {/* Link to logout page */}
+          {currentUser && (
+            <p className="my-2">
+              <Link
+                to="/signout"
+                className="hover:text-cta cursor-pointer transition-all"
+              >
+                Log Out
+              </Link>
+            </p>
+          )}
+        </div>
       </div>
-
-      {/* Popup div - displayed when hamburger is clicked  */}
-      {open && (
-        // <div className="lg:hidden text-xl md:text-lg absolute w-full z-10 bg-white px-5 pb-6 text-center shadow-md">
-        //   {/* Link to Home */}
-        //   <p className="my-2">
-        //     <Link
-        //       to="/"
-        //       className="hover:text-cta cursor-pointer transition-all"
-        //     >
-        //       Home
-        //     </Link>
-        //   </p>
-        //   {/* Link to create post page - not shown if already on create post page */}
-        //   {location.pathname != "/addPost" && (
-        //     <p className="my-2">
-        //       <Link
-        //         to="/addPost"
-        //         className="hover:text-cta cursor-pointer transition-all"
-        //       >
-        //         Create Post
-        //       </Link>
-        //     </p>
-        //   )}
-        //   {/* Link to signup page */}
-        //   {!currentUser && (
-        //     <p className="my-2">
-        //       <Link
-        //         to="/signup"
-        //         className="hover:text-cta cursor-pointer transition-all"
-        //       >
-        //         Sign up
-        //       </Link>
-        //     </p>
-        //   )}
-        //   {/* Link to login page */}
-        //   {!currentUser && (
-        //     <p className="my-2">
-        //       <Link
-        //         to="/login"
-        //         className="hover:text-cta cursor-pointer transition-all"
-        //       >
-        //         Log in
-        //       </Link>
-        //     </p>
-        //   )}
-        //   {/* Link to logout page */}
-        //   {currentUser && (
-        //     <p className="my-2">
-        //       <Link
-        //         to="/signout"
-        //         className="hover:text-cta cursor-pointer transition-all"
-        //       >
-        //         Log Out
-        //       </Link>
-        //     </p>
-        //   )}
-        //   <br />
-        // </div>
-        <></>
-      )}
     </>
   );
 };

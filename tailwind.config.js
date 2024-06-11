@@ -43,10 +43,10 @@ module.exports = {
         "ink": "#16264c",
         "error": "#f72a2a",
         "blueink": "#004e98",
-        "disabledBlueink": "#476c8f",
         "bgwhite": "#fcfafa",
         "cta": "#9b0ced",
         "hovercta": "#7123b0",
+        "darkgrey": "#1f1e1e"
       }
     },
   },

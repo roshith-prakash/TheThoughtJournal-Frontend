@@ -13,6 +13,7 @@ import {
   User,
   Onboarding,
   Profile,
+  EditProfile,
 } from "./pages";
 import { useEffect } from "react";
 import { io } from "socket.io-client";
@@ -70,7 +71,24 @@ function App() {
                 />
 
                 {/* Logged in User's Profile */}
-                <Route path="/profile" element={<Profile />} />
+                <Route
+                  path="/profile"
+                  element={
+                    <Protector>
+                      <Profile />
+                    </Protector>
+                  }
+                />
+
+                {/* Edit Current User's Profile */}
+                <Route
+                  path="/editProfile"
+                  element={
+                    <Protector>
+                      <EditProfile />
+                    </Protector>
+                  }
+                />
 
                 {/* View a Post */}
                 <Route path="/post/:postId" element={<Post />} />

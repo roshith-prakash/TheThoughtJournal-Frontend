@@ -240,7 +240,7 @@ const Login = () => {
           </div>
         </div>
       </div>
-      <div className="lg:hidden">
+      <div className="hidden pt-20 lg:block">
         <Footer />
       </div>
     </>

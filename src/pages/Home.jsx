@@ -40,8 +40,7 @@ const Home = () => {
       <div className="pb-32">
         <div className="p-5">
           <h1 className="text-4xl font-semibold px-2 py-5">
-            Welcome {dbUser?.name ? String(dbUser?.name).split(" ")[0] : "User"}
-            !
+            Welcome {dbUser?.name ? dbUser?.name : "User"}!
           </h1>
         </div>
         <div>
@@ -78,7 +77,9 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <Footer />
+      <div className="hidden pt-20 lg:block">
+        <Footer />
+      </div>
     </>
   );
 };

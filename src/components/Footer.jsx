@@ -9,7 +9,7 @@ const Footer = () => {
   return (
     <>
       <div className="bg-gradient-to-b from-cta to-hovercta font-inter pb-20 min-h-50vh relative text-white">
-        <div className="absolute -top-16 w-[90vw] lg:w-[80vw] left-1/2 -translate-x-1/2 rounded-lg h-32 flex flex-col py-2 lg:flex-row justify-around items-center bg-[#1f1e1e] text-white">
+        <div className="absolute -top-16 w-[90vw] lg:w-[80vw] left-1/2 -translate-x-1/2 rounded-lg h-32 flex flex-col py-2 lg:flex-row justify-around items-center bg-darkgrey text-white">
           <p className="text-xl font-medium">Have a thought to share?</p>
           <button
             onClick={() => navigate("/addPost")}

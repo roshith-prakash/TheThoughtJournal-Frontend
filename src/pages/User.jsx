@@ -16,7 +16,10 @@ const User = () => {
   });
 
   console.log(data);
-  console.log(error?.response?.data?.data);
+
+  if (error) {
+    console.log(error?.response?.data?.data);
+  }
 
   return (
     <div>

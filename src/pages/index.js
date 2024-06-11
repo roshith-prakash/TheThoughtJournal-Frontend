@@ -8,5 +8,6 @@ import Post from "./Post";
 import User from "./User"
 import Onboarding from "./Onboarding";
 import Profile from "./Profile";
+import EditProfile from "./EditProfile"
 
-export { Home, NotFound, Signup, Login, Signout, CreatePost, Post, User, Onboarding, Profile }
+export { Home, NotFound, Signup, Login, Signout, CreatePost, Post, User, Onboarding, Profile, EditProfile }

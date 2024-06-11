@@ -41,7 +41,9 @@ const NotFound = () => {
           </div>
         </div>
       </div>
-      <Footer />
+      <div className="hidden pt-20 lg:block">
+        <Footer />
+      </div>
     </>
   );
 };

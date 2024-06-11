@@ -9,13 +9,13 @@ import {
   OutlineButton,
 } from "../components";
 import notfound from "../assets/notfound.svg";
-import { Form, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { sendEmailVerification } from "firebase/auth";
 import { toast, Toaster } from "react-hot-toast";
 import { auth } from "../firebase/firebase";
-import defaultAccount from "../assets/account.png";
 import { IoCloudUploadOutline } from "react-icons/io5";
 import { axiosInstance } from "../utils/axios";
+import defaultAccount from "../assets/account.png";
 
 const Onboarding = () => {
   // Navigate function to navigate to different pages.
@@ -77,6 +77,7 @@ const Onboarding = () => {
       });
   };
 
+  // Submit the data to the server to create the user object.
   const handleSubmit = () => {
     setError({
       name: 0,
@@ -95,29 +96,37 @@ const Onboarding = () => {
       return;
     }
 
+    setDisabled(true);
+
+    // Check if username is already in use.
     axiosInstance
       .post("/auth/checkUsername", { username: username })
       .then((res) => {
+        // If username already exists - show an error
         if (res.data?.exists) {
           setError((prev) => ({ ...prev, username: 2 }));
           return;
-        } else {
-          console.log("OK");
-
+        }
+        // If username is available
+        else {
+          // Create formdata instance
           const formData = new FormData();
 
+          // If image is added - add a file
           if (typeof image != "string") {
             formData.append("file", image);
           }
 
+          // Add details in the user object
           const obj = {
             ...currentUser,
             bio: bio,
             username: username,
             name: name,
-            image: image,
+            image: typeof image == "string" ? image : null,
           };
 
+          // Append the new user object in formdata
           formData.append("user", JSON.stringify(obj));
 
           // Add user in DB
@@ -139,6 +148,7 @@ const Onboarding = () => {
         }
       })
       .catch((err) => {
+        setDisabled(false);
         toast.error("Something went wrong.");
         console.log(err);
         return;
@@ -333,6 +343,7 @@ const Onboarding = () => {
             ></textarea>
           </div>
 
+          {/* Submit Button */}
           <div className="mt-10 flex justify-center items-center">
             <div className="w-[40%]">
               <CTAButton

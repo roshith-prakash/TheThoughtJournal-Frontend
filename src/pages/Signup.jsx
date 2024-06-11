@@ -98,28 +98,7 @@ const Signup = () => {
           setDisabled(false);
         });
 
-        // Add user in DB
-        // axiosInstance
-        //   .post("/auth/create-user", {
-        //     user: user,
-        //   })
-        //   .then((res) => {
-        //     // Send email verification link.
-        //     sendEmailVerification(user).then((res) => {
-        //       toast.success("Profile Created.");
-        //       toast("Email Verification Link sent.");
-        //       // Enable button
-        //       setDisabled(false);
-        //       // Navigate to home
-        //       setTimeout(() => navigate("/"), 4000);
-        //     });
-        //   })
-        //   .catch((err) => {
-        //     // Display error
-        //     toast.error("Something went wrong!");
-        //     // Enable button
-        //     setDisabled(false);
-        //   });
+        navigate("/onboarding");
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -148,21 +127,20 @@ const Signup = () => {
         // The signed-in user info.
         const user = result.user;
 
-        // Add user in DB
-        // axiosInstance
-        //   .post("/auth/create-user", {
-        //     user: user,
-        //   })
-        //   .then((res) => {
-        //     setDisabled(false);
-        //     navigate("/");
-        //   })
-        //   .catch((err) => {
-        //     // Display error
-        //     toast.error("Something went wrong!");
-        //     // Enable button
-        //     setDisabled(false);
-        //   });
+        // Check if user exists in DB - if yes, send to home - if no, send to onboarding.
+        axiosInstance
+          .post("/auth/get-current-user", { user: user })
+          .then((res) => {
+            if (res?.data?.user) {
+              navigate("/");
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+            if (err?.response?.data?.data == "User does not exist.") {
+              navigate("/onboarding");
+            }
+          });
       })
       .catch((error) => {
         setDisabled(false);
@@ -274,9 +252,6 @@ const Signup = () => {
 
         {/* Image Div - displayed only on laptop */}
         <div className="flex-1 bg-signup bg-cover origin-center hidden lg:block"></div>
-      </div>
-      <div className="lg:hidden">
-        <Footer />
       </div>
     </>
   );

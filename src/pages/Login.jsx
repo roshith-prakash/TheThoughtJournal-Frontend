@@ -32,6 +32,7 @@ const Login = () => {
     pw: 0,
   });
 
+  // Scroll to top of page
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
@@ -82,8 +83,23 @@ const Login = () => {
         // Signed in
         const user = userCredential.user;
         console.log(user);
-        setDisabled(false);
-        navigate("/");
+
+        // Check if user exists in DB - if yes, send to home - if no, send to onboarding.
+        axiosInstance
+          .post("/auth/get-current-user", { user: user })
+          .then((res) => {
+            if (res?.data?.user) {
+              setDisabled(false);
+              navigate("/");
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+            setDisabled(false);
+            if (err?.response?.data?.data == "User does not exist.") {
+              navigate("/onboarding");
+            }
+          });
         // ...
       })
       .catch((error) => {
@@ -112,23 +128,26 @@ const Login = () => {
         // The signed-in user info.
         const user = result.user;
 
-        // Add user in DB if not already present
+        // Check if user exists in DB - if yes, send to home - if no, send to onboarding.
         axiosInstance
-          .post("/auth/create-user", {
-            user: user,
-          })
+          .post("/auth/get-current-user", { user: user })
           .then((res) => {
-            navigate("/");
+            if (res?.data?.user) {
+              setDisabled(false);
+              navigate("/");
+            }
           })
           .catch((err) => {
-            // Display error
-            toast.error("Something went wrong!");
-            // Enable button
+            console.log(err);
             setDisabled(false);
+            if (err?.response?.data?.data == "User does not exist.") {
+              navigate("/onboarding");
+            }
           });
       })
       .catch((error) => {
         // Handle Errors here.
+        setDisabled(false);
         const errorCode = error.code;
         const errorMessage = error.message;
         // The email of the user's account used.

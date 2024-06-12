@@ -14,11 +14,11 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-
-import google from "../assets/google.png";
 import { isValidEmail, isValidPassword } from "../functions/regexFunctions";
 import toast, { Toaster } from "react-hot-toast";
 import { axiosInstance } from "../utils/axios";
+import google from "../assets/google.png";
+import login from "../assets/login.svg";
 
 const provider = new GoogleAuthProvider();
 
@@ -162,12 +162,14 @@ const Login = () => {
     <>
       <Navbar />
       <Toaster />
-      <div className="lg:min-h-[89vh]  flex w-full">
+      <div className="lg:min-h-[89vh] flex w-full bg-none lg:bg-bgwhite">
         {/* Image Div - displayed only on laptop */}
-        <div className="flex-1 min-h-[100%] bg-login bg-cover origin-center hidden lg:block"></div>
+        <div className="flex-1 flex items-center justify-center">
+          <img src={login} className="max-w-[70%]" />
+        </div>
 
         {/* Right Div */}
-        <div className="min-h-[95vh] mt-5 lg:mt-0 lg:h-full lg:min-h-[88vh] pb-10 bg-cover lg:bg-none lg:bg-[#fcfafa] flex-1 flex justify-center items-center">
+        <div className="min-h-[95vh] mt-5 lg:mt-0 lg:h-full lg:min-h-[88vh] pb-10 flex-1 flex justify-center items-center">
           {/* Login Form Div */}
           <div className="bg-white border-[1px] -translate-y-5 md:-translate-y-0 px-8 md:w-[65%] mt-5 md:mt-14 lg:mt-5 p-5 md:px-20 shadow-xl rounded-xl pb-10">
             {/* Title */}

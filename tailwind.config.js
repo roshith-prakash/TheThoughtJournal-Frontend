@@ -32,7 +32,6 @@ module.exports = {
         "accordion-up": "accordion-up 0.2s ease-out",
       },
       backgroundImage: {
-        'signup': "url('src/assets/signup.jpg')",
         'login': "url('src/assets/login.jpg')",
         'paper': "url('src/assets/paper.jpg')",
         'bg1': "url('src/assets/bg1.jpg')",
@@ -46,7 +45,8 @@ module.exports = {
         "bgwhite": "#fcfafa",
         "cta": "#9b0ced",
         "hovercta": "#7123b0",
-        "darkgrey": "#1f1e1e"
+        "darkgrey": "#1f1e1e",
+        "lightpink": "#dcbbf0"
       }
     },
   },

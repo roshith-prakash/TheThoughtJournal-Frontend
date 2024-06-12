@@ -16,7 +16,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import { axiosInstance } from "../utils/axios";
-import { isValidPassword, isValidEmail } from "../functions/regexFunctions";
+import signup from "../assets/signup.svg";
 
 import google from "../assets/google.png";
 
@@ -158,9 +158,9 @@ const Signup = () => {
     <>
       <Navbar />
       <Toaster />
-      <div className="lg:min-h-[89vh] flex w-full">
+      <div className="lg:min-h-[89vh] flex w-full lg:bg-none lg:bg-bgwhite">
         {/* Left Div */}
-        <div className="min-h-[95vh] lg:h-full lg:min-h-[88vh] pb-10 bg-cover lg:bg-none lg:bg-bgwhite flex-1 flex justify-center items-center">
+        <div className="min-h-[95vh] lg:h-full lg:min-h-[88vh] pb-10 bg-cover  flex-1 flex justify-center items-center">
           {/* Signup Form Div */}
           <div className="bg-white border-[1px] px-8 md:w-[65%] md:mt-5 lg:mt-5 p-5 md:px-20 shadow-xl rounded-xl pb-10">
             {/* Title */}
@@ -250,7 +250,9 @@ const Signup = () => {
         </div>
 
         {/* Image Div - displayed only on laptop */}
-        <div className="flex-1 bg-signup bg-cover origin-center hidden lg:block"></div>
+        <div className="flex-1 flex items-center justify-center">
+          <img src={signup} className="max-w-[70%]" />
+        </div>
       </div>
     </>
   );

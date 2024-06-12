@@ -6,7 +6,8 @@ import Input from "./Input";
 import PasswordInput from "./PasswordInput";
 import ErrorStatement from "./ErrorStatement";
 import Protector from "./Protector";
+import PostCard from "./PostCard";
 
 export {
-    CTAButton, Navbar, OutlineButton, Footer, Input, PasswordInput, ErrorStatement, Protector
+    CTAButton, Navbar, OutlineButton, Footer, Input, PasswordInput, ErrorStatement, Protector, PostCard
 }

@@ -1,4 +1,4 @@
-import { CTAButton, Footer, Navbar } from "../components";
+import { CTAButton, Footer, Navbar, PostCard } from "../components";
 import { useDBUser } from "../context/userContext";
 import defaultAccount from "../assets/account.png";
 import { BsPen } from "react-icons/bs";
@@ -94,29 +94,7 @@ const Profile = () => {
         <div className="mt-10 grid md:grid-cols-2 lg:grid-cols-3 mx-5 md:mx-10 lg:mx-20">
           {data &&
             data?.data?.posts?.map((post, index) => {
-              return (
-                <Link key={index} to={`/post/${post?.id}`}>
-                  <div className="my-5 mx-5 p-5 rounded-xl border-2 cursor-pointer hover:shadow-xl hover:scale-105 transition-all">
-                    <img
-                      src={post?.thumbnail}
-                      className="h-40 w-full object-center object-contain mb-5"
-                    />
-                    <p>{post?.title}</p>
-                    <p className="break-all">
-                      <Link to={`/user/${post?.User?.username}`}>
-                        {post?.User?.name
-                          ? post?.User?.name
-                          : "@" + String(post?.User?.username)}
-                      </Link>
-                    </p>
-                    <p>
-                      {post?.category != "OTHER"
-                        ? post?.category
-                        : post?.otherCategory}
-                    </p>
-                  </div>
-                </Link>
-              );
+              return <PostCard post={post} index={index} />;
             })}
         </div>
       </div>

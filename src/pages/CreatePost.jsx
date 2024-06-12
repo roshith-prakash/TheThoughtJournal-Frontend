@@ -22,8 +22,9 @@ import { FaArrowDown } from "react-icons/fa6";
 import { axiosInstance } from "../utils/axios";
 import { useAuth } from "../context/authContext";
 import { toast, Toaster } from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDBUser } from "../context/userContext";
+import { getMinsToRead } from "../functions/mathFunctions";
 
 const CreatePost = () => {
   const navigate = useNavigate();
@@ -271,35 +272,84 @@ const CreatePost = () => {
         </div>
       </div>
 
+      {/* Preview */}
+      <h1 className="py-5 text-2xl lg:text-4xl text-center font-medium flex justify-center gap-x-2 items-center">
+        Preview your Journal post! <FaArrowDown />
+      </h1>
+
       {/* Preview Post */}
-      <div className="p-10 pb-20 m-5 lg:m-10 bg-white shadow-xl border-[1px] rounded-xl">
-        {/* Title */}
-        <h1 className="text-2xl lg:text-4xl text-center font-medium flex justify-center gap-x-2 items-center">
-          Preview your Journal post! <FaArrowDown />
-        </h1>
-        <hr className="border-[1px] my-5" />
+      <div className=" pb-20 m-5 lg:m-10 bg-white shadow-xl border-[1px] rounded-xl">
         {/* Thumbnail Image */}
-        {imageFile && (
-          <div className="">
+        <div>
+          {imageFile && (
             <img
               src={URL.createObjectURL(imageFile)}
-              className="max-h-96 w-full rounded object-contain object-center"
+              className="h-96 lg:h-[30rem] w-full rounded-t object-cover object-center"
             ></img>
+          )}
+        </div>
+
+        {/* Title + Content Section */}
+        <div className="p-5 md:p-10 md:pt-0 mt-8">
+          {/* Badge */}
+          {category && category != "OTHER" && (
+            <p className="bg-cta text-white text-lg lg:text-xl rounded-full px-3 py-1 w-fit">
+              {category}
+            </p>
+          )}
+
+          {category == "OTHER" && otherCategory && (
+            <p className="bg-cta text-white text-lg lg:text-xl rounded-full px-3 py-1 w-fit">
+              {otherCategory}
+            </p>
+          )}
+
+          {/* Post Title */}
+          <h1 className="mt-10 text-4xl lg:text-6xl font-bold text-ink">
+            {title}
+          </h1>
+
+          {/* Post Author */}
+          {(title || !isEditorEmpty(value)) && (
+            <Link
+              to={`/user/${dbUser?.username}`}
+              className="mt-14 flex gap-x-4 text-xl items-center w-fit"
+            >
+              {/* User Image or Avatar */}
+              {dbUser?.photoURL ? (
+                <img
+                  src={dbUser?.photoURL}
+                  className="h-12 w-12 rounded-full"
+                />
+              ) : (
+                <Avvvatars size={50} value={dbUser.name} />
+              )}
+
+              {/* User's name & username */}
+              <div>
+                <p className="break-all font-medium">{dbUser?.name}</p>
+                <p className="break-all">@{dbUser?.username}</p>
+              </div>
+            </Link>
+          )}
+
+          {/* Time to read */}
+          {!isEditorEmpty(value) && (
+            <div className="mt-4 px-2 text-greyText font-medium">
+              {getMinsToRead(value)} min read.
+            </div>
+          )}
+
+          {/* Post Content */}
+          <div className="mt-10">
+            <ReactQuill
+              value={value}
+              className="border-none postdisplay"
+              theme="snow"
+              readOnly
+              modules={{ toolbar: null }}
+            />
           </div>
-        )}
-        {/* Post Title */}{" "}
-        <h1 className="mt-20 text-4xl lg:text-6xl font-bold text-ink">
-          {title}
-        </h1>
-        {/* Post Content */}
-        <div className="mt-10">
-          <ReactQuill
-            value={value}
-            className="border-none postdisplay"
-            theme="snow"
-            readOnly
-            modules={{ toolbar: null }}
-          />
         </div>
       </div>
     </div>

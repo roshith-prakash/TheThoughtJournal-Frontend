@@ -46,6 +46,8 @@ const Home = () => {
               {dbUser?.name ? dbUser?.name : "User"}!
             </span>
           </h1>
+
+          <h3 className="text-2xl font-semibold px-2">Let's start reading!</h3>
         </div>
         <div>
           {isLoading && <p>Loading</p>}

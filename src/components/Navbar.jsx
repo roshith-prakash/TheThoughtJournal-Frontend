@@ -56,7 +56,7 @@ const Navbar = () => {
                   <div className=" bg-gradient-to-br  from-[#ec8cff] to-cta rounded-full p-1 flex items-center justify-center">
                     <img
                       src={dbUser?.photoURL}
-                      className="rounded-full h-9 border-2 border-white"
+                      className="rounded-full h-9 w-9 border-2 border-white"
                     ></img>
                   </div>
                 ) : (

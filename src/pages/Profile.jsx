@@ -22,7 +22,9 @@ const Profile = () => {
   const { data, isLoading, error } = useQuery({
     queryKey: ["getPosts"],
     queryFn: async () => {
-      return axiosInstance.post("/post/get-user-posts", { userId: dbUser?.id });
+      return axiosInstance.post("/post/get-user-posts", {
+        username: dbUser?.username,
+      });
     },
   });
 

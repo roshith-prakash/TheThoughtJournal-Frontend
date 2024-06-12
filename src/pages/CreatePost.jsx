@@ -22,10 +22,13 @@ import { FaArrowDown } from "react-icons/fa6";
 import { axiosInstance } from "../utils/axios";
 import { useAuth } from "../context/authContext";
 import { toast, Toaster } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import { useDBUser } from "../context/userContext";
 
 const CreatePost = () => {
-  // Current user from firebase auth
-  const { currentUser } = useAuth();
+  const navigate = useNavigate();
+  // User Object
+  const { dbUser } = useDBUser();
   // Ref for file input
   const fileRef = useRef();
   // State for text editor input
@@ -108,7 +111,7 @@ const CreatePost = () => {
     formData.append("category", category);
     formData.append("otherCategory", otherCategory);
     formData.append("content", String(value));
-    formData.append("user", JSON.stringify(currentUser));
+    formData.append("user", JSON.stringify(dbUser));
     setDisabled(true);
 
     // Sending request to server
@@ -122,6 +125,7 @@ const CreatePost = () => {
         console.log(res.data);
         toast.success("Post created!");
         setDisabled(false);
+        navigate("/profile");
       })
       .catch((err) => {
         toast.error("Something went wrong!");

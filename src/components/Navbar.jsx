@@ -17,6 +17,7 @@ import { RiAccountPinCircleLine } from "react-icons/ri";
 import defaultAccount from "../assets/account.png";
 import { FaUserPlus } from "react-icons/fa6";
 import { RxCross2, RxHamburgerMenu } from "react-icons/rx";
+import { IoSearch } from "react-icons/io5";
 
 const Navbar = () => {
   const location = useLocation();
@@ -27,28 +28,49 @@ const Navbar = () => {
   return (
     <>
       <div
-        className={`relative font-inter shadow-md overflow-hidden bg-white flex justify-between items-center px-5 lg:px-10 py-5 z-10 max-w-screen`}
+        className={`sticky top-0 w-full font-inter shadow-md overflow-hidden bg-white flex justify-between items-center px-5 lg:px-10 py-5 z-10 max-w-screen`}
       >
         {/* Logo on the left side - linked to home page */}
         <Link className="flex items-center gap-x-2 hover:animate-pulse" to="/">
           <img
             src={logo}
             alt="Logo"
-            className="h-10 w-10 cursor-pointer rounded-full shadow-xl"
+            className="h-6 w-6 md:h-10 md:w-10 cursor-pointer rounded-full shadow-xl"
           ></img>
-          <p className="gmx-2 italic font-medium text-lg text-ink transition-all">
+          <p className="gmx-2 italic font-medium text-base  md:text-lg text-ink transition-all">
             The Thought Journal
           </p>
         </Link>
 
         {/* Links at the right side - displayed on larger screens */}
-        <div className="lg:flex gap-x-8 font-medium items-center">
+        <div className="flex gap-x-5 lg:gap-x-8 font-medium items-center">
+          {/* Search Icon - takes to search page. */}
+          <Link to="/search">
+            <IoSearch className="text-3xl hover:text-cta transition-all" />
+          </Link>
+
           {/* Link to create post page */}
           {location.pathname != "/addPost" && (
             <Link to="/addPost" className="hidden lg:block">
               <CTAButton text={"Create a Post"} />
             </Link>
           )}
+
+          {/* Link to signup page */}
+          {!currentUser && (
+            <Link to="/signup" className="hidden lg:block">
+              Sign up
+            </Link>
+          )}
+
+          {/* Link to login page */}
+          {!currentUser && (
+            <Link to="/login" className="hidden lg:block">
+              Login
+            </Link>
+          )}
+
+          {/* Contains Popup for account & Hamburger button. */}
           <div className="flex items-center gap-x-5">
             <Popover>
               <PopoverTrigger className="flex items-center">
@@ -187,7 +209,7 @@ const Navbar = () => {
                       }
                     >
                       <CgLogOut className="text-xl rotate-180" />
-                      Log in
+                      Login
                     </NavLink>
                   )}
                 </div>
@@ -202,24 +224,21 @@ const Navbar = () => {
             </div>
           </div>
         </div>
-
-        {/* Hamburger button - displayed on smaller screens */}
       </div>
 
       {/* Pop out div - displayed when hamburger is clicked  */}
       <div
-        className={`lg:hidden h-screen text-xl md:text-lg fixed top-0 right-0 z-10 bg-white pb-6 text-center shadow-md ${
+        className={`lg:hidden h-screen w-full text-xl md:text-lg fixed top-0 right-0 z-10 bg-white pb-6 text-center shadow-md ${
           open ? "translate-x-0" : "translate-x-[100%]"
-        } transition-all`}
+        } transition-all duration-500`}
       >
-        {open && (
-          <div className="flex justify-end pt-8 px-5 mb-14">
-            <RxCross2
-              onClick={() => setOpen(false)}
-              className="cursor-pointer text-xl text-ink"
-            />
-          </div>
-        )}
+        <div className="flex justify-end pt-8 px-5 mb-14">
+          <RxCross2
+            onClick={() => setOpen(false)}
+            className="cursor-pointer text-xl text-ink"
+          />
+        </div>
+
         <div className="px-8">
           {/* Link to Home */}
           <p className="my-2">

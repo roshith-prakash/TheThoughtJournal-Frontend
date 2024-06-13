@@ -4,6 +4,7 @@ import { useDBUser } from "../context/userContext";
 import {
   CTAButton,
   ErrorStatement,
+  Footer,
   Input,
   Navbar,
   OutlineButton,
@@ -16,6 +17,7 @@ import { auth } from "../firebase/firebase";
 import { IoCloudUploadOutline } from "react-icons/io5";
 import { axiosInstance } from "../utils/axios";
 import defaultAccount from "../assets/account.png";
+import { isValidUsername } from "../functions/regexFunctions";
 
 const Onboarding = () => {
   // Navigate function to navigate to different pages.
@@ -87,12 +89,21 @@ const Onboarding = () => {
     if (name == null || name == undefined || name.length <= 0) {
       setError((prev) => ({ ...prev, name: 1 }));
       return;
+    } else if (name.length > 30) {
+      setError((prev) => ({ ...prev, name: 2 }));
+      return;
     } else if (
       username == null ||
       username == undefined ||
       username.length <= 0
     ) {
       setError((prev) => ({ ...prev, username: 1 }));
+      return;
+    } else if (username.length > 15) {
+      setError((prev) => ({ ...prev, username: 3 }));
+      return;
+    } else if (!isValidUsername(username)) {
+      setError((prev) => ({ ...prev, username: 4 }));
       return;
     }
 
@@ -183,6 +194,7 @@ const Onboarding = () => {
             </div>
           </div>
         </div>
+        <Footer />
       </div>
     );
   }
@@ -226,6 +238,7 @@ const Onboarding = () => {
             </div>
           </div>
         </div>
+        <Footer />
       </div>
     );
   }
@@ -257,6 +270,7 @@ const Onboarding = () => {
             </div>
           </div>
         </div>
+        <Footer />
       </div>
     );
   }
@@ -316,6 +330,9 @@ const Onboarding = () => {
               {error.name == 1 && (
                 <ErrorStatement text={"Please enter your name."} />
               )}
+              {error.name == 2 && (
+                <ErrorStatement text={"Name cannot exceed 30 characters."} />
+              )}
             </div>
 
             {/* Username Input field */}
@@ -331,6 +348,18 @@ const Onboarding = () => {
               )}
               {error.username == 2 && (
                 <ErrorStatement text={"Username already exists."} />
+              )}
+              {error.username == 3 && (
+                <ErrorStatement
+                  text={"Username cannot exceed 15 characters."}
+                />
+              )}
+              {error.username == 4 && (
+                <ErrorStatement
+                  text={
+                    "Username can contain alphabets, numbers and underscore."
+                  }
+                />
               )}
             </div>
           </div>
@@ -357,6 +386,7 @@ const Onboarding = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

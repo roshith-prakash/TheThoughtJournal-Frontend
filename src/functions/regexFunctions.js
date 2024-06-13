@@ -19,3 +19,7 @@ export const isEditorEmpty = (value) => {
         .replace(/<(.|\n)*?>/g, "")
         .trim().length === 0
 }
+
+export const isValidUsername = (username) => {
+    return /^[a-z0-9_\.]+$/.test(username)
+}

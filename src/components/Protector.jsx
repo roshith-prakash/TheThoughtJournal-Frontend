@@ -10,11 +10,17 @@ import { useEffect, useState } from "react";
 import HashLoader from "react-spinners/HashLoader";
 
 const Protector = ({ children }) => {
+  // Navigate function to navigate to different pages.
   const navigate = useNavigate();
+  // Firebase User.
   const { currentUser } = useAuth();
+  // User object from database.
   const { dbUser } = useDBUser();
+  // Loading is false if dbUser is present
   const [loading, setLoading] = useState(dbUser ? false : true);
 
+  // If dbUser is present - directly set loading to false
+  // If dbUser is not present - wait for dbUser to be fetched (in case of reloads)
   useEffect(() => {
     if (!dbUser) {
       setTimeout(() => {

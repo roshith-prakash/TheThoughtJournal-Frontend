@@ -1,4 +1,4 @@
-import { Navbar, OutlineButton } from "../components";
+import { Footer, Navbar, OutlineButton } from "../components";
 import { auth } from "../firebase/firebase";
 import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
@@ -30,7 +30,7 @@ const Signout = () => {
     <>
       <Navbar />
 
-      <div className="min-h-[89vh] py-16 gap-10 flex flex-col justify-center items-center">
+      <div className="min-h-[89vh] py-16 gap-10 flex flex-col justify-center items-center pb-24">
         <h1 className="text-3xl lg:text-4xl font-medium">
           Do you want to log out?
         </h1>
@@ -42,6 +42,8 @@ const Signout = () => {
           <OutlineButton onClick={handleLogout} text={"Log Out"} />
         </div>
       </div>
+
+      <Footer />
     </>
   );
 };

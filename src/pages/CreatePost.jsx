@@ -25,6 +25,7 @@ import { toast, Toaster } from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { useDBUser } from "../context/userContext";
 import { getMinsToRead } from "../functions/mathFunctions";
+import { modules, formats, QuillToolbar } from "../components/QuillToolbar";
 
 const CreatePost = () => {
   const navigate = useNavigate();
@@ -53,6 +54,7 @@ const CreatePost = () => {
     other: 0,
   });
 
+  console.log(value);
   // Scroll to top of page
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -251,16 +253,19 @@ const CreatePost = () => {
           {error.content == 1 && (
             <ErrorStatement text={"Please add the content for your post."} />
           )}
+          <QuillToolbar />
           <ReactQuill
             theme="snow"
-            className="h-96 mt-2"
+            className="h-96 mt-1"
             value={value}
             onChange={setValue}
+            modules={modules}
+            formats={formats}
           />
         </div>
 
         {/* Save Button */}
-        <div className="mt-36 lg:mt-20 flex justify-center">
+        <div className="mt-24 lg:mt-20 flex justify-center">
           <div className="w-[45%] lg:w-[30%]">
             <CTAButton
               disabledText={"Please wait..."}
@@ -310,7 +315,7 @@ const CreatePost = () => {
           </h1>
 
           {/* Post Author */}
-          {(title || !isEditorEmpty(value)) && (
+          {(title?.length > 0 || (value && !isEditorEmpty(value))) && (
             <Link
               to={`/user/${dbUser?.username}`}
               className="mt-14 flex gap-x-4 text-xl items-center w-fit"
@@ -334,7 +339,7 @@ const CreatePost = () => {
           )}
 
           {/* Time to read */}
-          {!isEditorEmpty(value) && (
+          {value && !isEditorEmpty(value) && (
             <div className="mt-4 px-2 text-greyText font-medium">
               {getMinsToRead(value)} min read.
             </div>

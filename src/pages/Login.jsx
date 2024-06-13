@@ -164,7 +164,7 @@ const Login = () => {
       <Toaster />
       <div className="lg:min-h-[89vh] flex w-full bg-none lg:bg-bgwhite">
         {/* Image Div - displayed only on laptop */}
-        <div className="flex-1 flex items-center justify-center">
+        <div className="hidden lg:flex lg:flex-1 items-center justify-center">
           <img src={login} className="max-w-[70%]" />
         </div>
 

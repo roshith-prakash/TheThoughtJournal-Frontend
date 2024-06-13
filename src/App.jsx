@@ -14,6 +14,7 @@ import {
   Onboarding,
   Profile,
   EditProfile,
+  Search,
 } from "./pages";
 import { useEffect } from "react";
 import { io } from "socket.io-client";
@@ -95,6 +96,9 @@ function App() {
 
                 {/* View a User's Profile (Non Logged in user) */}
                 <Route path="/user/:username" element={<User />} />
+
+                {/* Search a user or post */}
+                <Route path="/search" element={<Search />} />
 
                 {/* 404 error page */}
                 <Route path="*" element={<NotFound />} />

@@ -1,23 +1,26 @@
 import React, { useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { axiosInstance } from "../utils/axios";
 import { useQuery } from "@tanstack/react-query";
 import ReactQuill from "react-quill";
-import { Footer, Navbar } from "../components";
+import { Footer, Navbar, OutlineButton } from "../components";
 import Avvvatars from "avvvatars-react";
 import { getMinsToRead } from "../functions/mathFunctions";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import doesNotExist from "../assets/exist.svg";
+import HashLoader from "react-spinners/HashLoader";
 
 dayjs.extend(relativeTime);
 
 const Post = () => {
+  const navigate = useNavigate();
   // Get Post Id from params.
   let { postId } = useParams();
 
   // Fetch data from server.
   const { data, isLoading, error } = useQuery({
-    queryKey: ["post", postId],
+    queryKey: ["post-page", postId],
     queryFn: async () => {
       return axiosInstance.post("/post/get-post", { postId: postId });
     },
@@ -28,13 +31,25 @@ const Post = () => {
     document.title = `${data?.data?.post?.title} | The Thought Journal`;
   }, [data]);
 
-  console.log(data?.data);
+  console.log(data?.data?.post);
 
   return (
-    <div className="bg-bgwhite">
+    <div className="bg-bgwhite min-h-screen">
       <Navbar />
 
-      {data && (
+      {isLoading && (
+        <div className="min-h-[70vh] md:min-h-[65vh] lg:min-h-[60vh]  flex justify-center items-center">
+          <HashLoader
+            color={"#9b0ced"}
+            loading={isLoading}
+            size={100}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
+        </div>
+      )}
+
+      {data && data?.data?.post && (
         <div className="pb-20 m-2 md:m-5 lg:m-10 bg-white shadow-xl border-[1px] rounded-xl">
           {/* Thumbnail Image */}
           <div>
@@ -81,7 +96,7 @@ const Post = () => {
               </div>
             </Link>
 
-            {/* Time to read + post date */}
+            {/* Time required to read + post date */}
             <div className="mt-4 px-2 text-greyText font-medium">
               {getMinsToRead(data?.data?.post?.content)} min read | Posted on{" "}
               {dayjs(data?.data?.post?.createdAt).format("MMM DD, YYYY")}.
@@ -96,6 +111,28 @@ const Post = () => {
                 readOnly
                 modules={{ toolbar: null }}
               />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {!isLoading && data?.data?.post == null && (
+        <div className="min-h-[70vh] md:min-h-[65vh] lg:min-h-[60vh]  flex justify-center items-center">
+          <div>
+            {/* Title for page */}
+            <p className="text-3xl lg:text-4xl px-5 text-center mt-14">
+              Uh oh. That post isn't available. Go Back?
+            </p>
+            <div className="mt-10 flex flex-col gap-10 justify-center items-center">
+              {/* Image */}
+              <img
+                src={doesNotExist}
+                className="max-w-[50%] lg:max-w-[40%] pointer-events-none"
+              />
+              {/* Button to navigate back to home page */}
+              <div className="w-[40%] lg:w-[30%]">
+                <OutlineButton onClick={() => navigate(-1)} text="Go Back" />
+              </div>
             </div>
           </div>
         </div>

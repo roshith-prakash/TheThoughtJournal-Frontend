@@ -25,7 +25,7 @@ const queryClient = new QueryClient();
 
 function App() {
   useEffect(() => {
-    const socket = io("http://localhost:4000");
+    const socket = io(prodURL);
 
     // Maintain connection to render server so it doesn't die.
     const interval = setInterval(() => {

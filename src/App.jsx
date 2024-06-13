@@ -19,6 +19,7 @@ import {
 import { useEffect } from "react";
 import { io } from "socket.io-client";
 import { Protector } from "./components";
+import { prodURL } from "./utils/axios";
 
 // Creating Tanstack query client
 const queryClient = new QueryClient();

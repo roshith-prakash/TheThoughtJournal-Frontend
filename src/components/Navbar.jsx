@@ -35,7 +35,7 @@ const Navbar = () => {
           <img
             src={logo}
             alt="Logo"
-            className="h-6 w-6 md:h-10 md:w-10 cursor-pointer rounded-full shadow-xl"
+            className="h-6 w-6 md:h-10 md:w-10 cursor-pointer bg-transparent shadow-xl"
           ></img>
           <p className="gmx-2 italic font-medium text-base  md:text-lg text-ink transition-all">
             The Thought Journal

@@ -191,7 +191,7 @@ const CreatePost = () => {
               className="hidden"
               type="file"
               ref={fileRef}
-              accept="image/.jpg,.jpeg,.png"
+              accept="image/png, image/jpg, image/jpeg"
               onChange={handleFileChange}
             />
             {/* Flex div - button & image name */}

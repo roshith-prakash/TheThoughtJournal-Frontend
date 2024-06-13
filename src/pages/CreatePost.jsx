@@ -79,6 +79,11 @@ const CreatePost = () => {
       setError((prev) => ({ ...prev, title: 1 }));
       return;
     }
+    // If title is longer than 100 characters.
+    else if (title.length > 100) {
+      setError((prev) => ({ ...prev, title: 2 }));
+      return;
+    }
     // Check if image has been added
     else if (imageFile == null || imageFile == undefined) {
       setError((prev) => ({ ...prev, image: 1 }));
@@ -172,6 +177,9 @@ const CreatePost = () => {
             />
             {error.title == 1 && (
               <ErrorStatement text={"Please enter the title of your post."} />
+            )}
+            {error.title == 2 && (
+              <ErrorStatement text={"Title cannot exceed 100 characters."} />
             )}
           </div>
 

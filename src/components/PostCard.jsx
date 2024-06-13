@@ -13,7 +13,7 @@ const PostCard = ({ post, index }) => {
       {/* Entire card is a link to post page to view the post */}
       <Link
         to={`/post/${post?.id}`}
-        className="my-5 mx-5 pb-2 w-full md:w-96 lg:w-80 overflow-hidden rounded-lg cursor-pointer shadow-lg hover:shadow-xl hover:scale-105 transition-all"
+        className="my-5 mx-5  w-full md:w-96 lg:w-80 overflow-hidden rounded-lg cursor-pointer shadow-lg hover:shadow-xl hover:scale-105 transition-all"
       >
         {/* Thumbnail for post card. */}
         <img
@@ -27,7 +27,7 @@ const PostCard = ({ post, index }) => {
             {post?.category != "OTHER" ? post?.category : post?.otherCategory}
           </p>
           {/* Post title - ellipsized if too long. */}
-          <p className="ml-2 mt-3 text-2xl flex items-center font-medium h-16-z">
+          <p className="ml-2 mt-3 text-2xl flex items-center font-medium h-16">
             {post?.title.length < 30
               ? post?.title
               : post?.title.substring(0, 40) + "..."}

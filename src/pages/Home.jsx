@@ -1,17 +1,20 @@
 import React, { useEffect } from "react";
 import Navbar from "../components/Navbar";
 import { axiosInstance } from "../utils/axios";
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { useDBUser } from "../context/userContext";
 import { useAuth } from "../context/authContext";
 import { Footer, PostCard } from "../components";
 import MoonLoader from "react-spinners/MoonLoader";
+import { useInView } from "react-intersection-observer";
 
 const Home = () => {
   // Scroll to the top of page
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
+
+  const { ref, inView } = useInView();
 
   // Set window title.
   useEffect(() => {
@@ -22,18 +25,32 @@ const Home = () => {
   const { dbUser } = useDBUser();
   const { currentUser } = useAuth();
 
-  console.log("Firebase user", currentUser);
-  console.log("DB USER", dbUser);
-
   // Query to get posts
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["recent-posts-home"],
-    queryFn: async () => {
-      return axiosInstance.get("/post/get-recent-posts");
-    },
-  });
+  const { data, isLoading, error, fetchNextPage, isFetchingNextPage } =
+    useInfiniteQuery({
+      queryKey: ["recent-posts-home"],
+      queryFn: async ({ pageParam }) => {
+        return axiosInstance.post("/post/get-recent-posts", {
+          page: pageParam,
+        });
+      },
+      initialPageParam: 0,
+      getNextPageParam: (lastPage) => {
+        console.log(lastPage);
+        return lastPage?.data?.nextPage;
+      },
+    });
+
+  useEffect(() => {
+    if (inView) {
+      console.log("fetching");
+      fetchNextPage();
+    }
+  }, [inView, fetchNextPage]);
 
   console.log(data);
+  console.log(inView);
+  console.log(isFetchingNextPage);
 
   return (
     <>
@@ -67,11 +84,14 @@ const Home = () => {
           {data && (
             <div className="grid md:grid-cols-2 lg:grid-cols-4 ">
               {data &&
-                data?.data?.posts?.map((post, index) => {
-                  return <PostCard post={post} index={index} />;
+                data?.pages?.map((page) => {
+                  return page?.data?.posts?.map((post, index) => {
+                    return <PostCard post={post} index={index} />;
+                  });
                 })}
             </div>
           )}
+          <div ref={ref}></div>
         </div>
       </div>
       <div className="hidden pt-20 lg:block">

@@ -4,13 +4,14 @@ import { useDBUser } from "../context/userContext";
 import defaultAccount from "../assets/account.png";
 import dayjs from "dayjs";
 import { TfiWrite } from "react-icons/tfi";
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { axiosInstance } from "../utils/axios";
 import Profile from "./Profile";
 import userNotFound from "../assets/user.svg";
 import HashLoader from "react-spinners/HashLoader";
 import { useEffect } from "react";
 import noPosts from "../assets/noposts.svg";
+import { useInView } from "react-intersection-observer";
 
 const User = () => {
   // Get Post Id from params.
@@ -21,6 +22,8 @@ const User = () => {
   if (username == dbUser?.username) {
     return <Profile />;
   } else {
+    const { ref, inView } = useInView();
+
     // Fetch user data from server.
     const {
       data: user,
@@ -35,20 +38,34 @@ const User = () => {
       },
     });
 
-    // Fetching the user's posts.
+    // Query to get posts
     const {
       data: posts,
       isLoading: loadingPosts,
-      error: postsError,
-    } = useQuery({
+      error,
+      fetchNextPage,
+      isFetchingNextPage,
+    } = useInfiniteQuery({
       queryKey: ["userPosts", username],
-      queryFn: async () => {
+      queryFn: async ({ pageParam }) => {
         return axiosInstance.post("/post/get-user-posts", {
-          username: username,
+          username: user?.data?.user?.username,
+          page: pageParam,
         });
+      },
+      initialPageParam: 0,
+      getNextPageParam: (lastPage) => {
+        return lastPage?.data?.nextPage;
       },
       enabled: !!user,
     });
+
+    // Fetch next page when end div reached.
+    useEffect(() => {
+      if (inView) {
+        fetchNextPage();
+      }
+    }, [inView, fetchNextPage]);
 
     // Scroll to top
     useEffect(() => {
@@ -124,21 +141,22 @@ const User = () => {
               </div>
             </div>
 
-            {/* Posts div Title*/}
-            {posts?.data?.posts.length > 0 && (
+            {/* Posts title */}
+            {posts?.pages?.[0]?.data?.posts.length > 0 && (
               <div className="mt-6 font-semibold flex items-center gap-x-6 px-3 text-3xl lg:text-5xl mx-5 md:mx-10 lg:mx-20">
                 <TfiWrite />
-                {user?.data?.user?.name}'s Journal Posts
+                Your Journal Posts
               </div>
             )}
 
-            {/* Mapping user's posts */}
-            {posts?.data?.posts.length > 0 && (
-              <div className="mt-10 grid md:grid-cols-2 lg:grid-cols-3 mx-5 md:mx-10 lg:mx-20">
-                {posts &&
-                  posts?.data?.posts?.map((post, index) => {
+            {/* If posts are present - map the posts */}
+            {posts?.pages?.[0]?.data?.posts.length && (
+              <div className="mt-10 grid md:grid-cols-2 lg:grid-cols-4 mx-5 md:mx-10 lg:mx-10">
+                {posts?.pages?.map((page) => {
+                  return page?.data?.posts?.map((post, index) => {
                     return <PostCard post={post} index={index} />;
-                  })}
+                  });
+                })}
               </div>
             )}
 
@@ -154,6 +172,8 @@ const User = () => {
                 </div>
               </div>
             )}
+
+            <div ref={ref}></div>
           </div>
         )}
 

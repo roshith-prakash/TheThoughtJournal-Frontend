@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { axiosInstance } from "../utils/axios";
 import { useQuery } from "@tanstack/react-query";
@@ -10,13 +10,27 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import doesNotExist from "../assets/exist.svg";
 import HashLoader from "react-spinners/HashLoader";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "../components/ui/dialog";
+import { BsFillTrash3Fill } from "react-icons/bs";
+import { useDBUser } from "../context/userContext";
+import { toast, Toaster } from "react-hot-toast";
 
 dayjs.extend(relativeTime);
 
 const Post = () => {
   const navigate = useNavigate();
+  const [disabled, setDisabled] = useState(false);
   // Get Post Id from params.
   let { postId } = useParams();
+
+  const { dbUser } = useDBUser();
 
   // Fetch data from server.
   const { data, isLoading, error } = useQuery({
@@ -33,9 +47,29 @@ const Post = () => {
 
   console.log(data?.data?.post);
 
+  // Handler to delete post.
+  const deletePost = () => {
+    setDisabled(true);
+    axiosInstance
+      .post("/post/delete-post", {
+        postId: data?.data?.post?.id,
+      })
+      .then((res) => {
+        setDisabled(false);
+        toast.success("Post deleted");
+        navigate("/profile");
+      })
+      .catch((err) => {
+        setDisabled(false);
+        console.log(err);
+        toast.error("Something went wrong.");
+      });
+  };
+
   return (
     <div className="bg-bgwhite min-h-screen">
       <Navbar />
+      <Toaster />
 
       {isLoading && (
         <div className="min-h-[70vh] md:min-h-[65vh] lg:min-h-[60vh]  flex justify-center items-center">
@@ -60,11 +94,96 @@ const Post = () => {
           </div>
           <div className="p-5 md:p-10 md:pt-0 mt-8">
             {/* Badge */}
-            <p className="bg-cta text-white text-lg lg:text-xl rounded-full px-3 py-1 w-fit">
-              {data?.data?.post?.category != "OTHER"
-                ? data?.data?.post?.category
-                : data?.data?.post?.otherCategory}
-            </p>
+            <div className="flex justify-between items-center">
+              <p className="bg-cta text-white text-lg lg:text-xl rounded-full px-3 py-1 w-fit">
+                {data?.data?.post?.category != "OTHER"
+                  ? data?.data?.post?.category
+                  : data?.data?.post?.otherCategory}
+              </p>
+
+              {data?.data?.post?.User?.username == dbUser?.username && (
+                <div className="lg:hidden">
+                  <Dialog>
+                    <DialogTrigger>
+                      <BsFillTrash3Fill className="text-xl cursor-pointer text-red-600" />
+                    </DialogTrigger>
+                    <DialogContent>
+                      <DialogHeader>
+                        <DialogTitle>
+                          Do you want to delete this post?
+                        </DialogTitle>
+                        <DialogDescription>
+                          <p className="mt-5">
+                            This action cannot be undone. This will permanently
+                            delete your post.
+                          </p>
+                        </DialogDescription>
+                      </DialogHeader>
+                      <div className="flex justify-center mt-5">
+                        <div className="w-fit">
+                          <OutlineButton
+                            text={
+                              <div className="flex justify-center items-center text-red-600 gap-x-2">
+                                <BsFillTrash3Fill className=" cursor-pointer text-red-600" />
+                                Delete this post
+                              </div>
+                            }
+                            disabled={disabled}
+                            onClick={deletePost}
+                            disabledText="Please wait..."
+                          />
+                        </div>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
+                </div>
+              )}
+
+              {data?.data?.post?.User?.username == dbUser?.username && (
+                <div className="hidden lg:block">
+                  <Dialog>
+                    <DialogTrigger>
+                      <OutlineButton
+                        text={
+                          <div className="flex items-center gap-x-2">
+                            <BsFillTrash3Fill className="text-xl cursor-pointer text-red-600" />
+                            <p>Delete</p>
+                          </div>
+                        }
+                      />
+                    </DialogTrigger>
+                    <DialogContent>
+                      <DialogHeader>
+                        <DialogTitle>
+                          Do you want to delete this post?
+                        </DialogTitle>
+                        <DialogDescription>
+                          <p className="mt-5">
+                            This action cannot be undone. This will permanently
+                            delete your post.
+                          </p>
+                        </DialogDescription>
+                      </DialogHeader>
+                      <div className="flex justify-center mt-5">
+                        <div className="w-fit">
+                          <OutlineButton
+                            text={
+                              <div className="flex justify-center items-center text-red-600 gap-x-2">
+                                <BsFillTrash3Fill className=" cursor-pointer text-red-600" />
+                                Delete this post
+                              </div>
+                            }
+                            onClick={deletePost}
+                            disabled={disabled}
+                            disabledText="Please wait..."
+                          />
+                        </div>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
+                </div>
+              )}
+            </div>
 
             {/* Post Title */}
             <h1 className="mt-10 text-4xl lg:text-6xl font-bold text-ink">

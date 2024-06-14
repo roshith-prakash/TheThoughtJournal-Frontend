@@ -94,7 +94,7 @@ const Home = () => {
           <div ref={ref}></div>
         </div>
       </div>
-      <div className="hidden pt-20 lg:block">
+      <div className="pt-20">
         <Footer />
       </div>
     </>

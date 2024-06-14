@@ -304,7 +304,7 @@ const EditProfile = () => {
           </div>
         </div>
       </div>
-      <div className="hidden lg:block">
+      <div className="pt-20">
         <Footer />
       </div>
     </>

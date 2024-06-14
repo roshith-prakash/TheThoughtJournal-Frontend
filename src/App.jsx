@@ -25,13 +25,15 @@ import { prodURL } from "./utils/axios";
 const queryClient = new QueryClient();
 
 function App() {
+  // Maintain connection to render server so it doesn't die.
   useEffect(() => {
     const socket = io(prodURL);
 
-    // Maintain connection to render server so it doesn't die.
     const interval = setInterval(() => {
       socket.emit("toMaintainConnection");
     }, 5000);
+
+    socket.on("maintainReply", () => {});
 
     // Clear the loop
     return () => clearInterval(interval);

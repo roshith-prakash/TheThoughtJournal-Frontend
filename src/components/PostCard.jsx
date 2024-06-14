@@ -28,9 +28,7 @@ const PostCard = ({ post, index }) => {
           </p>
           {/* Post title - ellipsized if too long. */}
           <p className="ml-2 mt-5 text-2xl font-medium h-16 overflow-hidden">
-            {post?.title.length < 30
-              ? post?.title
-              : post?.title.substring(0, 40) + "..."}
+            {post?.title}
           </p>
 
           {/* How long ago the post was posted. */}

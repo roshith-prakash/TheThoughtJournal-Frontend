@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import {
   ErrorStatement,
+  Footer,
   Input,
   Navbar,
   OutlineButton,
@@ -253,6 +254,10 @@ const Signup = () => {
         <div className="hidden lg:flex lg:flex-1  items-center justify-center">
           <img src={signup} className="max-w-[70%]" />
         </div>
+      </div>
+
+      <div className="pt-20">
+        <Footer />
       </div>
     </>
   );

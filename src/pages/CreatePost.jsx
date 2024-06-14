@@ -4,6 +4,7 @@ import "react-quill/dist/quill.snow.css";
 import {
   CTAButton,
   ErrorStatement,
+  Footer,
   Input,
   Navbar,
   OutlineButton,
@@ -102,6 +103,12 @@ const CreatePost = () => {
         otherCategory.length <= 0
       ) {
         setError((prev) => ({ ...prev, other: 1 }));
+        return;
+      } else if (otherCategory.length > 20) {
+        setError((prev) => ({ ...prev, other: 2 }));
+        return;
+      } else if (String(otherCategory).split(" ").length > 2) {
+        setError((prev) => ({ ...prev, other: 3 }));
         return;
       }
     }
@@ -253,6 +260,12 @@ const CreatePost = () => {
                 text={"Please enter the category for your post."}
               />
             )}
+            {error.other == 2 && (
+              <ErrorStatement text={"Category cannot exceed 20 characters."} />
+            )}
+            {error.other == 3 && (
+              <ErrorStatement text={"Category cannot be more than 2 words."} />
+            )}
           </div>
         )}
 
@@ -302,6 +315,15 @@ const CreatePost = () => {
           )}
         </div>
 
+        {!imageFile &&
+          !title &&
+          !category &&
+          (!value || isEditorEmpty(value)) && (
+            <div className="flex justify-center items-center pt-20 text-2xl">
+              Create your Post Above!
+            </div>
+          )}
+
         {/* Title + Content Section */}
         <div className="p-5 md:p-10 md:pt-0 mt-8">
           {/* Badge */}
@@ -318,9 +340,11 @@ const CreatePost = () => {
           )}
 
           {/* Post Title */}
-          <h1 className="mt-10 text-4xl lg:text-6xl font-bold text-ink">
-            {title}
-          </h1>
+          {title && (
+            <h1 className="mt-10 text-4xl lg:text-6xl font-bold text-ink">
+              {title}
+            </h1>
+          )}
 
           {/* Post Author */}
           {(title?.length > 0 || (value && !isEditorEmpty(value))) && (
@@ -354,16 +378,22 @@ const CreatePost = () => {
           )}
 
           {/* Post Content */}
-          <div className="mt-10">
-            <ReactQuill
-              value={value}
-              className="border-none postdisplay"
-              theme="snow"
-              readOnly
-              modules={{ toolbar: null }}
-            />
-          </div>
+          {!isEditorEmpty(value) && (
+            <div className="mt-10">
+              <ReactQuill
+                value={value}
+                className="border-none postdisplay"
+                theme="snow"
+                readOnly
+                modules={{ toolbar: null }}
+              />
+            </div>
+          )}
         </div>
+      </div>
+
+      <div className="pt-20">
+        <Footer />
       </div>
     </div>
   );

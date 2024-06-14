@@ -34,7 +34,7 @@ const Navbar = () => {
         <Link className="flex items-center gap-x-2 hover:animate-pulse" to="/">
           <img
             src={logo}
-            alt="Logo"
+            alt="The Thought Journal"
             className="h-6 w-6 md:h-10 md:w-10 cursor-pointer bg-transparent shadow-xl"
           ></img>
           <p className="gmx-2 italic font-medium text-base  md:text-lg text-ink transition-all">
@@ -237,9 +237,9 @@ const Navbar = () => {
             <img
               src={logo}
               alt="Logo"
-              className="h-8 w-8 md:h-10 md:w-10 cursor-pointer bg-transparent shadow-xl"
+              className="h-10 w-10 md:h-10 md:w-10 cursor-pointer bg-transparent shadow-xl"
             ></img>
-            <p className="mx-2 italic font-medium text-base  md:text-lg text-ink transition-all">
+            <p className="mx-2 italic font-medium text-lg  md:text-lg text-ink transition-all">
               The Thought Journal
             </p>
           </div>
@@ -248,8 +248,7 @@ const Navbar = () => {
             className="cursor-pointer text-2xl text-ink"
           />
         </div>
-
-        <div className="px-8">
+        <div className="px-8 mt-20 text-2xl flex flex-col gap-y-3">
           {/* Link to Home */}
           <p className="my-2">
             <Link

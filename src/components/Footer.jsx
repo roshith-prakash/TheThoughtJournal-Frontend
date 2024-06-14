@@ -1,10 +1,13 @@
 import React from "react";
 import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa6";
 import footer from "../assets/footer.svg";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BsPen } from "react-icons/bs";
+import logo from "../assets/logo.png";
+import { useAuth } from "../context/authContext";
 
 const Footer = () => {
+  const { currentUser } = useAuth();
   const navigate = useNavigate();
   return (
     <>
@@ -19,16 +22,56 @@ const Footer = () => {
             Create a Post!
           </button>
         </div>
-        <div className="pt-36 font-medium flex">
+        <div className="pt-32 font-medium flex">
           <div className="flex-1">
-            <p className="text-2xl text-center">
-              &#8220;Ad Astra Per Aspera&#8221;
-            </p>
-            <p className="text-center mt-2 text-xl">
-              Learning something new everyday!
+            {/* Logo */}
+            <div className="flex justify-center items-center gap-x-3">
+              <img src={logo} className="h-16" />
+            </div>
+            {/* Title */}
+            <p className="mt-5 text-3xl text-center">The Thought Journal</p>
+            {/* Subtitle */}
+            <p className="text-center mt-3 text-sm">
+              "Thoughts That Inspire and Enlighten"
             </p>
 
-            <div className="flex justify-center gap-x-8 mt-10">
+            <div className="mt-14 flex justify-center">
+              <div className="flex gap-x-5">
+                <Link to="/" className="hover:scale-110 transition-all">
+                  Home
+                </Link>
+                {currentUser && (
+                  <Link
+                    to="/addPost"
+                    className="hover:scale-110 transition-all"
+                  >
+                    Create Post
+                  </Link>
+                )}
+
+                {!currentUser && (
+                  <Link to="/signup" className="hover:scale-110 transition-all">
+                    Sign Up
+                  </Link>
+                )}
+                {!currentUser && (
+                  <Link to="/login" className="hover:scale-110 transition-all">
+                    Login
+                  </Link>
+                )}
+                {currentUser && (
+                  <Link
+                    to="/signout"
+                    className="hover:scale-110 transition-all"
+                  >
+                    Log Out
+                  </Link>
+                )}
+              </div>
+            </div>
+
+            {/* Link */}
+            <div className="flex justify-center gap-x-8 mt-14">
               <a
                 href="https://github.com/roshith-prakash"
                 target="_blank"
@@ -53,8 +96,7 @@ const Footer = () => {
               </a>
             </div>
 
-            <p className="mt-14 text-center">Developed by Roshith Prakash.</p>
-            <p className="mt-3 text-center">2024.</p>
+            <p className="mt-5 text-center">Developed by Roshith Prakash.</p>
           </div>
           <div className="hidden flex-1 lg:flex justify-center items-center">
             <img src={footer} className="h-60 pointer-events-none" />

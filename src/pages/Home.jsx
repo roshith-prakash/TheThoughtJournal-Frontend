@@ -36,7 +36,6 @@ const Home = () => {
       },
       initialPageParam: 0,
       getNextPageParam: (lastPage) => {
-        console.log(lastPage);
         return lastPage?.data?.nextPage;
       },
     });

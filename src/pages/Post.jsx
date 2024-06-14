@@ -21,12 +21,16 @@ import {
 import { BsFillTrash3Fill } from "react-icons/bs";
 import { useDBUser } from "../context/userContext";
 import { toast, Toaster } from "react-hot-toast";
+import { IoHeart } from "react-icons/io5";
+import { FaHeart, FaRegHeart } from "react-icons/fa6";
 
 dayjs.extend(relativeTime);
 
 const Post = () => {
   const navigate = useNavigate();
+  // To disable delete button.
   const [disabled, setDisabled] = useState(false);
+  const [liked, setLiked] = useState(false);
   // Get Post Id from params.
   let { postId } = useParams();
 
@@ -44,8 +48,6 @@ const Post = () => {
   useEffect(() => {
     document.title = `${data?.data?.post?.title} | The Thought Journal`;
   }, [data]);
-
-  console.log(data?.data?.post);
 
   // Handler to delete post.
   const deletePost = () => {
@@ -71,6 +73,7 @@ const Post = () => {
       <Navbar />
       <Toaster />
 
+      {/* If data is being fetched */}
       {isLoading && (
         <div className="min-h-[70vh] md:min-h-[65vh] lg:min-h-[60vh]  flex justify-center items-center">
           <HashLoader
@@ -83,8 +86,9 @@ const Post = () => {
         </div>
       )}
 
+      {/* When post is available */}
       {data && data?.data?.post && (
-        <div className="pb-20 m-2 md:m-5 lg:m-10 bg-white shadow-xl border-[1px] rounded-xl">
+        <div className="pb-10 m-2 md:m-5 lg:m-10 bg-white shadow-xl border-[1px] rounded-xl">
           {/* Thumbnail Image */}
           <div>
             <img
@@ -191,7 +195,6 @@ const Post = () => {
             </h1>
 
             {/* Post Author */}
-
             <Link
               to={`/user/${data?.data?.post?.User?.username}`}
               className="mt-14 flex gap-x-4 text-xl items-center w-fit"
@@ -231,10 +234,25 @@ const Post = () => {
                 modules={{ toolbar: null }}
               />
             </div>
+
+            {/* <div className="mt-10 border-t-2 flex gap-x-5 px-10 py-10 items-center">
+              {liked ? (
+                <FaHeart
+                  className="text-3xl cursor-pointer text-red-600 hover:scale-110 transition-all"
+                  onClick={() => setLiked((prev) => !prev)}
+                />
+              ) : (
+                <FaRegHeart
+                  className="text-3xl cursor-pointer hover:scale-110 transition-all"
+                  onClick={() => setLiked((prev) => !prev)}
+                />
+              )}
+            </div> */}
           </div>
         </div>
       )}
 
+      {/* When post is NOT available */}
       {!isLoading && data?.data?.post == null && (
         <div className="min-h-[70vh] md:min-h-[65vh] lg:min-h-[60vh]  flex justify-center items-center">
           <div>
@@ -257,7 +275,7 @@ const Post = () => {
         </div>
       )}
 
-      <div className="hidden mt-32 lg:block">
+      <div className="pt-32">
         <Footer />
       </div>
     </div>

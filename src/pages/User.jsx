@@ -145,12 +145,12 @@ const User = () => {
             {posts?.pages?.[0]?.data?.posts.length > 0 && (
               <div className="mt-6 font-semibold flex items-center gap-x-6 px-3 text-3xl lg:text-5xl mx-5 md:mx-10 lg:mx-20">
                 <TfiWrite />
-                Your Journal Posts
+                {user?.data?.user?.name}'s Journal Posts
               </div>
             )}
 
             {/* If posts are present - map the posts */}
-            {posts?.pages?.[0]?.data?.posts.length && (
+            {posts?.pages?.[0]?.data?.posts.length > 0 && (
               <div className="mt-10 grid md:grid-cols-2 lg:grid-cols-4 mx-5 md:mx-10 lg:mx-10">
                 {posts?.pages?.map((page) => {
                   return page?.data?.posts?.map((post, index) => {
@@ -160,7 +160,8 @@ const User = () => {
               </div>
             )}
 
-            {!loadingPosts && posts?.data?.posts.length == 0 && (
+            {/* If user does not have any posts */}
+            {!loadingPosts && posts?.pages?.[0]?.data?.posts.length == 0 && (
               <div className="flex w-full justify-center items-center pb-32">
                 <div>
                   <p className="font-medium text-2xl text-center ">

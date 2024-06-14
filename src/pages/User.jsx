@@ -193,7 +193,10 @@ const User = () => {
                 />
                 {/* Button to navigate back */}
                 <div className="w-[40%] lg:w-[30%]">
-                  <OutlineButton onClick={() => navigate(-1)} text="Go Back" />
+                  <OutlineButton
+                    onClick={() => navigate("/")}
+                    text="Go Back Home"
+                  />
                 </div>
               </div>
             </div>

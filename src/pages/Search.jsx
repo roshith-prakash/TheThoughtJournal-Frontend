@@ -146,33 +146,35 @@ const Search = () => {
             </TabsList>
             {/* Posts div */}
             <TabsContent value="posts">
-              <div className="py-10 lg:px-5 grid grid-cols-1 md:grid-cols-2">
-                {/* Map posts if posts are found */}
-                {posts &&
-                  posts?.pages?.map((page) => {
-                    return page?.data.posts?.map((post, index) => {
-                      if (post?.title) {
-                        return <PostCard post={post} index={index} />;
-                      }
-                    });
-                  })}
+              {posts && posts?.pages?.[0]?.data?.posts.length > 0 && (
+                <div className="py-10 lg:px-5 grid grid-cols-1 md:grid-cols-2">
+                  {/* Map posts if posts are found */}
+                  {posts &&
+                    posts?.pages?.map((page) => {
+                      return page?.data.posts?.map((post, index) => {
+                        if (post?.title) {
+                          return <PostCard post={post} index={index} />;
+                        }
+                      });
+                    })}
+                </div>
+              )}
 
-                {/* If no posts are found */}
-                {searchTerm != null &&
-                  searchTerm != undefined &&
-                  searchTerm?.length > 0 &&
-                  posts &&
-                  posts?.pages?.[0]?.data?.posts.length == 0 && (
-                    <div className="flex flex-col justify-center pt-10">
-                      <div className="flex justify-center">
-                        <img src={homeNoPosts} className="max-w-[30%]" />
-                      </div>
-                      <p className="text-center mt-5 text-2xl font-medium">
-                        Uh oh! Couldn't find any posts.
-                      </p>
+              {/* If no posts are found */}
+              {searchTerm != null &&
+                searchTerm != undefined &&
+                searchTerm?.length > 0 &&
+                posts &&
+                posts?.pages?.[0]?.data?.posts.length == 0 && (
+                  <div className="flex flex-col justify-center pt-10">
+                    <div className="flex justify-center">
+                      <img src={homeNoPosts} className="max-w-[30%]" />
                     </div>
-                  )}
-              </div>
+                    <p className="text-center mt-5 text-2xl font-medium">
+                      Uh oh! Couldn't find any posts.
+                    </p>
+                  </div>
+                )}
               <div ref={ref}></div>
             </TabsContent>
             {/* Users div */}

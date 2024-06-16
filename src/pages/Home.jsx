@@ -7,6 +7,7 @@ import { useAuth } from "../context/authContext";
 import { Footer, PostCard } from "../components";
 import MoonLoader from "react-spinners/MoonLoader";
 import { useInView } from "react-intersection-observer";
+import homeNoPosts from "../assets/homeNoPosts.svg";
 
 const Home = () => {
   // Scroll to the top of page
@@ -78,7 +79,6 @@ const Home = () => {
               />
             </div>
           )}
-          {error && <p>Error</p>}
 
           {data && (
             <div className="grid md:grid-cols-2 lg:grid-cols-4 ">
@@ -90,7 +90,31 @@ const Home = () => {
                 })}
             </div>
           )}
-          <div ref={ref}></div>
+
+          {error && (
+            <div className="flex flex-col justify-center pt-10">
+              <div className="flex justify-center">
+                <img src={homeNoPosts} className="max-w-[30%]" />
+              </div>
+              <p className="text-center mt-5 text-2xl font-medium">
+                Uh oh! Couldn't fetch posts.
+              </p>
+            </div>
+          )}
+
+          {data &&
+            (!data?.pages || data?.pages?.[0]?.data?.posts.length == 0) && (
+              <div className="flex flex-col justify-center pt-10">
+                <div className="flex justify-center">
+                  <img src={homeNoPosts} className="max-w-[30%]" />
+                </div>
+                <p className="text-center mt-5 text-2xl font-medium">
+                  Uh oh! Couldn't fetch posts.
+                </p>
+              </div>
+            )}
+
+          {data && <div ref={ref}></div>}
         </div>
       </div>
       <div className="pt-20">

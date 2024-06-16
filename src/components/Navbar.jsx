@@ -35,7 +35,7 @@ const Navbar = () => {
           <img
             src={logo}
             alt="The Thought Journal"
-            className="h-6 w-6 md:h-10 md:w-10 cursor-pointer bg-transparent shadow-xl"
+            className="h-6 w-6 md:h-10 md:w-10 cursor-pointer bg-transparent -translate-y-0.5"
           ></img>
           <p className="gmx-2 italic font-medium text-base  md:text-lg text-ink transition-all">
             The Thought Journal
@@ -233,16 +233,18 @@ const Navbar = () => {
         } transition-all duration-500`}
       >
         <div className="flex justify-between items-center pt-8 px-5 mb-14">
+          {/* Logo */}
           <div className="flex items-center">
             <img
               src={logo}
               alt="Logo"
-              className="h-10 w-10 md:h-10 md:w-10 cursor-pointer bg-transparent shadow-xl"
+              className="h-10 w-10 md:h-10 md:w-10 cursor-pointer bg-transparent -translate-y-0.5"
             ></img>
             <p className="mx-2 italic font-medium text-lg  md:text-lg text-ink transition-all">
               The Thought Journal
             </p>
           </div>
+          {/* Close drawer */}
           <RxCross2
             onClick={() => setOpen(false)}
             className="cursor-pointer text-2xl text-ink"
@@ -288,6 +290,18 @@ const Navbar = () => {
                 className="hover:text-cta cursor-pointer transition-all"
               >
                 Log in
+              </Link>
+            </p>
+          )}
+
+          {/* Link to login page */}
+          {dbUser && (
+            <p className="my-2">
+              <Link
+                to="/profile"
+                className="hover:text-cta cursor-pointer transition-all"
+              >
+                My Profile
               </Link>
             </p>
           )}

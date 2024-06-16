@@ -4,6 +4,6 @@ export const getMinsToRead = (value) => {
         String(value)
             .replace(/<(.|\n)*?>/g, "")
             .trim()
-            .split(/\s+/).length / 160
+            .split(/\s+/).length / 200
     )
 }

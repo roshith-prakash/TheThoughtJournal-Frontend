@@ -8,9 +8,10 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { axiosInstance } from "../utils/axios";
 import Avvvatars from "avvvatars-react";
 import { Link } from "react-router-dom";
+import homeNoPosts from "../assets/homeNoPosts.svg";
 
 const Search = () => {
-  const [search, setSearch] = useState();
+  const [search, setSearch] = useState("");
   const [searchTerm, setSearchTerm] = useState("posts");
   const debouncedSearch = useDebounce(search);
 
@@ -78,6 +79,7 @@ const Search = () => {
   }, [inView, fetchNextPosts, fetchNextUsers]);
 
   console.log(users);
+  console.log(posts);
 
   return (
     <>
@@ -145,6 +147,7 @@ const Search = () => {
             {/* Posts div */}
             <TabsContent value="posts">
               <div className="py-10 lg:px-5 grid grid-cols-1 md:grid-cols-2">
+                {/* Map posts if posts are found */}
                 {posts &&
                   posts?.pages?.map((page) => {
                     return page?.data.posts?.map((post, index) => {
@@ -153,6 +156,22 @@ const Search = () => {
                       }
                     });
                   })}
+
+                {/* If no posts are found */}
+                {searchTerm != null &&
+                  searchTerm != undefined &&
+                  searchTerm?.length > 0 &&
+                  posts &&
+                  posts?.pages?.[0]?.data?.posts.length == 0 && (
+                    <div className="flex flex-col justify-center pt-10">
+                      <div className="flex justify-center">
+                        <img src={homeNoPosts} className="max-w-[30%]" />
+                      </div>
+                      <p className="text-center mt-5 text-2xl font-medium">
+                        Uh oh! Couldn't find any posts.
+                      </p>
+                    </div>
+                  )}
               </div>
               <div ref={ref}></div>
             </TabsContent>
@@ -189,6 +208,22 @@ const Search = () => {
                       }
                     });
                   })}
+
+                {/* If no users couldn't be found */}
+                {searchTerm != null &&
+                  searchTerm != undefined &&
+                  searchTerm?.length > 0 &&
+                  users &&
+                  users?.pages?.[0]?.data?.users.length == 0 && (
+                    <div className="flex flex-col justify-center pt-10">
+                      <div className="flex justify-center">
+                        <img src={homeNoPosts} className="max-w-[30%]" />
+                      </div>
+                      <p className="text-center mt-5 text-2xl font-medium">
+                        Uh oh! Couldn't find any users.
+                      </p>
+                    </div>
+                  )}
               </div>
               <div ref={ref}></div>
             </TabsContent>

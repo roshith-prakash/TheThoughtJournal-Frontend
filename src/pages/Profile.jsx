@@ -241,7 +241,7 @@ const Profile = () => {
         )}
 
         {/* If posts are present - map the posts */}
-        {data?.pages?.[0]?.data?.posts.length && (
+        {data?.pages?.[0]?.data?.posts.length > 0 && (
           <div className="mt-10 grid md:grid-cols-2 lg:grid-cols-4 mx-5 md:mx-10 lg:mx-10">
             {data?.pages?.map((page) => {
               return page?.data?.posts?.map((post, index) => {

@@ -60,6 +60,11 @@ const User = () => {
       enabled: !!user,
     });
 
+    // Set window title.
+    useEffect(() => {
+      document.title = `${user?.data?.user?.name} | The Thought Journal`;
+    }, [user]);
+
     // Fetch next page when end div reached.
     useEffect(() => {
       if (inView) {

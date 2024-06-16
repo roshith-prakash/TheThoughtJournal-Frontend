@@ -20,6 +20,11 @@ const Search = () => {
   // Intersection observer to fetch new posts
   const { ref, inView } = useInView();
 
+  // Scroll to the top of page
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
+
   // Fetching searched Posts
   const {
     data: posts,

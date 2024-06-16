@@ -8,6 +8,7 @@ import { useEffect } from "react";
 const Signout = () => {
   const navigate = useNavigate();
 
+  // Scroll to the top of page
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);

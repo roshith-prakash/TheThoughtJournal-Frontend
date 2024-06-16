@@ -44,6 +44,11 @@ const Post = () => {
     },
   });
 
+  // Scroll to the top of page
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
+
   // Set window title.
   useEffect(() => {
     document.title = `${data?.data?.post?.title} | The Thought Journal`;

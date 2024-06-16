@@ -44,8 +44,10 @@ const Onboarding = () => {
     username: 0,
   });
 
-  // console.log("Firebase user", currentUser);
-  console.log("DB USER", dbUser);
+  // Scroll to the top of page
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
 
   // Set window title.
   useEffect(() => {

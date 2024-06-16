@@ -55,7 +55,6 @@ const CreatePost = () => {
     other: 0,
   });
 
-  console.log(value);
   // Scroll to top of page
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });

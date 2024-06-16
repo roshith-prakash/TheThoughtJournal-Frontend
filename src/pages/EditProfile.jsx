@@ -40,6 +40,11 @@ const EditProfile = () => {
     username: 0,
   });
 
+  // Scroll to the top of page
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
+
   // Set window title.
   useEffect(() => {
     document.title = `Edit Profile | The Thought Journal`;

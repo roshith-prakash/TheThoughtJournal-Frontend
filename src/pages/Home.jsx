@@ -41,16 +41,12 @@ const Home = () => {
       },
     });
 
+  //Fetch next posts
   useEffect(() => {
     if (inView) {
-      console.log("fetching");
       fetchNextPage();
     }
   }, [inView, fetchNextPage]);
-
-  console.log(data);
-  console.log(inView);
-  console.log(isFetchingNextPage);
 
   return (
     <>
@@ -62,7 +58,7 @@ const Home = () => {
           <h1 className="text-4xl font-semibold px-2 py-5">
             Welcome{" "}
             <span className="bg-gradient-to-r from-cta to-hovercta bg-clip-text text-transparent">
-              {dbUser?.name ? dbUser?.name : "User"}!
+              {dbUser?.name ? dbUser?.name : "Journaler"}!
             </span>
           </h1>
 

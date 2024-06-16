@@ -11,10 +11,13 @@ import { Link } from "react-router-dom";
 import homeNoPosts from "../assets/homeNoPosts.svg";
 
 const Search = () => {
+  // State for user input - passed to debouncer
   const [search, setSearch] = useState("");
   const [searchTerm, setSearchTerm] = useState("posts");
+  // Debouncing the input of the user
   const debouncedSearch = useDebounce(search);
 
+  // Intersection observer to fetch new posts
   const { ref, inView } = useInView();
 
   // Fetching searched Posts
@@ -70,16 +73,16 @@ const Search = () => {
   // Fetching next set of posts or users
   useEffect(() => {
     if (inView) {
+      // If posts tab is open - fetch the next posts.
       if (searchTerm == "posts") {
         fetchNextPosts();
-      } else if (searchTerm == "users") {
+      }
+      // If users tab is open - fetch the next users.
+      else if (searchTerm == "users") {
         fetchNextUsers();
       }
     }
   }, [inView, fetchNextPosts, fetchNextUsers]);
-
-  console.log(users);
-  console.log(posts);
 
   return (
     <>

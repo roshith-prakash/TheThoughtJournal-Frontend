@@ -210,7 +210,7 @@ const EditProfile = () => {
               accept="image/png, image/jpg, image/jpeg"
               onChange={handleFileChange}
             />
-            {/* Display user image or defaul account image */}
+            {/* Display user image or default account image */}
             <div className="flex justify-center">
               {image ? (
                 <img
@@ -225,6 +225,7 @@ const EditProfile = () => {
                 <img src={defaultAccount} className="h-24 w-24 rounded-full" />
               )}
             </div>
+
             {/* Button to select an image */}
             <button
               onClick={() => fileRef.current.click()}

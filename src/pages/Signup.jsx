@@ -92,6 +92,7 @@ const Signup = () => {
         const user = userCredential.user;
         console.log(user);
 
+        // Send verification email
         sendEmailVerification(user).then((res) => {
           toast("Email Verification Link sent.");
           // Enable button

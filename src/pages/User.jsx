@@ -72,16 +72,12 @@ const User = () => {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }, []);
 
-    console.log(user);
-    console.log(posts);
-
     return (
       <>
         <div className="max-w-screen overflow-hidden">
           <Navbar />
         </div>
-        {/* If user is found */}
-
+        {/* If data is being fetched*/}
         {loadingUser && (
           <div className="min-h-[70vh] md:min-h-[65vh] lg:min-h-[60vh] p-20 pb-40 flex justify-center items-center">
             <HashLoader
@@ -94,6 +90,7 @@ const User = () => {
           </div>
         )}
 
+        {/* If user was found */}
         {user && (
           <div className="lg:min-h-screen bg-bgwhite w-full pb-20">
             {/* Background color div */}

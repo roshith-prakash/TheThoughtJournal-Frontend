@@ -5,7 +5,7 @@ import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { useDBUser } from "../context/userContext";
 import { useAuth } from "../context/authContext";
 import { Footer, PostCard } from "../components";
-import MoonLoader from "react-spinners/MoonLoader";
+import HashLoader from "react-spinners/HashLoader";
 import { useInView } from "react-intersection-observer";
 import homeNoPosts from "../assets/homeNoPosts.svg";
 
@@ -58,6 +58,7 @@ const Home = () => {
       <Navbar />
       <div className="pb-32">
         <div className="p-5">
+          {/* Title - Gradient text */}
           <h1 className="text-4xl font-semibold px-2 py-5">
             Welcome{" "}
             <span className="bg-gradient-to-r from-cta to-hovercta bg-clip-text text-transparent">
@@ -65,21 +66,24 @@ const Home = () => {
             </span>
           </h1>
 
+          {/* Subtitle */}
           <h3 className="text-2xl font-semibold px-2">Let's start reading!</h3>
         </div>
         <div>
+          {/* Loading indicator */}
           {isLoading && (
             <div className="h-96 flex justify-center items-center">
-              <MoonLoader
+              <HashLoader
                 color={"#9b0ced"}
                 loading={isLoading}
-                size={50}
+                size={100}
                 aria-label="Loading Spinner"
                 data-testid="loader"
               />
             </div>
           )}
 
+          {/* Mapping posts if available */}
           {data && (
             <div className="grid md:grid-cols-2 lg:grid-cols-4 ">
               {data &&
@@ -91,6 +95,7 @@ const Home = () => {
             </div>
           )}
 
+          {/* Error while fetching */}
           {error && (
             <div className="flex flex-col justify-center pt-10">
               <div className="flex justify-center">
@@ -102,6 +107,7 @@ const Home = () => {
             </div>
           )}
 
+          {/* No content found */}
           {data &&
             (!data?.pages || data?.pages?.[0]?.data?.posts.length == 0) && (
               <div className="flex flex-col justify-center pt-10">
@@ -114,6 +120,7 @@ const Home = () => {
               </div>
             )}
 
+          {/* Fetch Next page div - infinite loading */}
           {data && <div ref={ref}></div>}
         </div>
       </div>

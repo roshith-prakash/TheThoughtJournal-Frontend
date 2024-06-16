@@ -167,6 +167,7 @@ const CreatePost = () => {
         <h1 className="text-2xl lg:text-4xl text-center font-medium">
           Create a new Journal post{" "}
         </h1>
+        {/* Subtitle */}
         <p className="text-base mt-2 lg:text-xl text-center">
           (You can preview your post below!)
         </p>
@@ -315,6 +316,7 @@ const CreatePost = () => {
           )}
         </div>
 
+        {/* If nothing is added */}
         {!imageFile &&
           !title &&
           !category &&

@@ -319,7 +319,7 @@ const Post = () => {
             {/* Like + Share */}
             <div className="mt-10 border-t-2 px-5 lg:px-10 py-10 ">
               <p className="mb-8 text-xl font-medium">
-                Enjoyed the post? Like it!
+                Enjoyed the post? Like & Share it!
               </p>
               <div className="flex gap-x-5">
                 {/* Like button  */}

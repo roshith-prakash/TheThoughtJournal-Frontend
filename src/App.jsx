@@ -20,6 +20,7 @@ import { useEffect } from "react";
 import { io } from "socket.io-client";
 import { Protector } from "./components";
 import { prodURL } from "./utils/axios";
+import SecurityHeaders from "./components/SecurityHeaders";
 
 // Creating Tanstack query client
 const queryClient = new QueryClient();
@@ -47,6 +48,7 @@ function App() {
         <AuthProvider>
           {/* Providing Db user data to children */}
           <UserProvider>
+            <SecurityHeaders />
             <BrowserRouter>
               <Routes>
                 {/* Home Page */}

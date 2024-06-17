@@ -27,6 +27,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDBUser } from "../context/userContext";
 import { getMinsToRead } from "../functions/mathFunctions";
 import { modules, formats, QuillToolbar } from "../components/QuillToolbar";
+import Avvvatars from "avvvatars-react";
 
 const CreatePost = () => {
   const navigate = useNavigate();

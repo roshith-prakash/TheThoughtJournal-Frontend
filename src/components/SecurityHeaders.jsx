@@ -6,7 +6,7 @@ const SecurityHeaders = () => {
       {/* Content Security Policy (CSP) */}
       <meta
         http-equiv="Content-Security-Policy"
-        content=" script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; frame-src 'none';"
+        content="style-src 'self' 'unsafe-inline';"
       />
 
       {/* X-Content-Type-Options */}

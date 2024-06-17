@@ -26,11 +26,13 @@ import noPosts from "../assets/noposts.svg";
 import { auth } from "../firebase/firebase";
 import { Toaster, toast } from "react-hot-toast";
 import { useInView } from "react-intersection-observer";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const Profile = () => {
   const navigate = useNavigate();
   const { dbUser, setDbUser } = useDBUser();
   const [disabled, setDisabled] = useState(false);
+  const [tabValue, setTabValue] = useState("userPosts");
 
   const { ref, inView } = useInView();
 
@@ -45,25 +47,54 @@ const Profile = () => {
   }, []);
 
   // Query to get posts
-  const { data, isLoading, error, fetchNextPage, isFetchingNextPage } =
-    useInfiniteQuery({
-      queryKey: ["getUserPosts"],
-      queryFn: async ({ pageParam }) => {
-        return axiosInstance.post("/post/get-user-posts", {
-          username: dbUser?.username,
-          page: pageParam,
-        });
-      },
-      initialPageParam: 0,
-      getNextPageParam: (lastPage) => {
-        return lastPage?.data?.nextPage;
-      },
-    });
+  const { data, isLoading, error, fetchNextPage } = useInfiniteQuery({
+    queryKey: ["getUserPosts"],
+    queryFn: async ({ pageParam }) => {
+      return axiosInstance.post("/post/get-user-posts", {
+        username: dbUser?.username,
+        page: pageParam,
+      });
+    },
+    initialPageParam: 0,
+    getNextPageParam: (lastPage) => {
+      return lastPage?.data?.nextPage;
+    },
+    enabled: tabValue == "likedPosts",
+  });
+
+  // Query to get posts
+  const {
+    data: likedPosts,
+    isLoading: loadingLikedPosts,
+    error: likedPostsError,
+    fetchNextPage: fetchLikedPosts,
+  } = useInfiniteQuery({
+    queryKey: ["getUserLikedPosts"],
+    queryFn: async ({ pageParam }) => {
+      return axiosInstance.post("/post/get-liked-posts", {
+        username: dbUser?.username,
+        page: pageParam,
+      });
+    },
+    initialPageParam: 0,
+    getNextPageParam: (lastPage) => {
+      return lastPage?.data?.nextPage;
+    },
+    enabled: tabValue == "likedPosts",
+  });
 
   // Fetch next page when end div reached.
   useEffect(() => {
-    if (inView) {
-      fetchNextPage();
+    if (tabValue == "userPosts") {
+      if (inView) {
+        fetchNextPage();
+      }
+    }
+
+    if (tabValue == "likedPosts") {
+      if (inView) {
+        fetchLikedPosts();
+      }
     }
   }, [inView, fetchNextPage]);
 
@@ -102,6 +133,8 @@ const Profile = () => {
 
     // Deleting user from firebase
   };
+
+  console.log(likedPosts);
 
   return (
     <>
@@ -232,46 +265,114 @@ const Profile = () => {
           </div>
         </div>
 
-        {/* Posts title */}
-        {data?.pages?.[0]?.data?.posts.length > 0 && (
-          <div className="mt-6 font-semibold flex items-center gap-x-6 px-3 text-3xl lg:text-5xl mx-5 md:mx-10 lg:mx-20">
-            <TfiWrite />
-            Your Journal Posts
-          </div>
-        )}
-
-        {/* If posts are present - map the posts */}
-        {data?.pages?.[0]?.data?.posts.length > 0 && (
-          <div className="mt-10 grid md:grid-cols-2 lg:grid-cols-4 mx-5 md:mx-10 lg:mx-10">
-            {data?.pages?.map((page) => {
-              return page?.data?.posts?.map((post, index) => {
-                return <PostCard post={post} index={index} />;
-              });
-            })}
-          </div>
-        )}
-
-        {/* If no posts were created by the user */}
-        {!isLoading && data?.pages?.[0]?.data?.posts.length == 0 && (
-          <div className="flex w-full justify-center items-center">
-            <div>
-              <p className="font-medium text-2xl text-center ">
-                You have not journalled any posts.
-              </p>
-              <div className="flex justify-center mt-16">
-                <img src={noPosts} className="max-w-[50%]" />
+        <Tabs defaultValue="userPosts" className="w-full">
+          <TabsList className="bg-transparent flex justify-center w-full">
+            <TabsTrigger
+              onClick={() => setTabValue("userPosts")}
+              value="userPosts"
+              className={`${
+                tabValue == "userPosts"
+                  ? "text-cta border-b-2 border-cta"
+                  : "text-ink border-b-2"
+              } text-xl flex-1 py-3`}
+            >
+              Your Posts
+            </TabsTrigger>
+            <TabsTrigger
+              onClick={() => setTabValue("likedPosts")}
+              value="likedPosts"
+              className={`${
+                tabValue == "likedPosts"
+                  ? "text-cta border-b-2 border-cta"
+                  : "text-ink border-b-2"
+              } text-xl flex-1 py-3`}
+            >
+              Liked Posts
+            </TabsTrigger>
+          </TabsList>
+          <TabsContent value="userPosts" className="py-10">
+            {/* Posts title */}
+            {data?.pages?.[0]?.data?.posts.length > 0 && (
+              <div className="mt-6 font-semibold flex items-center gap-x-6 px-3 text-3xl lg:text-5xl mx-5 md:mx-10 lg:mx-20">
+                <TfiWrite />
+                Your Journal Posts
               </div>
-              <div className="mt-20 flex justify-center">
-                <div className="max-w-[50%]">
-                  <CTAButton
-                    text={<p className="text-xl">Create a Post</p>}
-                    onClick={() => navigate("/addPost")}
-                  />
+            )}
+
+            {/* If posts are present - map the posts */}
+            {data?.pages?.[0]?.data?.posts.length > 0 && (
+              <div className="mt-10 grid md:grid-cols-2 lg:grid-cols-4 mx-5 md:mx-10 lg:mx-10">
+                {data?.pages?.map((page) => {
+                  return page?.data?.posts?.map((post, index) => {
+                    return <PostCard post={post} index={index} />;
+                  });
+                })}
+              </div>
+            )}
+
+            {/* If no posts were created by the user */}
+            {!isLoading && data?.pages?.[0]?.data?.posts.length == 0 && (
+              <div className="flex w-full justify-center items-center">
+                <div>
+                  <p className="font-medium text-2xl text-center ">
+                    You have not journalled any posts.
+                  </p>
+                  <div className="flex justify-center mt-16">
+                    <img src={noPosts} className="max-w-[50%]" />
+                  </div>
+                  <div className="mt-20 flex justify-center">
+                    <div className="max-w-[50%]">
+                      <CTAButton
+                        text={<p className="text-xl">Create a Post</p>}
+                        onClick={() => navigate("/addPost")}
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-        )}
+            )}
+          </TabsContent>
+          <TabsContent value="likedPosts" className="py-10">
+            {/* Posts title */}
+            {likedPosts?.pages?.[0]?.data?.posts.length > 0 &&
+              likedPosts?.pages?.[0]?.data?.posts[0] != null && (
+                <div className="mt-6 font-semibold flex items-center gap-x-6 px-3 text-3xl lg:text-5xl mx-5 md:mx-10 lg:mx-20">
+                  <TfiWrite />
+                  Your Liked Posts
+                </div>
+              )}
+
+            {/* If posts are present - map the posts */}
+            {likedPosts?.pages?.[0]?.data?.posts.length > 0 &&
+              likedPosts?.pages?.[0]?.data?.posts[0] != null && (
+                <div className="mt-10 grid md:grid-cols-2 lg:grid-cols-4 mx-5 md:mx-10 lg:mx-10">
+                  {likedPosts?.pages?.map((page) => {
+                    return page?.data?.posts?.map((post, index) => {
+                      if (post) {
+                        return <PostCard post={post} index={index} />;
+                      }
+                    });
+                  })}
+                </div>
+              )}
+
+            {/* If no posts were created by the user */}
+            {!loadingLikedPosts &&
+              (likedPosts?.pages?.[0]?.data?.posts.length == 0 ||
+                likedPosts?.pages?.[0]?.data?.posts[0] == null) && (
+                <div className="flex w-full justify-center items-center">
+                  <div>
+                    <p className="font-medium text-2xl text-center ">
+                      You have not liked any posts.
+                    </p>
+                    <div className="flex justify-center mt-16">
+                      <img src={noPosts} className="max-w-[50%]" />
+                    </div>
+                  </div>
+                </div>
+              )}
+          </TabsContent>
+        </Tabs>
 
         <div ref={ref}></div>
       </div>

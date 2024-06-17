@@ -23,6 +23,7 @@ import { useDBUser } from "../context/userContext";
 import { toast, Toaster } from "react-hot-toast";
 import { IoHeart } from "react-icons/io5";
 import { FaHeart, FaRegHeart } from "react-icons/fa6";
+import { LuSend } from "react-icons/lu";
 
 dayjs.extend(relativeTime);
 
@@ -30,14 +31,17 @@ const Post = () => {
   const navigate = useNavigate();
   // To disable delete button.
   const [disabled, setDisabled] = useState(false);
+  // To like a post
   const [liked, setLiked] = useState(false);
+  // To disable like Button
+  const [disableLike, setDisableLike] = useState(false);
   // Get Post Id from params.
   let { postId } = useParams();
 
   const { dbUser } = useDBUser();
 
   // Fetch data from server.
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["post-page", postId],
     queryFn: async () => {
       return axiosInstance.post("/post/get-post", { postId: postId });
@@ -53,6 +57,75 @@ const Post = () => {
   useEffect(() => {
     document.title = `${data?.data?.post?.title} | The Thought Journal`;
   }, [data]);
+
+  //To set liked if post is already liked
+  useEffect(() => {
+    if (data?.data?.post?.likes.includes(dbUser?.id)) {
+      setLiked(true);
+    } else {
+      setLiked(false);
+    }
+  }, [data?.data?.post?.id, dbUser?.id]);
+
+  // To like the post
+  const addLike = () => {
+    if (!dbUser) {
+      toast.error("You must be signed in to like a post!.");
+      return;
+    }
+
+    if (!disableLike) {
+      setLiked(true);
+      setDisableLike(true);
+
+      axiosInstance
+        .post("/post/likePost", {
+          postId: data?.data?.post?.id,
+          userId: dbUser?.id,
+        })
+        .then((res) => {
+          console.log(res?.data);
+          setDisableLike(false);
+          refetch();
+        })
+        .catch((err) => {
+          setLiked(false);
+          setDisableLike(false);
+          console.log(err);
+          toast.error("Something went wrong!");
+        });
+    }
+  };
+
+  // To like the post
+  const removeLike = () => {
+    if (!dbUser) {
+      toast.error("You must be signed in to like a post!.");
+      return;
+    }
+
+    if (!disableLike) {
+      setLiked(false);
+      setDisableLike(true);
+
+      axiosInstance
+        .post("/post/unlikePost", {
+          postId: data?.data?.post?.id,
+          userId: dbUser?.id,
+        })
+        .then((res) => {
+          console.log(res?.data);
+          setDisableLike(false);
+          refetch();
+        })
+        .catch((err) => {
+          setLiked(true);
+          setDisableLike(false);
+          console.log(err);
+          toast.error("Something went wrong!");
+        });
+    }
+  };
 
   // Handler to delete post.
   const deletePost = () => {
@@ -73,6 +146,9 @@ const Post = () => {
       });
   };
 
+  console.log(data);
+
+  console.log(location.href);
   return (
     <div className="bg-bgwhite min-h-screen">
       <Navbar />
@@ -240,19 +316,44 @@ const Post = () => {
               />
             </div>
 
-            {/* <div className="mt-10 border-t-2 flex gap-x-5 px-10 py-10 items-center">
-              {liked ? (
-                <FaHeart
-                  className="text-3xl cursor-pointer text-red-600 hover:scale-110 transition-all"
-                  onClick={() => setLiked((prev) => !prev)}
+            {/* Like + Share */}
+            <div className="mt-10 border-t-2 px-5 lg:px-10 py-10 ">
+              <p className="mb-8 text-xl font-medium">
+                Enjoyed the post? Like it!
+              </p>
+              <div className="flex gap-x-5">
+                {/* Like button  */}
+                <div className="flex flex-col items-center w-min px-2">
+                  {liked ? (
+                    <FaHeart
+                      className="text-3xl cursor-pointer text-red-600 hover:scale-110 transition-all"
+                      onClick={removeLike}
+                    />
+                  ) : (
+                    <FaRegHeart
+                      className="text-3xl cursor-pointer hover:scale-110 transition-all"
+                      onClick={addLike}
+                    />
+                  )}
+                  <p className="mt-1 -ml-0.5">
+                    {Intl.NumberFormat("en", { notation: "compact" }).format(
+                      data?.data?.post?.likeCount
+                    )}
+                  </p>
+                </div>
+
+                {/* Share button - copies the post link */}
+                <LuSend
+                  onClick={() => {
+                    if (navigator?.clipboard) {
+                      navigator.clipboard.writeText(location.href);
+                      toast.success("Copied link to post!");
+                    }
+                  }}
+                  className="text-3xl cursor-pointer hover:text-cta transition-all"
                 />
-              ) : (
-                <FaRegHeart
-                  className="text-3xl cursor-pointer hover:scale-110 transition-all"
-                  onClick={() => setLiked((prev) => !prev)}
-                />
-              )}
-            </div> */}
+              </div>
+            </div>
           </div>
         </div>
       )}

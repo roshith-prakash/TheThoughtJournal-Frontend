@@ -12,7 +12,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import { TfiWrite } from "react-icons/tfi";
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { axiosInstance } from "../utils/axios";
 import {
   Dialog,
@@ -27,14 +27,20 @@ import { auth } from "../firebase/firebase";
 import { Toaster, toast } from "react-hot-toast";
 import { useInView } from "react-intersection-observer";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { numberFormat } from "../functions/numberFormatter";
+import Avvvatars from "avvvatars-react";
+import homeNoPosts from "../assets/homeNoPosts.svg";
 
 const Profile = () => {
   const navigate = useNavigate();
   const { dbUser, setDbUser } = useDBUser();
   const [disabled, setDisabled] = useState(false);
   const [tabValue, setTabValue] = useState("userPosts");
+  const [followerOpen, setFollowerOpen] = useState(false);
+  const [followingOpen, setFollowingOpen] = useState(false);
 
   const { ref, inView } = useInView();
+  const { ref: ref2, inView: inView2 } = useInView();
 
   // Set window title.
   useEffect(() => {
@@ -48,7 +54,7 @@ const Profile = () => {
 
   // Query to get posts
   const { data, isLoading, error, fetchNextPage } = useInfiniteQuery({
-    queryKey: ["getUserPosts"],
+    queryKey: ["getUserPosts", dbUser?.username],
     queryFn: async ({ pageParam }) => {
       return axiosInstance.post("/post/get-user-posts", {
         username: dbUser?.username,
@@ -69,7 +75,7 @@ const Profile = () => {
     error: likedPostsError,
     fetchNextPage: fetchLikedPosts,
   } = useInfiniteQuery({
-    queryKey: ["getUserLikedPosts"],
+    queryKey: ["getUserLikedPosts", dbUser?.username],
     queryFn: async ({ pageParam }) => {
       return axiosInstance.post("/post/get-liked-posts", {
         username: dbUser?.username,
@@ -81,6 +87,48 @@ const Profile = () => {
       return lastPage?.data?.nextPage;
     },
     enabled: tabValue == "likedPosts",
+  });
+
+  // Query to get followers
+  const {
+    data: followers,
+    isLoading: loadingFollowers,
+    error: followersError,
+    fetchNextPage: fetchFollowers,
+  } = useInfiniteQuery({
+    queryKey: ["getUserFollowers", dbUser?.username],
+    queryFn: async ({ pageParam }) => {
+      return axiosInstance.post("/user/get-followers", {
+        username: dbUser?.username,
+        page: pageParam,
+      });
+    },
+    initialPageParam: 0,
+    getNextPageParam: (lastPage) => {
+      return lastPage?.data?.nextPage;
+    },
+    enabled: followerOpen,
+  });
+
+  // Query to get following list
+  const {
+    data: following,
+    isLoading: loadingFollowing,
+    error: followingError,
+    fetchNextPage: fetchFollowing,
+  } = useInfiniteQuery({
+    queryKey: ["getUserFollowing", dbUser?.username],
+    queryFn: async ({ pageParam }) => {
+      return axiosInstance.post("/user/get-following", {
+        username: dbUser?.username,
+        page: pageParam,
+      });
+    },
+    initialPageParam: 0,
+    getNextPageParam: (lastPage) => {
+      return lastPage?.data?.nextPage;
+    },
+    enabled: followingOpen,
   });
 
   // Fetch next page when end div reached.
@@ -97,6 +145,21 @@ const Profile = () => {
       }
     }
   }, [inView, fetchNextPage]);
+
+  // Fetch followers & following
+  useEffect(() => {
+    if (followingOpen) {
+      if (inView2) {
+        fetchFollowing();
+      }
+    }
+
+    if (followerOpen) {
+      if (inView2) {
+        fetchFollowers();
+      }
+    }
+  }, [inView2, fetchFollowers, fetchFollowing, followingOpen, followerOpen]);
 
   // Delete the user
   const deleteUser = () => {
@@ -134,15 +197,13 @@ const Profile = () => {
     // Deleting user from firebase
   };
 
-  console.log(likedPosts);
-
   return (
     <>
       <Navbar />
       <Toaster />
       <div className="lg:min-h-screenbg-bgwhite w-full pb-20">
         {/* Background color div */}
-        <div className="bg-[#dcbbf0] border-b-4 border-black h-48"></div>
+        <div className="bg-[#cf86f9] border-b-4 border-black h-48"></div>
 
         {/* Profile Info Div */}
         <div className="bg-white shadow-xl -translate-y-14 border-2 min-h-52 pt-20 pb-10 rounded-lg mx-5 md:mx-10 lg:mx-20">
@@ -150,7 +211,7 @@ const Profile = () => {
           <div className="absolute w-full -top-16 flex justify-center">
             <img
               src={dbUser?.photoURL ? dbUser?.photoURL : defaultAccount}
-              className="bg-white rounded-full h-32 w-32 border-8 border-[#dcbbf0] pointer-events-none"
+              className="bg-white rounded-full h-32 w-32 border-8 border-[#cf86f9] pointer-events-none"
             />
           </div>
 
@@ -253,6 +314,147 @@ const Profile = () => {
             {dbUser?.bio && (
               <p className="px-4 my-10 text-md text-center">{dbUser?.bio}</p>
             )}
+
+            {/* Counts */}
+            <div className="py-1 flex justify-center items-center gap-x-8">
+              {/* Total Like Count */}
+              <div className="flex flex-col items-center gap-y-1">
+                <p>{numberFormat(dbUser?.totalLikes)}</p>
+                <p className="text-md font-medium">Total Likes</p>
+              </div>
+
+              {/* Follower Count */}
+              <Dialog open={followerOpen} onOpenChange={setFollowerOpen}>
+                <DialogTrigger>
+                  <div className="flex flex-col items-center gap-y-1 p-1 transition-all cursor-pointer rounded hover:bg-slate-100">
+                    <p>{numberFormat(dbUser?.followerCount)}</p>
+                    <p className="text-md font-medium">Followers</p>
+                  </div>
+                </DialogTrigger>
+                <DialogContent className="h-96 overflow-y-auto">
+                  <DialogHeader>
+                    <DialogTitle>Followers</DialogTitle>
+                    <DialogDescription>
+                      <div className="mt-5 text-black">
+                        {/* If no users couldn't be found */}
+                        {followers &&
+                          followers?.pages?.[0]?.data?.users.length == 0 && (
+                            <div className="flex flex-col justify-center pt-10">
+                              <div className="flex justify-center">
+                                <img
+                                  src={homeNoPosts}
+                                  className="max-w-[50%]"
+                                />
+                              </div>
+                              <p className="text-center mt-5 text-xl font-medium">
+                                You do not have any followers.
+                              </p>
+                            </div>
+                          )}
+
+                        {/* If users are present in DB */}
+                        {followers &&
+                          followers?.pages?.map((page) => {
+                            return page?.data.users?.map((user, index) => {
+                              if (user?.name) {
+                                return (
+                                  <Link
+                                    to={`/user/${user?.username}`}
+                                    className="py-3 px-4 flex gap-x-5 items-center rounded hover:bg-slate-100"
+                                  >
+                                    {user?.photoURL ? (
+                                      <img
+                                        src={user?.photoURL}
+                                        className="h-12 w-12 rounded-full"
+                                      />
+                                    ) : (
+                                      <Avvvatars size={50} value={user?.name} />
+                                    )}
+
+                                    <div className="flex-col gap-y-2">
+                                      <p className="text-lg font-medium">
+                                        {user?.name}
+                                      </p>
+                                      <p>@{user?.username}</p>
+                                    </div>
+                                  </Link>
+                                );
+                              }
+                            });
+                          })}
+                      </div>
+                      <div ref={ref2}></div>
+                    </DialogDescription>
+                  </DialogHeader>
+                </DialogContent>
+              </Dialog>
+
+              {/* Following Count */}
+              <Dialog open={followingOpen} onOpenChange={setFollowingOpen}>
+                <DialogTrigger>
+                  <div className="flex flex-col items-center gap-y-1 p-1 transition-all cursor-pointer rounded hover:bg-slate-100">
+                    <p>{numberFormat(dbUser?.followingCount)}</p>
+                    <p className="text-md font-medium">Following</p>
+                  </div>
+                </DialogTrigger>
+                <DialogContent className="h-96 overflow-y-auto">
+                  <DialogHeader>
+                    <DialogTitle>Following</DialogTitle>
+                    <DialogDescription>
+                      <div className="mt-5 text-black">
+                        {/* If users are present in DB */}
+                        {following &&
+                          following?.pages?.map((page) => {
+                            return page?.data.users?.map((user, index) => {
+                              if (user?.name) {
+                                return (
+                                  <Link
+                                    to={`/user/${user?.username}`}
+                                    className="py-3 px-4 flex gap-x-5 items-center rounded hover:bg-slate-100"
+                                  >
+                                    {user?.photoURL ? (
+                                      <img
+                                        src={user?.photoURL}
+                                        className="h-12 w-12 rounded-full"
+                                      />
+                                    ) : (
+                                      <Avvvatars size={50} value={user?.name} />
+                                    )}
+
+                                    <div className="flex-col gap-y-2">
+                                      <p className="text-lg font-medium">
+                                        {user?.name}
+                                      </p>
+                                      <p>@{user?.username}</p>
+                                    </div>
+                                  </Link>
+                                );
+                              }
+                            });
+                          })}
+
+                        {/* If no users couldn't be found */}
+                        {following &&
+                          following?.pages?.[0]?.data?.users.length == 0 && (
+                            <div className="flex flex-col justify-center pt-10">
+                              <div className="flex justify-center">
+                                <img
+                                  src={homeNoPosts}
+                                  className="max-w-[60%]"
+                                />
+                              </div>
+                              <p className="text-center mt-5 text-2xl font-medium">
+                                You do not follow any users.
+                              </p>
+                            </div>
+                          )}
+                      </div>
+                      <div ref={ref2}></div>
+                    </DialogDescription>
+                  </DialogHeader>
+                </DialogContent>
+              </Dialog>
+            </div>
           </div>
 
           {/* Separator */}

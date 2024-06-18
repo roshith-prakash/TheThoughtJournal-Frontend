@@ -9,26 +9,33 @@ import { axiosInstance } from "../utils/axios";
 import Profile from "./Profile";
 import userNotFound from "../assets/user.svg";
 import HashLoader from "react-spinners/HashLoader";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import noPosts from "../assets/noposts.svg";
 import { useInView } from "react-intersection-observer";
+import { numberFormat } from "../functions/numberFormatter";
+import { GoPlusCircle } from "react-icons/go";
+import { RxCross2 } from "react-icons/rx";
+import toast, { Toaster } from "react-hot-toast";
 
 const User = () => {
   // Get Post Id from params.
   let { username } = useParams();
 
-  const { dbUser } = useDBUser();
+  const { dbUser, fetchUser } = useDBUser();
 
   if (username == dbUser?.username) {
     return <Profile />;
   } else {
     const { ref, inView } = useInView();
+    const [disabled, setDisabled] = useState(false);
+    const [following, setFollowing] = useState(false);
 
     // Fetch user data from server.
     const {
       data: user,
       isLoading: loadingUser,
       error: userError,
+      refetch,
     } = useQuery({
       queryKey: ["userProfile", username],
       queryFn: async () => {
@@ -77,8 +84,95 @@ const User = () => {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }, []);
 
+    useEffect(() => {
+      if (dbUser?.following.includes(user?.data?.user?.id)) {
+        setFollowing(true);
+      } else {
+        setFollowing(false);
+      }
+    }, [user, dbUser?.following.length]);
+
+    // To follow the user
+    const followUser = () => {
+      // Check if user is logged in
+      if (!dbUser) {
+        toast.error("You must be signed in to follow a user");
+        return;
+      } else {
+        // Perform action only when button is not disabled
+        if (!disabled) {
+          setDisabled(true);
+
+          // API call to add the user to the following list
+          axiosInstance
+            .post("/user/followUser", {
+              userId: user?.data?.user?.id,
+              currentUser: dbUser?.id,
+            })
+            .then((res) => {
+              console.log(res?.data);
+              toast.success(`Followed ${user?.data?.user?.username}!`);
+              setDisabled(false);
+              setFollowing(true);
+              refetch();
+              fetchUser();
+            })
+            .catch((err) => {
+              setFollowing(false);
+              setDisabled(false);
+              console.log(err);
+              if (err.response.status === 409) {
+                toast.error("You're already following the user!");
+              } else {
+                toast.error("Something went wrong!");
+              }
+            });
+        }
+      }
+    };
+
+    // To unfollow the user
+    const unfollowUser = () => {
+      // Check if user is logged in
+      if (!dbUser) {
+        toast.error("You must be signed in to follow a user");
+        return;
+      } else {
+        // Perform action only when button is not disabled
+        if (!disabled) {
+          setDisabled(true);
+
+          // API call to remove the user from the following list
+          axiosInstance
+            .post("/user/unfollowUser", {
+              userId: user?.data?.user?.id,
+              currentUser: dbUser?.id,
+            })
+            .then((res) => {
+              console.log(res?.data);
+              toast.success(`Unfollowed ${user?.data?.user?.username}!`);
+              setDisabled(false);
+              setFollowing(false);
+              refetch();
+              fetchUser();
+            })
+            .catch((err) => {
+              setFollowing(true);
+              setDisabled(false);
+              console.log(err);
+              if (err.response.status === 409) {
+                toast.error("You're not following the user!");
+              } else {
+                toast.error("Something went wrong!");
+              }
+            });
+        }
+      }
+    };
+
     return (
       <>
+        <Toaster />
         <div className="max-w-screen overflow-hidden">
           <Navbar />
         </div>
@@ -115,6 +209,46 @@ const User = () => {
                 />
               </div>
 
+              {/* Follow / unfllow icon on small screen */}
+              <div className="lg:hidden absolute flex gap-x-4 right-6 top-5">
+                {following ? (
+                  <RxCross2
+                    className="text-xl cursor-pointer"
+                    onClick={unfollowUser}
+                  />
+                ) : (
+                  <GoPlusCircle
+                    className="text-xl cursor-pointer"
+                    onClick={followUser}
+                  />
+                )}
+              </div>
+
+              {/* Follow / unfollow button on large screen */}
+              <div className="hidden absolute lg:flex gap-x-4 right-6 top-5">
+                {following ? (
+                  <OutlineButton
+                    text={
+                      <div className="flex items-center gap-x-2">
+                        <p>Unfollow</p>
+                        <RxCross2 />
+                      </div>
+                    }
+                    onClick={unfollowUser}
+                  />
+                ) : (
+                  <OutlineButton
+                    text={
+                      <div className="flex items-center gap-x-2">
+                        <p>Follow</p>
+                        <GoPlusCircle />
+                      </div>
+                    }
+                    onClick={followUser}
+                  />
+                )}
+              </div>
+
               <div className="px-2">
                 {/* Name of the user */}
                 <p className="text-center text-3xl font-bold">
@@ -130,6 +264,27 @@ const User = () => {
                     {user?.data?.user?.bio}
                   </p>
                 )}
+
+                {/* Counts */}
+                <div className="py-1 flex justify-center items-center gap-x-8">
+                  {/* Total Like Count */}
+                  <div className="flex flex-col items-center gap-y-1">
+                    <p>{numberFormat(user?.data?.user?.totalLikes)}</p>
+                    <p className="text-md font-medium">Total Likes</p>
+                  </div>
+
+                  {/* Follower Count */}
+                  <div className="flex flex-col items-center gap-y-1">
+                    <p>{numberFormat(user?.data?.user?.followerCount)}</p>
+                    <p className="text-md font-medium">Followers</p>
+                  </div>
+
+                  {/* Following Count */}
+                  <div className="flex flex-col items-center gap-y-1">
+                    <p>{numberFormat(user?.data?.user?.followingCount)}</p>
+                    <p className="text-md font-medium">Following</p>
+                  </div>
+                </div>
               </div>
 
               <hr className="my-5 mx-2" />

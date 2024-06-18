@@ -230,10 +230,10 @@ const Onboarding = () => {
                 <OutlineButton
                   onClick={() => window.location.reload()}
                   text={
-                    <>
+                    <div className="flex flex-col">
                       <p>Already verified?</p>
                       <p> Reload the page</p>
-                    </>
+                    </div>
                   }
                 />
               </div>

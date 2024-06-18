@@ -172,7 +172,7 @@ const Login = () => {
         {/* Right Div */}
         <div className="min-h-[95vh] mt-5 lg:mt-0 lg:h-full lg:min-h-[88vh] pb-10 flex-1 flex justify-center items-center">
           {/* Login Form Div */}
-          <div className="bg-white border-[1px] -translate-y-5 md:-translate-y-0 px-8 md:w-[65%] mt-5 md:mt-14 lg:mt-5 p-5 md:px-20 shadow-xl rounded-xl pb-10">
+          <div className="bg-white border-[1px] w-[85%] -translate-y-5 md:-translate-y-0 px-8 md:w-[65%] mt-5 md:mt-14 lg:mt-5 p-5 md:px-20 shadow-xl rounded-xl pb-10">
             {/* Title */}
             <h1 className="text-ink font-bold text-2xl mt-5 italic text-center">
               Log in to The Journal

@@ -75,7 +75,6 @@ const Post = () => {
     }
 
     if (!disableLike) {
-      setLiked(true);
       setDisableLike(true);
 
       axiosInstance
@@ -85,6 +84,7 @@ const Post = () => {
         })
         .then((res) => {
           console.log(res?.data);
+          setLiked(true);
           setDisableLike(false);
           refetch();
         })
@@ -105,7 +105,6 @@ const Post = () => {
     }
 
     if (!disableLike) {
-      setLiked(false);
       setDisableLike(true);
 
       axiosInstance
@@ -115,6 +114,7 @@ const Post = () => {
         })
         .then((res) => {
           console.log(res?.data);
+          setLiked(false);
           setDisableLike(false);
           refetch();
         })
@@ -146,9 +146,6 @@ const Post = () => {
       });
   };
 
-  console.log(data);
-
-  console.log(location.href);
   return (
     <div className="bg-bgwhite min-h-screen">
       <Navbar />
@@ -325,17 +322,27 @@ const Post = () => {
                 {/* Like button  */}
                 <div className="flex flex-col items-center w-min px-2">
                   {liked ? (
-                    <FaHeart
-                      className="text-3xl cursor-pointer text-red-600 hover:scale-110 transition-all"
-                      onClick={removeLike}
-                    />
+                    <button onClick={removeLike} disabled={disableLike}>
+                      <FaHeart
+                        className={`text-3xl text-red-600 hover:scale-110 transition-all ${
+                          disableLike && "text-red-300"
+                        }`}
+                      />
+                    </button>
                   ) : (
-                    <FaRegHeart
-                      className="text-3xl cursor-pointer hover:scale-110 transition-all"
-                      onClick={addLike}
-                    />
+                    <button onClick={addLike} disabled={disableLike}>
+                      <FaRegHeart
+                        className={`text-3xl hover:scale-110 transition-all ${
+                          disableLike && "text-slate-500"
+                        }`}
+                      />
+                    </button>
                   )}
-                  <p className="mt-1 -ml-0.5">
+                  <p
+                    className={`mt-1 -ml-0.5 ${
+                      disableLike && "text-slate-500"
+                    }`}
+                  >
                     {Intl.NumberFormat("en", { notation: "compact" }).format(
                       data?.data?.post?.likeCount
                     )}

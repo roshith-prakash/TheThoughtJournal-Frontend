@@ -30,6 +30,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { numberFormat } from "../functions/numberFormatter";
 import Avvvatars from "avvvatars-react";
 import homeNoPosts from "../assets/homeNoPosts.svg";
+import HashLoader from "react-spinners/HashLoader";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -68,7 +69,7 @@ const Profile = () => {
     enabled: tabValue == "likedPosts",
   });
 
-  // Query to get posts
+  // Query to get liked posts
   const {
     data: likedPosts,
     isLoading: loadingLikedPosts,
@@ -305,7 +306,7 @@ const Profile = () => {
             </Dialog>
           </div>
 
-          {/* Name, Username and Bio */}
+          {/* Name, Username and Bio + Stat Count */}
           <div className="px-2">
             <p className="text-center text-3xl font-bold">{dbUser?.name}</p>
             <p className="mt-2 text-center text-xl font-medium">
@@ -336,6 +337,18 @@ const Profile = () => {
                     <DialogTitle>Followers</DialogTitle>
                     <DialogDescription>
                       <div className="mt-5 text-black">
+                        {/* Loading indicator */}
+                        {loadingFollowers && (
+                          <div className="flex h-full pt-20 justify-center items-center">
+                            <HashLoader
+                              color={"#9b0ced"}
+                              loading={loadingFollowers}
+                              size={80}
+                              aria-label="Loading Spinner"
+                              data-testid="loader"
+                            />
+                          </div>
+                        )}
                         {/* If no users couldn't be found */}
                         {followers &&
                           followers?.pages?.[0]?.data?.users.length == 0 && (
@@ -402,6 +415,18 @@ const Profile = () => {
                     <DialogTitle>Following</DialogTitle>
                     <DialogDescription>
                       <div className="mt-5 text-black">
+                        {/* Loading indicator */}
+                        {loadingFollowing && (
+                          <div className="flex h-full pt-20 justify-center items-center">
+                            <HashLoader
+                              color={"#9b0ced"}
+                              loading={loadingFollowing}
+                              size={80}
+                              aria-label="Loading Spinner"
+                              data-testid="loader"
+                            />
+                          </div>
+                        )}
                         {/* If users are present in DB */}
                         {following &&
                           following?.pages?.map((page) => {
@@ -440,10 +465,10 @@ const Profile = () => {
                               <div className="flex justify-center">
                                 <img
                                   src={homeNoPosts}
-                                  className="max-w-[60%]"
+                                  className="max-w-[50%]"
                                 />
                               </div>
-                              <p className="text-center mt-5 text-2xl font-medium">
+                              <p className="text-center mt-5 text-xl font-medium">
                                 You do not follow any users.
                               </p>
                             </div>
@@ -493,6 +518,17 @@ const Profile = () => {
             </TabsTrigger>
           </TabsList>
           <TabsContent value="userPosts" className="py-10">
+            {isLoading && (
+              <div className="flex pt-10 justify-center items-center">
+                <HashLoader
+                  color={"#9b0ced"}
+                  loading={isLoading}
+                  size={80}
+                  aria-label="Loading Spinner"
+                  data-testid="loader"
+                />
+              </div>
+            )}
             {/* Posts title */}
             {data?.pages?.[0]?.data?.posts.length > 0 && (
               <div className="mt-6 font-semibold flex items-center gap-x-6 px-3 text-3xl lg:text-5xl mx-5 md:mx-10 lg:mx-20">
@@ -536,6 +572,19 @@ const Profile = () => {
           </TabsContent>
           <TabsContent value="likedPosts" className="py-10">
             {/* Posts title */}
+
+            {loadingLikedPosts && (
+              <div className="flex pt-10 justify-center items-center">
+                <HashLoader
+                  color={"#9b0ced"}
+                  loading={loadingLikedPosts}
+                  size={80}
+                  aria-label="Loading Spinner"
+                  data-testid="loader"
+                />
+              </div>
+            )}
+
             {likedPosts?.pages?.[0]?.data?.posts.length > 0 &&
               likedPosts?.pages?.[0]?.data?.posts[0] != null && (
                 <div className="mt-6 font-semibold flex items-center gap-x-6 px-3 text-3xl lg:text-5xl mx-5 md:mx-10 lg:mx-20">

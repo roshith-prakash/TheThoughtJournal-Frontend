@@ -4,7 +4,11 @@ import { useDBUser } from "../context/userContext";
 import defaultAccount from "../assets/account.png";
 import dayjs from "dayjs";
 import { TfiWrite } from "react-icons/tfi";
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import {
+  useInfiniteQuery,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { axiosInstance } from "../utils/axios";
 import Profile from "./Profile";
 import userNotFound from "../assets/user.svg";
@@ -16,12 +20,15 @@ import { numberFormat } from "../functions/numberFormatter";
 import { GoPlusCircle } from "react-icons/go";
 import { RxCross2 } from "react-icons/rx";
 import toast, { Toaster } from "react-hot-toast";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 const User = () => {
   // Get Post Id from params.
   let { username } = useParams();
 
   const { dbUser, fetchUser } = useDBUser();
+
+  const queryClient = useQueryClient();
 
   if (username == dbUser?.username) {
     return <Profile />;
@@ -115,6 +122,9 @@ const User = () => {
               setDisabled(false);
               setFollowing(true);
               refetch();
+              queryClient.removeQueries({
+                queryKey: ["getUserFollowing", dbUser?.username],
+              });
               fetchUser();
             })
             .catch((err) => {
@@ -153,6 +163,9 @@ const User = () => {
               toast.success(`Unfollowed ${user?.data?.user?.username}!`);
               setDisabled(false);
               setFollowing(false);
+              queryClient.removeQueries({
+                queryKey: ["getUserFollowing", dbUser?.username],
+              });
               refetch();
               fetchUser();
             })
@@ -209,18 +222,28 @@ const User = () => {
                 />
               </div>
 
-              {/* Follow / unfllow icon on small screen */}
+              {/* Follow / unfollow icon on small screen */}
               <div className="lg:hidden absolute flex gap-x-4 right-6 top-5">
                 {following ? (
-                  <RxCross2
-                    className="text-xl cursor-pointer"
-                    onClick={unfollowUser}
-                  />
+                  <button disabled={disabled} onClick={unfollowUser}>
+                    {disabled ? (
+                      <AiOutlineLoading3Quarters className="text-xl animate-spin" />
+                    ) : (
+                      <RxCross2
+                        className={`text-xl ${disabled && "text-slate-500"}`}
+                      />
+                    )}
+                  </button>
                 ) : (
-                  <GoPlusCircle
-                    className="text-xl cursor-pointer"
-                    onClick={followUser}
-                  />
+                  <button disabled={disabled} onClick={followUser}>
+                    {disabled ? (
+                      <AiOutlineLoading3Quarters className="text-xl animate-spin" />
+                    ) : (
+                      <GoPlusCircle
+                        className={`text-xl ${disabled && "text-slate-500"}`}
+                      />
+                    )}
+                  </button>
                 )}
               </div>
 
@@ -234,6 +257,8 @@ const User = () => {
                         <RxCross2 />
                       </div>
                     }
+                    disabled={disabled}
+                    disabledText="Please Wait..."
                     onClick={unfollowUser}
                   />
                 ) : (
@@ -244,6 +269,8 @@ const User = () => {
                         <GoPlusCircle />
                       </div>
                     }
+                    disabled={disabled}
+                    disabledText="Please Wait..."
                     onClick={followUser}
                   />
                 )}

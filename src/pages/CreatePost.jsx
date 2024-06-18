@@ -28,6 +28,7 @@ import { useDBUser } from "../context/userContext";
 import { getMinsToRead } from "../functions/mathFunctions";
 import { modules, formats, QuillToolbar } from "../components/QuillToolbar";
 import Avvvatars from "avvvatars-react";
+import { useQueryClient } from "@tanstack/react-query";
 
 const CreatePost = () => {
   const navigate = useNavigate();
@@ -55,6 +56,8 @@ const CreatePost = () => {
     content: 0,
     other: 0,
   });
+
+  const queryClient = useQueryClient();
 
   // Scroll to top of page
   useEffect(() => {
@@ -137,9 +140,11 @@ const CreatePost = () => {
         },
       })
       .then((res) => {
-        console.log(res.data);
         toast.success("Post created!");
         setDisabled(false);
+        queryClient.resetQueries({
+          queryKey: ["getUserPosts", dbUser?.username],
+        });
         navigate("/profile");
       })
       .catch((err) => {

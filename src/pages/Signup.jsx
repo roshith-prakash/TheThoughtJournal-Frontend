@@ -18,7 +18,7 @@ import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import { axiosInstance } from "../utils/axios";
 import signup from "../assets/signup.svg";
-
+import { isValidEmail, isValidPassword } from "../functions/regexFunctions";
 import google from "../assets/google.png";
 
 const provider = new GoogleAuthProvider();

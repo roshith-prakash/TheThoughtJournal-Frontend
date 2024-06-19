@@ -17,12 +17,18 @@ import {
   Search,
   EditPost,
 } from "./pages";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import { Protector } from "./components";
 import { prodURL } from "./utils/axios";
 import SecurityHeaders from "./components/SecurityHeaders";
-import { toast, Toaster } from "react-hot-toast";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "./components/ui/dialog";
 
 // Creating Tanstack query client
 const queryClient = new QueryClient();
@@ -42,17 +48,7 @@ function App() {
     return () => clearInterval(interval);
   }, []);
 
-  // Toast to show server limitations
-  useEffect(() => {
-    const toasttimeout = setTimeout(() => {
-      toast(
-        "Initial Request may take upto a minute due to server limitations. Please be patient.",
-        { position: "bottom-right", duration: 6000 }
-      );
-    }, 500);
-
-    return () => clearTimeout(toasttimeout);
-  }, []);
+  const [open, setOpen] = useState(true);
 
   return (
     <>
@@ -62,8 +58,18 @@ function App() {
         <AuthProvider>
           {/* Providing Db user data to children */}
           <UserProvider>
+            <Dialog open={open} onOpenChange={setOpen}>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Please Note</DialogTitle>
+                  <DialogDescription className="pt-5 text-md text-black">
+                    Initial request may take upto a minute due to server
+                    limitations. Please be patient.
+                  </DialogDescription>
+                </DialogHeader>
+              </DialogContent>
+            </Dialog>
             <SecurityHeaders />
-            <Toaster />
             <BrowserRouter>
               <Routes>
                 {/* Home Page */}

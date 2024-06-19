@@ -15,6 +15,7 @@ import {
   Profile,
   EditProfile,
   Search,
+  EditPost,
 } from "./pages";
 import { useEffect } from "react";
 import { io } from "socket.io-client";
@@ -41,10 +42,11 @@ function App() {
     return () => clearInterval(interval);
   }, []);
 
+  // Toast to show server limitations
   useEffect(() => {
     const toasttimeout = setTimeout(() => {
       toast(
-        "Initial Request may take upto a minute due to server restrictions. Please be patient.",
+        "Initial Request may take upto a minute due to server limitations. Please be patient.",
         { position: "bottom-right", duration: 6000 }
       );
     }, 500);
@@ -85,6 +87,16 @@ function App() {
                   element={
                     <Protector>
                       <CreatePost />
+                    </Protector>
+                  }
+                />
+
+                {/* Route to edit a post. */}
+                <Route
+                  path="/editPost"
+                  element={
+                    <Protector>
+                      <EditPost />
                     </Protector>
                   }
                 />

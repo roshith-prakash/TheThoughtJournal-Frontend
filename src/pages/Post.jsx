@@ -18,7 +18,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../components/ui/dialog";
-import { BsFillTrash3Fill } from "react-icons/bs";
+import { BsFillTrash3Fill, BsPen } from "react-icons/bs";
 import { useDBUser } from "../context/userContext";
 import { toast, Toaster } from "react-hot-toast";
 import { IoHeart } from "react-icons/io5";
@@ -184,7 +184,10 @@ const Post = () => {
               </p>
 
               {data?.data?.post?.User?.username == dbUser?.username && (
-                <div className="lg:hidden">
+                <div className="lg:hidden flex items-center gap-x-5">
+                  <Link to="/editPost" state={{ postId: data?.data?.post?.id }}>
+                    <BsPen className="text-xl" />
+                  </Link>
                   <Dialog>
                     <DialogTrigger>
                       <BsFillTrash3Fill className="text-xl cursor-pointer text-red-600" />
@@ -222,7 +225,17 @@ const Post = () => {
               )}
 
               {data?.data?.post?.User?.username == dbUser?.username && (
-                <div className="hidden lg:block">
+                <div className="hidden lg:flex gap-x-8">
+                  <Link
+                    to="/editPost"
+                    state={{ postId: data?.data?.post?.id }}
+                    className="min-w-14 flex justify-center font-medium shadow-md py-2 px-5 rounded-lg w-full text-ink active:shadow transition-all disabled:text-greyText hover:scale-105"
+                  >
+                    <div className="flex items-center gap-x-2">
+                      <BsPen className="text-xl" />
+                      <p>Edit</p>
+                    </div>
+                  </Link>
                   <Dialog>
                     <DialogTrigger>
                       <OutlineButton

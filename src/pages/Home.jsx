@@ -84,9 +84,6 @@ const Home = () => {
     }
   }, [inView, fetchNextPage, fetchFollowing, dbUser]);
 
-  console.log(posts);
-  console.log(data);
-
   return (
     <>
       {/* Navbar */}
@@ -122,13 +119,18 @@ const Home = () => {
 
             {/* Mapping posts if available */}
             {posts && (
-              <div className="grid md:grid-cols-2 lg:grid-cols-4 ">
-                {posts &&
-                  posts?.pages?.map((page) => {
-                    return page?.data?.posts?.map((post, index) => {
-                      return <PostCard post={post} index={index} />;
-                    });
-                  })}
+              <div className="mt-5">
+                <p className="px-7 text-2xl font-medium text-transparent bg-clip-text bg-gradient-to-l from-cta to-hovercta">
+                  From the people you follow:
+                </p>
+                <div className="mt-5 grid md:grid-cols-2 lg:grid-cols-4 ">
+                  {posts &&
+                    posts?.pages?.map((page) => {
+                      return page?.data?.posts?.map((post, index) => {
+                        return <PostCard post={post} index={index} />;
+                      });
+                    })}
+                </div>
               </div>
             )}
 

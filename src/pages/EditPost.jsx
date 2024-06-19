@@ -60,9 +60,9 @@ const EditPost = (props) => {
     other: 0,
   });
 
-  const queryClient = useQueryClient();
+  const inputRef = useRef();
 
-  console.log(dbUser);
+  const queryClient = useQueryClient();
 
   // Scroll to top of page
   useEffect(() => {
@@ -108,21 +108,25 @@ const EditPost = (props) => {
     // Check if title is empty
     if (title == null || title == undefined || title.length <= 0) {
       setError((prev) => ({ ...prev, title: 1 }));
+      inputRef.current.scrollIntoView({ behavior: "smooth" });
       return;
     }
     // If title is longer than 100 characters.
     else if (title.length > 100) {
       setError((prev) => ({ ...prev, title: 2 }));
+      inputRef.current.scrollIntoView({ behavior: "smooth" });
       return;
     }
     // Check if image has been added
     else if (imageFile == null || imageFile == undefined) {
       setError((prev) => ({ ...prev, image: 1 }));
+      inputRef.current.scrollIntoView({ behavior: "smooth" });
       return;
     }
     // Check if category has been selected
     else if (category == null || category == undefined) {
       setError((prev) => ({ ...prev, category: 1 }));
+      inputRef.current.scrollIntoView({ behavior: "smooth" });
       return;
     }
     // Check if category has been added if "OTHER" was selected
@@ -133,12 +137,15 @@ const EditPost = (props) => {
         otherCategory.length <= 0
       ) {
         setError((prev) => ({ ...prev, other: 1 }));
+        inputRef.current.scrollIntoView({ behavior: "smooth" });
         return;
       } else if (otherCategory.length > 20) {
         setError((prev) => ({ ...prev, other: 2 }));
+        inputRef.current.scrollIntoView({ behavior: "smooth" });
         return;
       } else if (String(otherCategory).split(" ").length > 2) {
         setError((prev) => ({ ...prev, other: 3 }));
+        inputRef.current.scrollIntoView({ behavior: "smooth" });
         return;
       }
     }
@@ -235,7 +242,10 @@ const EditPost = (props) => {
         <Toaster />
 
         {/* Editor box */}
-        <div className="p-10 pb-20 m-5 lg:m-10 bg-white shadow-xl border-[1px] rounded-xl">
+        <div
+          ref={inputRef}
+          className="p-10 pb-20 m-5 lg:m-10 bg-white shadow-xl border-[1px] rounded-xl"
+        >
           {/* Title */}
           <h1 className="text-2xl lg:text-4xl text-center font-medium">
             Create a new Journal post{" "}

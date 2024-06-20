@@ -200,8 +200,6 @@ const EditPost = (props) => {
     fileRef.current.value = null;
   };
 
-  console.log(data);
-
   if (!state?.postId) {
     return (
       <>

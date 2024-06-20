@@ -93,7 +93,7 @@ const Home = () => {
           {/* Title - Gradient text */}
           <h1 className="text-4xl font-semibold px-2 py-5">
             Welcome{" "}
-            <span className="bg-gradient-to-r from-cta to-hovercta bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-hovercta to-hovercta bg-clip-text text-transparent">
               {dbUser?.name ? dbUser?.name : "Journaler"}!
             </span>
           </h1>
@@ -120,7 +120,7 @@ const Home = () => {
             {/* Mapping posts if available */}
             {posts && (
               <div className="mt-5">
-                <p className="px-7 text-2xl font-medium text-transparent bg-clip-text bg-gradient-to-l from-cta to-hovercta">
+                <p className="px-7 text-2xl font-medium text-transparent bg-clip-text bg-gradient-to-b from-cta to-hovercta">
                   From the people you follow:
                 </p>
                 <div className="mt-5 grid md:grid-cols-2 lg:grid-cols-4 ">
@@ -162,8 +162,9 @@ const Home = () => {
             {/* Fetch Next page div - infinite loading */}
             {data && <div ref={ref}></div>}
 
-            <div className="mt-10">
-              <p className="text-center text-xl">
+            {/* Read other posts by going to search page */}
+            <div className="mt-10 flex justify-center">
+              <p className="w-fit text-xl hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-b hover:from-cta hover:to-hovercta transition-all">
                 You can read other recent posts by clicking on the search
                 button!
               </p>

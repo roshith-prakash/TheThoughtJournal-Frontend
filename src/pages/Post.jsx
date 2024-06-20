@@ -178,9 +178,9 @@ const Post = () => {
   });
 
   // Scroll to the top of page
-  // useEffect(() => {
-  //   window.scrollTo({ top: 0, behavior: "smooth" });
-  // }, []);
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
 
   // Set window title.
   useEffect(() => {

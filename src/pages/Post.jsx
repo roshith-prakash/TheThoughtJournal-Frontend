@@ -37,6 +37,7 @@ import { FiMessageCircle } from "react-icons/fi";
 import { useInView } from "react-intersection-observer";
 import { GoReply } from "react-icons/go";
 import { RxCross2 } from "react-icons/rx";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 dayjs.extend(relativeTime);
 
@@ -221,6 +222,9 @@ const Post = () => {
   // To disable like Button
   const [disableLike, setDisableLike] = useState(false);
 
+  // To disable send button
+  const [disableSend, setDisableSend] = useState(false);
+
   // To input comment of the user
   const [comment, setComment] = useState("");
 
@@ -398,7 +402,7 @@ const Post = () => {
       setCommentError(1);
       return;
     }
-
+    setDisableSend(true);
     // Call Api to add comment
     axiosInstance
       .post("/post/add-comment", {
@@ -412,6 +416,7 @@ const Post = () => {
         setComment("");
         setReply(null);
         setParentId(null);
+        setDisableSend(false);
         setRepliesPageNumber({});
         // Refetch post
         refetch();
@@ -421,6 +426,7 @@ const Post = () => {
       })
       .catch((err) => {
         console.log(err);
+        setDisableSend(false);
         toast.error("Something went wrong!");
       });
   };
@@ -850,10 +856,14 @@ const Post = () => {
                     placeholder="Write your comment..."
                     className="pr-10"
                   />
-                  <LuSend
-                    onClick={handleComment}
-                    className="absolute right-2 top-6 text-xl cursor-pointer hover:text-cta transiton-all"
-                  />
+                  {!disableSend ? (
+                    <LuSend
+                      onClick={handleComment}
+                      className="absolute right-2 top-6 text-xl cursor-pointer hover:text-cta transiton-all"
+                    />
+                  ) : (
+                    <AiOutlineLoading3Quarters className="absolute right-2 top-6 text-xl animate-spin" />
+                  )}
                 </div>
                 {commentError == 1 && (
                   <ErrorStatement text={"Please type your comment."} />

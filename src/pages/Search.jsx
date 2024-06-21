@@ -9,6 +9,7 @@ import { axiosInstance } from "../utils/axios";
 import Avvvatars from "avvvatars-react";
 import { Link } from "react-router-dom";
 import homeNoPosts from "../assets/homeNoPosts.svg";
+import HashLoader from "react-spinners/HashLoader";
 
 const Search = () => {
   // State for user input - passed to debouncer
@@ -31,6 +32,7 @@ const Search = () => {
     isLoading: loadingPosts,
     error: postsError,
     fetchNextPage: fetchNextPosts,
+    isFetchingNextPage: loadingNextPosts,
   } = useInfiniteQuery({
     queryKey: ["searchPosts", debouncedSearch],
     queryFn: ({ pageParam }) => {
@@ -56,6 +58,7 @@ const Search = () => {
     isLoading: loadingUsers,
     error: usersError,
     fetchNextPage: fetchNextUsers,
+    isFetchingNextPage: loadingNextUsers,
   } = useInfiniteQuery({
     queryKey: ["searchUsers", debouncedSearch],
     queryFn: ({ pageParam }) => {
@@ -168,6 +171,18 @@ const Search = () => {
                 </div>
               )}
 
+              {(loadingPosts || loadingNextPosts) && (
+                <div className="flex justify-center items-center py-10">
+                  <HashLoader
+                    color={"#9b0ced"}
+                    loading={loadingPosts || loadingNextPosts}
+                    size={100}
+                    aria-label="Loading Spinner"
+                    data-testid="loader"
+                  />
+                </div>
+              )}
+
               {/* If no posts are found */}
               {searchTerm != null &&
                 searchTerm != undefined &&
@@ -218,6 +233,18 @@ const Search = () => {
                       }
                     });
                   })}
+
+                {(loadingUsers || loadingNextUsers) && (
+                  <div className="flex justify-center items-center py-10">
+                    <HashLoader
+                      color={"#9b0ced"}
+                      loading={loadingUsers || loadingNextUsers}
+                      size={100}
+                      aria-label="Loading Spinner"
+                      data-testid="loader"
+                    />
+                  </div>
+                )}
 
                 {/* If no users couldn't be found */}
                 {searchTerm != null &&

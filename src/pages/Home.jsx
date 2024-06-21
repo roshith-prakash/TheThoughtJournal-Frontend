@@ -31,6 +31,7 @@ const Home = () => {
     isLoading: loading,
     error: followingError,
     fetchNextPage: fetchFollowing,
+    isFetchingNextPage: fetchingFollowedPosts,
   } = useInfiniteQuery({
     queryKey: ["following-posts-home", dbUser?.username],
     queryFn: async ({ pageParam }) => {
@@ -47,7 +48,13 @@ const Home = () => {
   });
 
   // Query to get recent posts
-  const { data, isLoading, error, fetchNextPage } = useInfiniteQuery({
+  const {
+    data,
+    isLoading,
+    error,
+    fetchNextPage,
+    isFetchingNextPage: fetchingRecentPosts,
+  } = useInfiniteQuery({
     queryKey: ["recent-posts-home"],
     queryFn: async ({ pageParam }) => {
       return axiosInstance.post("/post/get-recent-posts", {
@@ -68,7 +75,7 @@ const Home = () => {
   //Fetch next posts
   useEffect(() => {
     if (dbUser) {
-      if (dbUser.following.length > 0) {
+      if (dbUser?.following?.length > 0) {
         if (inView) {
           fetchFollowing();
         }
@@ -79,11 +86,17 @@ const Home = () => {
       }
     } else {
       if (inView) {
+        console.log("fetching");
         fetchNextPage();
       }
     }
-  }, [inView, fetchNextPage, fetchFollowing, dbUser]);
+  }, [inView, fetchNextPage, fetchFollowing, dbUser?.id]);
 
+  // console.log(inView, fetchingFollowedPosts);
+
+  // console.log(data)
+
+  console.log(posts);
   return (
     <>
       {/* Navbar */}
@@ -104,19 +117,6 @@ const Home = () => {
         {dbUser?.following?.length > 0 &&
         posts?.pages?.[0]?.data?.posts.length > 0 ? (
           <div>
-            {/* Loading indicator */}
-            {loading && (
-              <div className="h-96 flex justify-center items-center">
-                <HashLoader
-                  color={"#9b0ced"}
-                  loading={loading}
-                  size={100}
-                  aria-label="Loading Spinner"
-                  data-testid="loader"
-                />
-              </div>
-            )}
-
             {/* Mapping posts if available */}
             {posts && (
               <div className="mt-5">
@@ -159,6 +159,18 @@ const Home = () => {
                 </div>
               )}
 
+            {(loading || fetchingFollowedPosts) && (
+              <div className="h-96 flex justify-center items-center">
+                <HashLoader
+                  color={"#9b0ced"}
+                  loading={loading || fetchingFollowedPosts}
+                  size={100}
+                  aria-label="Loading Spinner"
+                  data-testid="loader"
+                />
+              </div>
+            )}
+
             {/* Fetch Next page div - infinite loading */}
             {data && <div ref={ref}></div>}
 
@@ -173,18 +185,6 @@ const Home = () => {
         ) : (
           <div>
             {/* Loading indicator */}
-            {isLoading && (
-              <div className="h-96 flex justify-center items-center">
-                <HashLoader
-                  color={"#9b0ced"}
-                  loading={isLoading}
-                  size={100}
-                  aria-label="Loading Spinner"
-                  data-testid="loader"
-                />
-              </div>
-            )}
-
             {/* Mapping posts if available */}
             {data && (
               <div className="grid md:grid-cols-2 lg:grid-cols-4 ">
@@ -221,6 +221,18 @@ const Home = () => {
                   </p>
                 </div>
               )}
+
+            {(isLoading || fetchingRecentPosts) && (
+              <div className="h-96 flex justify-center items-center">
+                <HashLoader
+                  color={"#9b0ced"}
+                  loading={isLoading || fetchingRecentPosts}
+                  size={100}
+                  aria-label="Loading Spinner"
+                  data-testid="loader"
+                />
+              </div>
+            )}
 
             {/* Fetch Next page div - infinite loading */}
             {data && <div ref={ref}></div>}

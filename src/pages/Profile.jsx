@@ -54,7 +54,13 @@ const Profile = () => {
   }, []);
 
   // Query to get posts
-  const { data, isLoading, error, fetchNextPage } = useInfiniteQuery({
+  const {
+    data,
+    isLoading,
+    error,
+    fetchNextPage,
+    isFetchingNextPage: loadingNextPosts,
+  } = useInfiniteQuery({
     queryKey: ["getUserPosts", dbUser?.username],
     queryFn: async ({ pageParam }) => {
       return axiosInstance.post("/post/get-user-posts", {
@@ -75,6 +81,7 @@ const Profile = () => {
     isLoading: loadingLikedPosts,
     error: likedPostsError,
     fetchNextPage: fetchLikedPosts,
+    isFetchingNextPage: loadingNextLikedPosts,
   } = useInfiniteQuery({
     queryKey: ["getUserLikedPosts", dbUser?.username],
     queryFn: async ({ pageParam }) => {
@@ -518,17 +525,6 @@ const Profile = () => {
             </TabsTrigger>
           </TabsList>
           <TabsContent value="userPosts" className="py-10">
-            {isLoading && (
-              <div className="flex pt-10 justify-center items-center">
-                <HashLoader
-                  color={"#9b0ced"}
-                  loading={isLoading}
-                  size={80}
-                  aria-label="Loading Spinner"
-                  data-testid="loader"
-                />
-              </div>
-            )}
             {/* Posts title */}
             {data?.pages?.[0]?.data?.posts.length > 0 && (
               <div className="mt-6 font-semibold flex items-center gap-x-6 px-3 text-3xl lg:text-5xl mx-5 md:mx-10 lg:mx-20">
@@ -569,21 +565,22 @@ const Profile = () => {
                 </div>
               </div>
             )}
-          </TabsContent>
-          <TabsContent value="likedPosts" className="py-10">
-            {/* Posts title */}
 
-            {loadingLikedPosts && (
+            {/* loading indicator */}
+            {(isLoading || loadingNextPosts) && (
               <div className="flex pt-10 justify-center items-center">
                 <HashLoader
                   color={"#9b0ced"}
-                  loading={loadingLikedPosts}
+                  loading={isLoading || loadingNextPosts}
                   size={80}
                   aria-label="Loading Spinner"
                   data-testid="loader"
                 />
               </div>
             )}
+          </TabsContent>
+          <TabsContent value="likedPosts" className="py-10">
+            {/* Posts title */}
 
             {likedPosts?.pages?.[0]?.data?.posts.length > 0 &&
               likedPosts?.pages?.[0]?.data?.posts[0] != null && (
@@ -622,6 +619,19 @@ const Profile = () => {
                   </div>
                 </div>
               )}
+
+            {/* Loading indicator */}
+            {(loadingLikedPosts || loadingNextLikedPosts) && (
+              <div className="flex pt-10 justify-center items-center">
+                <HashLoader
+                  color={"#9b0ced"}
+                  loading={loadingLikedPosts || loadingNextLikedPosts}
+                  size={80}
+                  aria-label="Loading Spinner"
+                  data-testid="loader"
+                />
+              </div>
+            )}
           </TabsContent>
         </Tabs>
 

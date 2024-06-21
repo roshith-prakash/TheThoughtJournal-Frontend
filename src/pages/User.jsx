@@ -58,7 +58,7 @@ const User = () => {
       isLoading: loadingPosts,
       error,
       fetchNextPage,
-      isFetchingNextPage,
+      isFetchingNextPage: loadingNextPosts,
     } = useInfiniteQuery({
       queryKey: ["userPosts", username],
       queryFn: async ({ pageParam }) => {
@@ -341,6 +341,18 @@ const User = () => {
                     return <PostCard post={post} index={index} />;
                   });
                 })}
+              </div>
+            )}
+
+            {(loadingPosts || loadingNextPosts) && (
+              <div className="flex justify-center items-center py-10">
+                <HashLoader
+                  color={"#9b0ced"}
+                  loading={loadingPosts || loadingNextPosts}
+                  size={100}
+                  aria-label="Loading Spinner"
+                  data-testid="loader"
+                />
               </div>
             )}
 

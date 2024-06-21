@@ -1,7 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { axiosInstance } from "../utils/axios";
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import {
+  useInfiniteQuery,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import ReactQuill from "react-quill";
 import {
   ErrorStatement,
@@ -45,26 +49,105 @@ const Comment = ({
   loadMoreReplies,
   fetchDisable,
   repliesPageNumber,
+  refetchComments,
+  refetchPost,
+  setRepliesPageNumber,
+  currentUser,
+  author,
 }) => {
-  return (
-    <div className="my-5 py-3 px-4 rounded-xl shadow-lg">
-      <Link to={`/user/${comment?.User?.username}`} className="flex gap-x-4">
-        {/* User Image or Avatar */}
-        {comment?.User?.photoURL ? (
-          <img
-            src={comment?.User?.photoURL}
-            className="h-12 w-12 rounded-full"
-          />
-        ) : (
-          <Avvvatars size={50} value={comment?.User?.name} />
-        )}
+  const [disableDelete, setDisableDelete] = useState(false);
+  const [modal, setModal] = useState(false);
 
-        {/* User's name & username */}
-        <div>
-          <p className="break-all font-medium">{comment?.User?.name}</p>
-          <p className="break-all">@{comment?.User?.username}</p>
-        </div>
-      </Link>
+  // Delete the comment (& replies if applicable)
+  const deleteComment = () => {
+    // Disable the delete button
+    setDisableDelete(true);
+
+    axiosInstance
+      .post("/post/remove-comment", {
+        commentId: comment?.id,
+      })
+      .then((res) => {
+        // Close the Modal
+        setModal(false);
+        // Refetch Post
+        refetchPost();
+        // Refetch comments
+        refetchComments();
+        // Reset page number object since comments are being refetched
+        setRepliesPageNumber({});
+        // Enable the button
+        setDisableDelete(false);
+        // Toast
+        toast.success("Comment Deleted!");
+      })
+      .catch((err) => {
+        // Log the error
+        console.log(err);
+        // Enable the button
+        setDisableDelete(false);
+        // Toast
+        toast.error("Could not delete comment.");
+      });
+  };
+
+  return (
+    <div className="my-5 py-3 px-4 rounded-xl shadow-lg relative">
+      <div className="flex justify-between">
+        {/* Link to user's account */}
+        <Link to={`/user/${comment?.User?.username}`} className="flex gap-x-4">
+          {/* User Image or Avatar */}
+          {comment?.User?.photoURL ? (
+            <img
+              src={comment?.User?.photoURL}
+              className="h-12 w-12 rounded-full"
+            />
+          ) : (
+            <Avvvatars size={50} value={comment?.User?.name} />
+          )}
+
+          {/* User's name & username */}
+          <div>
+            <p className="break-all font-medium">{comment?.User?.name}</p>
+            <p className="break-all">@{comment?.User?.username}</p>
+          </div>
+        </Link>
+        {/* Delete button - opens modal. */}
+        {(comment?.userId == currentUser || author == currentUser) &&
+          comment?.id && (
+            <Dialog open={modal} onOpenChange={setModal}>
+              <DialogTrigger>
+                <BsFillTrash3Fill className="text-xl cursor-pointer text-red-600" />
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Do you want to delete this comment?</DialogTitle>
+                  <DialogDescription>
+                    <p className="mt-5">
+                      This action cannot be undone. This will permanently delete
+                      your comment and all replies.
+                    </p>
+                  </DialogDescription>
+                </DialogHeader>
+                <div className="flex justify-center mt-5">
+                  <div className="w-fit">
+                    <OutlineButton
+                      text={
+                        <div className="flex justify-center items-center text-red-600 gap-x-2">
+                          <BsFillTrash3Fill className=" cursor-pointer text-red-600" />
+                          Delete this comment.
+                        </div>
+                      }
+                      disabled={disableDelete}
+                      onClick={deleteComment}
+                      disabledText="Please wait..."
+                    />
+                  </div>
+                </div>
+              </DialogContent>
+            </Dialog>
+          )}
+      </div>
       {/* Comment time */}
       <p className="text-sm text-greyText mt-1 ml-16">
         {dayjs(comment?.createdAt).fromNow()}
@@ -84,12 +167,28 @@ const Comment = ({
       {/* If reply to comment exists, render more comment objects */}
       {comment?.replies &&
         comment?.replies?.map((reply) => {
-          return <Comment comment={reply} handleReply={handleReply} />;
+          return (
+            <Comment
+              comment={reply}
+              handleReply={handleReply}
+              pageIndex={pageIndex}
+              commentIndex={commentIndex}
+              loadMoreReplies={loadMoreReplies}
+              fetchDisable={fetchDisable}
+              repliesPageNumber={repliesPageNumber}
+              refetchComments={refetchComments}
+              refetchPost={refetchPost}
+              setRepliesPageNumber={setRepliesPageNumber}
+              author={author}
+              currentUser={currentUser}
+            />
+          );
         })}
 
       {/* Load more replies button */}
-      {comment?.replies?.length > 0 &&
-        repliesPageNumber[comment?.id] != "NoReply" && (
+      {comment?.replyCount > 0 &&
+        repliesPageNumber[comment?.id] != "NoReply" &&
+        comment.replyCount > comment?.replies?.length && (
           <button
             className="mx-4 my-4 disabled:text-greytext text-cta font-medium"
             onClick={() => {
@@ -145,6 +244,8 @@ const Post = () => {
 
   const { ref, inView } = useInView();
 
+  const queryClient = useQueryClient();
+
   // Fetch data from server.
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["post-page", postId],
@@ -173,7 +274,6 @@ const Post = () => {
     getNextPageParam: (lastPage) => {
       return lastPage?.data?.nextPage;
     },
-    refetchOnWindowFocus: false,
     enabled: !!data,
   });
 
@@ -284,18 +384,22 @@ const Post = () => {
 
   // Handler to add comment.
   const handleComment = () => {
+    // Check if user is signed in
     if (!dbUser) {
       toast.error("You must be signed in to comment!");
       return;
     }
 
+    // Comment error
     setCommentError(0);
 
+    // Check if comment is typed
     if (comment == undefined || comment == null || comment.length == 0) {
       setCommentError(1);
       return;
     }
 
+    // Call Api to add comment
     axiosInstance
       .post("/post/add-comment", {
         userId: dbUser?.id,
@@ -304,11 +408,15 @@ const Post = () => {
         parentId: parentId,
       })
       .then((res) => {
+        // Reset state
         setComment("");
         setReply(null);
         setParentId(null);
-        refetchComments();
         setRepliesPageNumber({});
+        // Refetch post
+        refetch();
+        // Refetch Comments
+        refetchCommentsfunc();
         toast.success("Comment Added!");
       })
       .catch((err) => {
@@ -421,6 +529,20 @@ const Post = () => {
           setFetchDisable(false);
         });
     }
+  };
+
+  // Refetch post information
+  const refetchPost = () => {
+    refetch();
+  };
+
+  // Refetch comments
+  const refetchCommentsfunc = () => {
+    replyRef.current.scrollIntoView({ behavior: "smooth" });
+    // Resetting query because new data doesnt show up otherwise.
+    queryClient.resetQueries({
+      queryKey: ["comments", data?.data?.post?.id],
+    });
   };
 
   return (
@@ -644,14 +766,21 @@ const Post = () => {
                       )}
                     </p>
                   </div>
-                  <FiMessageCircle
-                    onClick={() => {
-                      replyRef.current.scrollIntoView({
-                        behavior: "smooth",
-                      });
-                    }}
-                    className="text-3xl cursor-pointer"
-                  />
+                  <div className="flex flex-col items-center w-min px-2">
+                    <FiMessageCircle
+                      onClick={() => {
+                        replyRef.current.scrollIntoView({
+                          behavior: "smooth",
+                        });
+                      }}
+                      className="text-3xl cursor-pointer"
+                    />
+                    <p className={`mt-1 -ml-0.5`}>
+                      {Intl.NumberFormat("en", { notation: "compact" }).format(
+                        data?.data?.post?.commentCount
+                      )}
+                    </p>
+                  </div>
                   {/* Share button - copies the post link */}
                   <LuSend
                     onClick={() => {
@@ -747,6 +876,11 @@ const Post = () => {
                           loadMoreReplies={loadMoreReplies}
                           fetchDisable={fetchDisable}
                           repliesPageNumber={repliesPageNumber}
+                          refetchComments={refetchComments}
+                          refetchPost={refetchPost}
+                          setRepliesPageNumber={setRepliesPageNumber}
+                          author={data?.data?.post?.User?.id}
+                          currentUser={dbUser?.id}
                         />
                       );
                     }
@@ -754,6 +888,20 @@ const Post = () => {
                 })}
               </div>
             )}
+
+            {/* While loading comments */}
+            {loadingComments && (
+              <div className="py-20 flex w-full justify-center items-center">
+                <HashLoader
+                  color={"#9b0ced"}
+                  loading={loadingComments}
+                  size={100}
+                  aria-label="Loading Spinner"
+                  data-testid="loader"
+                />
+              </div>
+            )}
+
             {/* Ref for infinte querying comments */}
             <div ref={ref}></div>
           </div>

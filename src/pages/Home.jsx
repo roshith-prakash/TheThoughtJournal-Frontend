@@ -74,29 +74,21 @@ const Home = () => {
 
   //Fetch next posts
   useEffect(() => {
-    if (dbUser) {
-      if (dbUser?.following?.length > 0) {
-        if (inView) {
-          fetchFollowing();
-        }
-      } else {
-        if (inView) {
-          fetchNextPage();
-        }
+    if (
+      posts == null ||
+      posts == undefined ||
+      posts?.pages[0]?.data?.posts?.length == 0
+    ) {
+      if (inView) {
+        fetchNextPage();
       }
     } else {
       if (inView) {
-        console.log("fetching");
-        fetchNextPage();
+        fetchFollowing();
       }
     }
   }, [inView, fetchNextPage, fetchFollowing, dbUser?.id]);
 
-  // console.log(inView, fetchingFollowedPosts);
-
-  // console.log(data)
-
-  console.log(posts);
   return (
     <>
       {/* Navbar */}

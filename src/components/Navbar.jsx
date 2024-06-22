@@ -31,7 +31,7 @@ const Navbar = () => {
         className={`sticky top-0 w-full font-inter shadow-md overflow-hidden bg-white flex justify-between items-center px-5 lg:px-10 py-5 z-10 max-w-screen`}
       >
         {/* Logo on the left side - linked to home page */}
-        <Link className="flex items-center gap-x-2 hover:animate-pulse" to="/">
+        <Link className="flex items-center gap-x-2" to="/">
           <img
             src={logo}
             alt="The Thought Journal"

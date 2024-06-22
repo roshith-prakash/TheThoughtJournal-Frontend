@@ -87,7 +87,7 @@ const EditProfile = () => {
     ) {
       setError((prev) => ({ ...prev, username: 1 }));
       return;
-    } else if (username.length > 15) {
+    } else if (username.length > 20) {
       setError((prev) => ({ ...prev, username: 3 }));
       return;
     } else if (!isValidUsername(username)) {
@@ -274,7 +274,7 @@ const EditProfile = () => {
               )}
               {error.username == 3 && (
                 <ErrorStatement
-                  text={"Username cannot exceed 15 characters."}
+                  text={"Username cannot exceed 20 characters."}
                 />
               )}
               {error.username == 4 && (

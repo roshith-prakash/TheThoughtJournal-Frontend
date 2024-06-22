@@ -293,7 +293,7 @@ const User = () => {
                 )}
 
                 {/* Counts */}
-                <div className="py-1 flex justify-center items-center gap-x-8">
+                <div className="py-1 mt-4 flex justify-center items-center gap-x-8">
                   {/* Total Like Count */}
                   <div className="flex flex-col items-center gap-y-1">
                     <p>{numberFormat(user?.data?.user?.totalLikes)}</p>

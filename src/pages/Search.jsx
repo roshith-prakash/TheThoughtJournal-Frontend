@@ -90,7 +90,17 @@ const Search = () => {
         fetchNextUsers();
       }
     }
-  }, [inView, fetchNextPosts, fetchNextUsers]);
+  }, [
+    inView,
+    fetchNextPosts,
+    fetchNextUsers,
+    users?.pages?.length,
+    posts?.pages?.length,
+    searchTerm,
+  ]);
+
+  console.log(users);
+  console.log(inView);
 
   return (
     <>
@@ -234,6 +244,8 @@ const Search = () => {
                     });
                   })}
 
+                <div ref={ref}></div>
+
                 {(loadingUsers || loadingNextUsers) && (
                   <div className="flex justify-center items-center py-10">
                     <HashLoader
@@ -262,7 +274,6 @@ const Search = () => {
                     </div>
                   )}
               </div>
-              <div ref={ref}></div>
             </TabsContent>
           </Tabs>
         </div>

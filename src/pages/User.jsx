@@ -21,6 +21,7 @@ import { GoPlusCircle } from "react-icons/go";
 import { RxCross2 } from "react-icons/rx";
 import toast, { Toaster } from "react-hot-toast";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { Dialog, DialogContent, DialogTrigger } from "../components/ui/dialog";
 
 const User = () => {
   // Get Post Id from params.
@@ -212,14 +213,50 @@ const User = () => {
             <div className="bg-white shadow-xl -translate-y-14 border-2 min-h-52 pt-20 pb-10 rounded-lg mx-5 md:mx-10 lg:mx-20">
               {/* Floating Image */}
               <div className="absolute w-full -top-16 flex justify-center">
-                <img
-                  src={
-                    user?.data?.user?.photoURL
-                      ? user?.data?.user?.photoURL
-                      : defaultAccount
-                  }
-                  className="bg-white rounded-full h-32 w-32 border-8 border-[#dcbbf0] pointer-events-none"
-                />
+                {user?.data?.user?.photoURL ? (
+                  <Dialog>
+                    <DialogTrigger>
+                      <img
+                        src={
+                          user?.data?.user?.photoURL
+                            ? user?.data?.user?.photoURL
+                            : defaultAccount
+                        }
+                        className={`bg-white rounded-full h-32 w-32 border-8 border-[#dcbbf0] ${
+                          user?.data?.user?.photoURL && "cursor-pointer"
+                        } `}
+                      />
+                    </DialogTrigger>
+                    <DialogContent className="w-80 md:w-96 border-none rounded max-w-auto h-fit p-0 m-0">
+                      <div className="flex justify-center">
+                        <img
+                          src={
+                            user?.data?.user?.photoURL
+                              ? user?.data?.user?.photoURL
+                              : defaultAccount
+                          }
+                          className={`h-80 w-80 md:w-96 md:h-96 rounded`}
+                        />
+                      </div>
+                    </DialogContent>
+                  </Dialog>
+                ) : (
+                  <img
+                    src={
+                      user?.data?.user?.photoURL
+                        ? user?.data?.user?.photoURL
+                        : defaultAccount
+                    }
+                    onClick={() => {
+                      if (user?.data?.user?.photoURL) {
+                        window.open(user?.data?.user?.photoURL);
+                      }
+                    }}
+                    className={`bg-white rounded-full h-32 w-32 border-8 border-[#dcbbf0] ${
+                      user?.data?.user?.photoURL && "cursor-pointer"
+                    } `}
+                  />
+                )}
               </div>
 
               {/* Follow / unfollow icon on small screen */}

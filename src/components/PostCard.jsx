@@ -27,7 +27,7 @@ const PostCard = ({ post, index }) => {
             {post?.category != "OTHER" ? post?.category : post?.otherCategory}
           </p>
           {/* Post title - ellipsized if too long. */}
-          <p className="ml-2 mt-5 text-2xl font-medium h-16 overflow-hidden">
+          <p className="ml-2 mt-5 text-2xl font-medium h-16 line-clamp-2 overflow-hidden">
             {post?.title}
           </p>
 

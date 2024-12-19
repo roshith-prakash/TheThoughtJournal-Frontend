@@ -382,7 +382,7 @@ const Profile = () => {
                                   <Link
                                     key={user?.username}
                                     to={`/user/${user?.username}`}
-                                    className="py-3 px-4 flex gap-x-5 items-center rounded hover:bg-slate-100 dark:hover:bg-darkgrey dark:text-darkmodetext"
+                                    className="py-3 px-4 flex items-center gap-x-5 rounded hover:bg-slate-100 dark:hover:bg-darkgrey dark:text-darkmodetext"
                                   >
                                     {user?.photoURL ? (
                                       <img
@@ -393,7 +393,7 @@ const Profile = () => {
                                       <Avvvatars size={50} value={user?.name} />
                                     )}
 
-                                    <div className="flex-col gap-y-2">
+                                    <div className="flex-col text-left gap-y-2">
                                       <p className="text-lg font-medium">
                                         {user?.name}
                                       </p>
@@ -456,7 +456,7 @@ const Profile = () => {
                                       <Avvvatars size={50} value={user?.name} />
                                     )}
 
-                                    <div className="flex-col gap-y-2">
+                                    <div className="flex-col text-left gap-y-2">
                                       <p className="text-lg font-medium">
                                         {user?.name}
                                       </p>

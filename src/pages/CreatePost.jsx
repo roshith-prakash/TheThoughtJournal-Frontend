@@ -148,7 +148,7 @@ const CreatePost = () => {
           "Content-Type": "multipart/formdata",
         },
       })
-      .then((res) => {
+      .then(() => {
         toast.success("Post created!");
         setDisabled(false);
         queryClient.resetQueries({
@@ -220,12 +220,13 @@ const CreatePost = () => {
               onChange={handleFileChange}
             />
             {/* Flex div - button & image name */}
-            <div className="mt-3 flex flex-col gap-y-2 md:gap-y-0 md:flex-row md:gap-x-5 items-center">
-              <div className="w-full md:flex-1">
+            <div className="mt-3">
+              {/* Flex div - button & image name */}
+              <div>
                 {/* Button to open file input  */}
                 <OutlineButton
                   text={
-                    <p className="flex gap-x-3 justify-center dark:text-darkmodetext items-center">
+                    <p className="flex gap-x-3 justify-center items-center">
                       Select your image
                       {/* Icon */}
                       <img src={gallery} className="h-5" />
@@ -233,9 +234,11 @@ const CreatePost = () => {
                   }
                   onClick={() => fileRef.current.click()}
                 />
+                {/* Display file name */}
+                <p className="mt-3 overflow-clip">
+                  {typeof imageFile == "string" ? imageFile : imageFile?.name}
+                </p>
               </div>
-              {/* Display file name */}
-              <p className="flex-1 overflow-hidden">{imageFile?.name}</p>
             </div>
             {error.image == 1 && (
               <ErrorStatement text={"Please add an image for your post."} />
@@ -254,7 +257,11 @@ const CreatePost = () => {
             </SelectTrigger>
             <SelectContent className="dark:bg-darkgrey">
               {categories.map((category) => {
-                return <SelectItem value={category}>{category}</SelectItem>;
+                return (
+                  <SelectItem key={category} value={category}>
+                    {category}
+                  </SelectItem>
+                );
               })}
             </SelectContent>
           </Select>

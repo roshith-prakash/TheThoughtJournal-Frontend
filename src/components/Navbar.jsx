@@ -59,7 +59,7 @@ const Navbar = () => {
           </button>
 
           {/* Search Icon - takes to search page. */}
-          <Link to="/search">
+          <Link to="/search" className="hidden md:block">
             <IoSearch className="text-2xl hover:text-cta transition-all" />
           </Link>
 
@@ -281,6 +281,15 @@ const Navbar = () => {
               className="hover:text-cta cursor-pointer transition-all"
             >
               Home
+            </Link>
+          </p>
+          {/* Link to Home */}
+          <p className="my-2">
+            <Link
+              to="/search"
+              className="hover:text-cta cursor-pointer transition-all"
+            >
+              Search
             </Link>
           </p>
           {/* Link to create post page - not shown if already on create post page */}

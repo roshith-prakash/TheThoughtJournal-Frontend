@@ -195,7 +195,7 @@ const User = () => {
       </div>
       {/* If data is being fetched*/}
       {loadingUser && (
-        <div className="min-h-[70vh] md:min-h-[65vh] lg:min-h-[60vh] p-20 pb-40 flex justify-center items-center">
+        <div className="dark:bg-darkbg min-h-[70vh] md:min-h-[65vh] lg:min-h-[60vh] p-20 pb-40 flex justify-center items-center">
           <HashLoader
             color={"#9b0ced"}
             loading={loadingUser}

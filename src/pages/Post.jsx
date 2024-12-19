@@ -561,7 +561,7 @@ const Post = () => {
 
       {/* If data is being fetched */}
       {isLoading && (
-        <div className="min-h-[70vh] md:min-h-[65vh] lg:min-h-[60vh]  flex justify-center items-center">
+        <div className="dark:bg-darkbg min-h-[70vh] md:min-h-[65vh] lg:min-h-[60vh]  flex justify-center items-center">
           <HashLoader
             color={"#9b0ced"}
             loading={isLoading}
@@ -641,7 +641,7 @@ const Post = () => {
                     <Link
                       to="/editPost"
                       state={{ postId: data?.data?.post?.id }}
-                      className="min-w-14 flex justify-center font-medium shadow-md py-2 px-5 rounded-lg w-full text-ink active:shadow transition-all disabled:text-greyText hover:scale-105"
+                      className="min-w-14 flex justify-center font-medium shadow-md py-2 px-5 rounded-lg w-full text-ink dark:text-darkmodetext dark:border-2 active:shadow transition-all disabled:text-greyText hover:scale-105"
                     >
                       <div className="flex items-center gap-x-2">
                         <BsPen className="text-xl" />

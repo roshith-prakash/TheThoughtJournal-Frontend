@@ -274,7 +274,7 @@ const EditPost = () => {
 
             {/* Add Post thumbnail image */}
             <div className="mt-8 lg:mt-0 lg:flex-1">
-              <p className="font-medium">Thumbnail</p>
+              <p className="font-medium mb-2">Thumbnail</p>
               {/* Hidden input box - used to accept images */}
               <input
                 className="hidden"
@@ -284,22 +284,20 @@ const EditPost = () => {
                 onChange={handleFileChange}
               />
               {/* Flex div - button & image name */}
-              <div className="mt-3 flex flex-col gap-y-2 md:gap-y-0 md:flex-row md:gap-x-5 items-center">
-                <div className="w-full md:flex-1">
-                  {/* Button to open file input  */}
-                  <OutlineButton
-                    text={
-                      <p className="flex gap-x-3 justify-center items-center">
-                        Select your image
-                        {/* Icon */}
-                        <img src={gallery} className="h-5" />
-                      </p>
-                    }
-                    onClick={() => fileRef.current.click()}
-                  />
-                </div>
+              <div>
+                {/* Button to open file input  */}
+                <OutlineButton
+                  text={
+                    <p className="flex gap-x-3 justify-center items-center">
+                      Select your image
+                      {/* Icon */}
+                      <img src={gallery} className="h-5" />
+                    </p>
+                  }
+                  onClick={() => fileRef.current.click()}
+                />
                 {/* Display file name */}
-                <p className="flex-1 overflow-hidden">
+                <p className="mt-3 overflow-clip">
                   {typeof imageFile == "string" ? imageFile : imageFile?.name}
                 </p>
               </div>
@@ -318,10 +316,10 @@ const EditPost = () => {
                 setCategory(selectedCategory)
               }
             >
-              <SelectTrigger className="md:w-[180px]">
+              <SelectTrigger className="md:w-[180px] dark:bg-darkgrey dark:border-2">
                 <SelectValue placeholder="Select a Category" />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="dark:bg-darkgrey">
                 {categories.map((category) => {
                   return (
                     <SelectItem key={category} value={category}>

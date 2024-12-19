@@ -1,19 +1,18 @@
 import Avvvatars from "avvvatars-react";
-import React from "react";
 import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 
 dayjs.extend(relativeTime);
 
-const PostCard = ({ post, index }) => {
+const PostCard = ({ post }) => {
   return (
     // Card container
-    <div key={index} className="flex justify-center">
+    <div className="flex justify-center">
       {/* Entire card is a link to post page to view the post */}
       <Link
         to={`/post/${post?.id}`}
-        className="my-5 mx-5  w-full md:w-96 lg:w-80 overflow-hidden rounded-lg cursor-pointer shadow-lg hover:shadow-xl hover:scale-105 transition-all"
+        className="my-5 mx-5  w-full md:w-96 lg:w-80 overflow-hidden rounded-lg cursor-pointer shadow-lg hover:shadow-xl hover:scale-105 transition-all dark:border-2"
       >
         {/* Thumbnail for post card. */}
         <img
@@ -21,9 +20,9 @@ const PostCard = ({ post, index }) => {
           className="h-60 w-full rounded-t-x object-top object-cover"
         />
         {/* Card Content Section */}
-        <div className="bg-gradient-to-br from-white to-bgwhite p-5">
+        <div className="bg-bgwhite dark:bg-darkbg dark:text-darkmodetext p-5">
           {/* Badge for post category */}
-          <p className="bg-cta text-white text-sm rounded-full px-3 py-1 w-fit">
+          <p className="bg-cta dark:bg-hovercta text-white dark:text-darkmodetext text-sm rounded-full px-3 py-1 w-fit">
             {post?.category != "OTHER" ? post?.category : post?.otherCategory}
           </p>
           {/* Post title - ellipsized if too long. */}

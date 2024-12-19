@@ -103,7 +103,7 @@ const Login = () => {
         // ...
       })
       .catch((error) => {
-        const errorCode = error.code;
+        // const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorMessage);
         setDisabled(false);
@@ -124,8 +124,8 @@ const Login = () => {
     signInWithPopup(auth, provider)
       .then((result) => {
         // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
+        // const credential = GoogleAuthProvider.credentialFromResult(result);
+        // const token = credential.accessToken;
         // The signed-in user info.
         const user = result.user;
 
@@ -149,12 +149,12 @@ const Login = () => {
       .catch((error) => {
         // Handle Errors here.
         setDisabled(false);
-        const errorCode = error.code;
+        // const errorCode = error.code;
         const errorMessage = error.message;
         // The email of the user's account used.
         // const email = error.customData.email;
         // The AuthCredential type that was used.
-        const credential = GoogleAuthProvider.credentialFromError(error);
+        // const credential = GoogleAuthProvider.credentialFromError(error);
         console.log(errorMessage);
       });
   };
@@ -163,7 +163,7 @@ const Login = () => {
     <>
       <Navbar />
       <Toaster />
-      <div className="lg:min-h-[89vh] flex w-full bg-none lg:bg-bgwhite">
+      <div className="lg:min-h-[89vh] flex w-full bg-none lg:bg-bgwhite dark:bg-darkbg">
         {/* Image Div - displayed only on laptop */}
         <div className="hidden lg:flex lg:flex-1 items-center justify-center">
           <img src={login} className="max-w-[70%]" />
@@ -172,9 +172,9 @@ const Login = () => {
         {/* Right Div */}
         <div className="min-h-[95vh] mt-5 lg:mt-0 lg:h-full lg:min-h-[88vh] pb-10 flex-1 flex justify-center items-center">
           {/* Login Form Div */}
-          <div className="bg-white border-[1px] w-[85%] -translate-y-5 md:-translate-y-0 px-8 md:w-[65%] mt-5 md:mt-14 lg:mt-5 p-5 md:px-20 shadow-xl rounded-xl pb-10">
+          <div className="bg-white dark:bg-darkgrey dark:text-darkmodetext border-[1px] w-[85%] -translate-y-5 md:-translate-y-0 px-8 md:w-[65%] mt-5 md:mt-14 lg:mt-5 p-5 md:px-20 shadow-xl rounded-xl pb-10">
             {/* Title */}
-            <h1 className="text-ink font-bold text-2xl mt-5 italic text-center">
+            <h1 className="text-ink dark:text-darkmodetext font-bold text-2xl mt-5 italic text-center">
               Log in to The Journal
             </h1>
 
@@ -235,7 +235,7 @@ const Login = () => {
             <button
               disabled={disabled}
               onClick={handleGoogleLogin}
-              className="flex w-full gap-x-5 py-4 justify-center items-center px-14 shadow-md rounded-lg font-medium active:shadow transition-all disabled:text-greyText"
+              className="flex dark:border-2 w-full gap-x-5 py-4 justify-center items-center px-14 shadow-md rounded-lg font-medium active:shadow transition-all disabled:text-greyText"
             >
               <p>Log in with Google</p>
               <img src={google} className="max-h-6 max-w-6" />
@@ -243,7 +243,7 @@ const Login = () => {
           </div>
         </div>
       </div>
-      <div className="pt-20">
+      <div className="pt-20 dark:bg-darkbg">
         <Footer />
       </div>
     </>

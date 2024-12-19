@@ -61,7 +61,9 @@ function App() {
             <Dialog open={open} onOpenChange={setOpen}>
               <DialogContent>
                 <DialogHeader>
-                  <DialogTitle>Please Note</DialogTitle>
+                  <DialogTitle className="dark:text-darkmodetext">
+                    Please Note
+                  </DialogTitle>
                   <DialogDescription className="pt-5 text-md text-black">
                     Initial request may take upto a minute due to server
                     limitations. Please be patient.

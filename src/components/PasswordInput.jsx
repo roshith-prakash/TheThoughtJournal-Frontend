@@ -11,7 +11,7 @@ const PasswordInput = ({ value, placeholder, onChange }) => {
       {/* Input field - can be text or password field depending on state */}
       <input
         type={display ? "text" : "password"}
-        className="border-b-2 placeholder:text-greyText w-full py-2 min-h-8 mt-3 focus:outline-none"
+        className="border-b-2 bg-transparent placeholder:text-greyText w-full py-2 min-h-8 mt-3 focus:outline-none"
         value={value}
         placeholder={placeholder}
         onChange={onChange}

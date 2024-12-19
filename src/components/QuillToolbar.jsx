@@ -67,7 +67,6 @@ export const formats = [
   "list",
   "bullet",
   "indent",
-
   "color",
   "code-block",
 ];

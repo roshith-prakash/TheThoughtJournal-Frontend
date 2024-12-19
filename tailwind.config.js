@@ -1,6 +1,7 @@
+/* eslint-disable no-undef */
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: ["class"],
+  darkMode: "class",
   content: [
     './pages/**/*.{js,jsx}',
     './components/**/*.{js,jsx}',
@@ -45,7 +46,10 @@ module.exports = {
         "cta": "#9b0ced",
         "hovercta": "#7123b0",
         "darkgrey": "#1f1e1e",
-        "lightpink": "#dcbbf0"
+        "lightpink": "#dcbbf0",
+        "darkbg": "#181818",
+        "secondarydarkbg": "#211f1f",
+        "darkmodetext": "#E4E4E4",
       }
     },
   },

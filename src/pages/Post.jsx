@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { axiosInstance } from "../utils/axios";
 import {
@@ -68,7 +68,7 @@ const Comment = ({
       .post("/post/remove-comment", {
         commentId: comment?.id,
       })
-      .then((res) => {
+      .then(() => {
         // Close the Modal
         setModal(false);
         // Refetch Post
@@ -93,7 +93,7 @@ const Comment = ({
   };
 
   return (
-    <div className="my-5 py-3 px-4 rounded-xl shadow-lg relative">
+    <div className="my-5 py-3 px-4 rounded-xl shadow-lg dark:border-2 relative">
       <div className="flex justify-between">
         {/* Link to user's account */}
         <Link to={`/user/${comment?.User?.username}`} className="flex gap-x-4">
@@ -122,7 +122,9 @@ const Comment = ({
               </DialogTrigger>
               <DialogContent>
                 <DialogHeader>
-                  <DialogTitle>Do you want to delete this comment?</DialogTitle>
+                  <DialogTitle className="dark:text-darkmodetext">
+                    Do you want to delete this comment?
+                  </DialogTitle>
                   <DialogDescription>
                     <p className="mt-5">
                       This action cannot be undone. This will permanently delete
@@ -167,9 +169,10 @@ const Comment = ({
       </div>
       {/* If reply to comment exists, render more comment objects */}
       {comment?.replies &&
-        comment?.replies?.map((reply) => {
+        comment?.replies?.map((reply, i) => {
           return (
             <Comment
+              key={i}
               comment={reply}
               handleReply={handleReply}
               pageIndex={pageIndex}
@@ -251,7 +254,7 @@ const Post = () => {
   const queryClient = useQueryClient();
 
   // Fetch data from server.
-  const { data, isLoading, error, refetch } = useQuery({
+  const { data, isLoading, refetch } = useQuery({
     queryKey: ["post-page", postId],
     queryFn: async () => {
       return axiosInstance.post("/post/get-post", { postId: postId });
@@ -263,7 +266,7 @@ const Post = () => {
   const {
     data: comments,
     isLoading: loadingComments,
-    error: CommentsError,
+    // error: CommentsError,
     fetchNextPage,
     refetch: refetchComments,
   } = useInfiniteQuery({
@@ -374,7 +377,7 @@ const Post = () => {
       .post("/post/delete-post", {
         postId: data?.data?.post?.id,
       })
-      .then((res) => {
+      .then(() => {
         setDisabled(false);
         toast.success("Post deleted");
         navigate("/profile");
@@ -411,7 +414,7 @@ const Post = () => {
         content: comment,
         parentId: parentId,
       })
-      .then((res) => {
+      .then(() => {
         // Reset state
         setComment("");
         setReply(null);
@@ -552,7 +555,7 @@ const Post = () => {
   };
 
   return (
-    <div className="bg-bgwhite min-h-screen">
+    <div className="bg-bgwhite dark:bg-darkbg min-h-screen">
       <Navbar />
       <Toaster />
 
@@ -572,7 +575,7 @@ const Post = () => {
       {/* When post is available */}
       {data && data?.data?.post && (
         <>
-          <div className="pb-10 m-2 md:m-5 lg:m-10 bg-white shadow-xl border-[1px] rounded-xl">
+          <div className="pb-10 m-2 md:m-5 lg:m-10 bg-white shadow-xl border-[1px] dark:border-darkgrey dark:bg-darkgrey dark:text-darkmodetext rounded-xl">
             {/* Thumbnail Image */}
             <div>
               <img
@@ -583,7 +586,7 @@ const Post = () => {
             <div className="p-5 md:p-10 md:pt-0 mt-8">
               {/* Badge */}
               <div className="flex justify-between items-center">
-                <p className="bg-cta text-white text-lg lg:text-xl rounded-full px-3 py-1 w-fit">
+                <p className="bg-cta dark:bg-hovercta text-white dark:text-darkmodetext text-lg lg:text-xl rounded-full px-3 py-1 w-fit">
                   {data?.data?.post?.category != "OTHER"
                     ? data?.data?.post?.category
                     : data?.data?.post?.otherCategory}
@@ -690,7 +693,7 @@ const Post = () => {
               </div>
 
               {/* Post Title */}
-              <h1 className="mt-10 text-4xl lg:text-6xl font-bold text-ink">
+              <h1 className="mt-10 text-4xl lg:text-6xl font-bold text-ink dark:text-hovercta">
                 {data?.data?.post?.title}
               </h1>
 
@@ -803,7 +806,7 @@ const Post = () => {
           </div>
           <div
             ref={replyRef}
-            className=" m-2 mt-5 md:m-5 lg:m-10 bg-white shadow-xl border-[1px] rounded-xl"
+            className=" m-2 mt-5 md:m-5 lg:m-10 bg-white shadow-xl border-[1px] dark:border-darkgrey dark:bg-darkgrey dark:text-darkmodetext rounded-xl"
           >
             <div className="p-5 md:p-10 md:pt-0 mt-8">
               {/* Title */}
@@ -812,7 +815,7 @@ const Post = () => {
               <div className="p-4">
                 {/* If replying to a comment, display the comment */}
                 {reply && (
-                  <div className="bg-slate-50 my-5 py-3 px-4 rounded shadow relative">
+                  <div className="bg-slate-50 dark:bg-darkgrey dark:border-2 my-5 py-3 px-4 rounded shadow relative">
                     <RxCross2
                       className="absolute top-8 text-xl right-5 cursor-pointer"
                       onClick={() => {
@@ -879,6 +882,7 @@ const Post = () => {
                     (DBcomment, commentIndex) => {
                       return (
                         <Comment
+                          key={commentIndex}
                           comment={DBcomment}
                           handleReply={handleReply}
                           pageIndex={pageIndex}
@@ -924,7 +928,7 @@ const Post = () => {
           <div>
             {/* Title for page */}
             <p className="text-3xl lg:text-4xl px-5 text-center mt-14">
-              Uh oh. That post isn't available. Go Back?
+              Uh oh. That post isn&apos;t available. Go Back?
             </p>
             <div className="mt-10 flex flex-col gap-10 justify-center items-center">
               {/* Image */}

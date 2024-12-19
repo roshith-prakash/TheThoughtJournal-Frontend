@@ -46,7 +46,7 @@ const Profile = () => {
   // Set window title.
   useEffect(() => {
     document.title = `${dbUser?.name} | The Thought Journal`;
-  }, []);
+  }, [dbUser]);
 
   // Scroll to top
   useEffect(() => {
@@ -57,7 +57,7 @@ const Profile = () => {
   const {
     data,
     isLoading,
-    error,
+    // error,
     fetchNextPage,
     isFetchingNextPage: loadingNextPosts,
   } = useInfiniteQuery({
@@ -79,7 +79,7 @@ const Profile = () => {
   const {
     data: likedPosts,
     isLoading: loadingLikedPosts,
-    error: likedPostsError,
+    // error: likedPostsError,
     fetchNextPage: fetchLikedPosts,
     isFetchingNextPage: loadingNextLikedPosts,
   } = useInfiniteQuery({
@@ -101,7 +101,7 @@ const Profile = () => {
   const {
     data: followers,
     isLoading: loadingFollowers,
-    error: followersError,
+    // error: followersError,
     fetchNextPage: fetchFollowers,
   } = useInfiniteQuery({
     queryKey: ["getUserFollowers", dbUser?.username],
@@ -122,7 +122,7 @@ const Profile = () => {
   const {
     data: following,
     isLoading: loadingFollowing,
-    error: followingError,
+    // error: followingError,
     fetchNextPage: fetchFollowing,
   } = useInfiniteQuery({
     queryKey: ["getUserFollowing", dbUser?.username],
@@ -152,6 +152,7 @@ const Profile = () => {
         fetchLikedPosts();
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inView, fetchNextPage]);
 
   // Fetch followers & following
@@ -179,7 +180,7 @@ const Profile = () => {
       .then(() => {
         axiosInstance
           .post("/auth/delete-user", { username: dbUser?.username })
-          .then((res) => {
+          .then(() => {
             toast.success("User Deleted.");
             setDbUser(null);
             setDisabled(false);
@@ -209,17 +210,17 @@ const Profile = () => {
     <>
       <Navbar />
       <Toaster />
-      <div className="lg:min-h-screenbg-bgwhite w-full pb-20">
+      <div className="lg:min-h-screen bg-bgwhite dark:bg-darkbg dark:text-darkmodetext w-full pb-20">
         {/* Background color div */}
-        <div className="bg-[#cf86f9] border-b-4 border-black h-48"></div>
+        <div className="bg-[#cf86f9] dark:bg-darkgrey border-b-4 border-black h-48"></div>
 
         {/* Profile Info Div */}
-        <div className="bg-white shadow-xl -translate-y-14 border-2 min-h-52 pt-20 pb-10 rounded-lg mx-5 md:mx-10 lg:mx-20">
+        <div className="bg-white dark:bg-darkgrey shadow-xl -translate-y-14 border-2 min-h-52 pt-20 pb-10 rounded-lg mx-5 md:mx-10 lg:mx-20">
           {/* Floating Image */}
           <div className="absolute w-full -top-16 flex justify-center">
             <img
               src={dbUser?.photoURL ? dbUser?.photoURL : defaultAccount}
-              className="bg-white rounded-full h-32 w-32 border-8 border-[#cf86f9] pointer-events-none"
+              className="bg-white rounded-full h-32 w-32 border-8 border-[#cf86f9] dark:border-darkgrey pointer-events-none"
             />
           </div>
 
@@ -334,12 +335,12 @@ const Profile = () => {
               {/* Follower Count */}
               <Dialog open={followerOpen} onOpenChange={setFollowerOpen}>
                 <DialogTrigger>
-                  <div className="flex flex-col items-center gap-y-1 p-1 transition-all cursor-pointer rounded hover:bg-slate-100">
+                  <div className="flex flex-col items-center gap-y-1 p-1 transition-all cursor-pointer rounded hover:bg-slate-100 dark:hover:bg-darkbg">
                     <p>{numberFormat(dbUser?.followerCount)}</p>
                     <p className="text-md font-medium">Followers</p>
                   </div>
                 </DialogTrigger>
-                <DialogContent className="h-96 overflow-y-auto">
+                <DialogContent className="h-96 overflow-y-auto  dark:text-darkmodetext">
                   <DialogHeader>
                     <DialogTitle>Followers</DialogTitle>
                     <DialogDescription>
@@ -375,12 +376,13 @@ const Profile = () => {
                         {/* If users are present in DB */}
                         {followers &&
                           followers?.pages?.map((page) => {
-                            return page?.data.users?.map((user, index) => {
+                            return page?.data.users?.map((user) => {
                               if (user?.name) {
                                 return (
                                   <Link
+                                    key={user?.username}
                                     to={`/user/${user?.username}`}
-                                    className="py-3 px-4 flex gap-x-5 items-center rounded hover:bg-slate-100"
+                                    className="py-3 px-4 flex gap-x-5 items-center rounded hover:bg-slate-100 dark:hover:bg-darkgrey dark:text-darkmodetext"
                                   >
                                     {user?.photoURL ? (
                                       <img
@@ -412,12 +414,12 @@ const Profile = () => {
               {/* Following Count */}
               <Dialog open={followingOpen} onOpenChange={setFollowingOpen}>
                 <DialogTrigger>
-                  <div className="flex flex-col items-center gap-y-1 p-1 transition-all cursor-pointer rounded hover:bg-slate-100">
+                  <div className="flex flex-col items-center gap-y-1 p-1 transition-all cursor-pointer rounded hover:bg-slate-100 dark:hover:bg-darkbg">
                     <p>{numberFormat(dbUser?.followingCount)}</p>
                     <p className="text-md font-medium">Following</p>
                   </div>
                 </DialogTrigger>
-                <DialogContent className="h-96 overflow-y-auto">
+                <DialogContent className="h-96 overflow-y-auto dark:text-darkmodetext">
                   <DialogHeader>
                     <DialogTitle>Following</DialogTitle>
                     <DialogDescription>
@@ -437,12 +439,13 @@ const Profile = () => {
                         {/* If users are present in DB */}
                         {following &&
                           following?.pages?.map((page) => {
-                            return page?.data.users?.map((user, index) => {
+                            return page?.data.users?.map((user) => {
                               if (user?.name) {
                                 return (
                                   <Link
+                                    key={user?.username}
                                     to={`/user/${user?.username}`}
-                                    className="py-3 px-4 flex gap-x-5 items-center rounded hover:bg-slate-100"
+                                    className="py-3 px-4 flex gap-x-5 items-center rounded hover:bg-slate-100 dark:hover:bg-darkgrey dark:text-darkmodetext"
                                   >
                                     {user?.photoURL ? (
                                       <img
@@ -507,7 +510,7 @@ const Profile = () => {
               className={`${
                 tabValue == "userPosts"
                   ? "text-cta border-b-2 border-cta"
-                  : "text-ink border-b-2"
+                  : "text-ink dark:text-darkmodetext border-b-2"
               } text-xl flex-1 py-3`}
             >
               Your Posts
@@ -518,7 +521,7 @@ const Profile = () => {
               className={`${
                 tabValue == "likedPosts"
                   ? "text-cta border-b-2 border-cta"
-                  : "text-ink border-b-2"
+                  : "text-ink dark:text-darkmodetext border-b-2"
               } text-xl flex-1 py-3`}
             >
               Liked Posts
@@ -538,7 +541,7 @@ const Profile = () => {
               <div className="mt-10 grid md:grid-cols-2 lg:grid-cols-4 mx-5 md:mx-10 lg:mx-10">
                 {data?.pages?.map((page) => {
                   return page?.data?.posts?.map((post, index) => {
-                    return <PostCard post={post} index={index} />;
+                    return <PostCard key={index} post={post} index={index} />;
                   });
                 })}
               </div>
@@ -597,7 +600,9 @@ const Profile = () => {
                   {likedPosts?.pages?.map((page) => {
                     return page?.data?.posts?.map((post, index) => {
                       if (post) {
-                        return <PostCard post={post} index={index} />;
+                        return (
+                          <PostCard key={index} post={post} index={index} />
+                        );
                       }
                     });
                   })}
@@ -637,7 +642,7 @@ const Profile = () => {
 
         <div ref={ref}></div>
       </div>
-      <div className="pt-32">
+      <div className="pt-32 dark:bg-darkbg">
         <Footer />
       </div>
     </>

@@ -21,7 +21,6 @@ import {
 import { categories } from "../data/categories";
 import { FaArrowDown } from "react-icons/fa6";
 import { axiosInstance } from "../utils/axios";
-import { useAuth } from "../context/authContext";
 import { toast, Toaster } from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { useDBUser } from "../context/userContext";
@@ -172,14 +171,14 @@ const CreatePost = () => {
   };
 
   return (
-    <div className="bg-bgwhite">
+    <div className="bg-bgwhite dark:bg-darkbg dark:text-darkmodetext">
       <Navbar />
       <Toaster />
 
       {/* Editor box */}
       <div
         ref={inputRef}
-        className="p-10 pb-20 m-5 lg:m-10 bg-white shadow-xl border-[1px] rounded-xl"
+        className="p-10 pb-20 m-5 lg:m-10 bg-white dark:bg-darkgrey shadow-xl border-[1px] rounded-xl"
       >
         {/* Title */}
         <h1 className="text-2xl lg:text-4xl text-center font-medium">
@@ -226,7 +225,7 @@ const CreatePost = () => {
                 {/* Button to open file input  */}
                 <OutlineButton
                   text={
-                    <p className="flex gap-x-3 justify-center items-center">
+                    <p className="flex gap-x-3 justify-center dark:text-darkmodetext items-center">
                       Select your image
                       {/* Icon */}
                       <img src={gallery} className="h-5" />
@@ -250,10 +249,10 @@ const CreatePost = () => {
           <Select
             onValueChange={(selectedCategory) => setCategory(selectedCategory)}
           >
-            <SelectTrigger className="md:w-[180px]">
+            <SelectTrigger className="md:w-[180px] dark:bg-darkgrey dark:border-2">
               <SelectValue placeholder="Select a Category" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="dark:bg-darkgrey">
               {categories.map((category) => {
                 return <SelectItem value={category}>{category}</SelectItem>;
               })}
@@ -323,7 +322,7 @@ const CreatePost = () => {
       </h1>
 
       {/* Preview Post */}
-      <div className=" pb-20 m-5 lg:m-10 bg-white shadow-xl border-[1px] rounded-xl">
+      <div className=" pb-20 m-5 lg:m-10 bg-white dark:bg-darkgrey dark:text-darkmodetext shadow-xl border-[1px] rounded-xl">
         {/* Thumbnail Image */}
         <div>
           {imageFile && (
@@ -348,7 +347,7 @@ const CreatePost = () => {
         <div className="p-5 md:p-10 md:pt-0 mt-8">
           {/* Badge */}
           {category && category != "OTHER" && (
-            <p className="bg-cta text-white text-lg lg:text-xl rounded-full px-3 py-1 w-fit">
+            <p className="bg-cta dark:bg-hovercta text-white dark:text-darkmodetext text-lg lg:text-xl rounded-full px-3 py-1 w-fit">
               {category}
             </p>
           )}
@@ -361,7 +360,7 @@ const CreatePost = () => {
 
           {/* Post Title */}
           {title && (
-            <h1 className="mt-10 text-4xl lg:text-6xl font-bold text-ink">
+            <h1 className="mt-10 text-4xl lg:text-6xl font-bold text-ink dark:text-hovercta">
               {title}
             </h1>
           )}

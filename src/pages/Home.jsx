@@ -1,29 +1,18 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import Navbar from "../components/Navbar";
 import { axiosInstance } from "../utils/axios";
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { useDBUser } from "../context/userContext";
-import { useAuth } from "../context/authContext";
 import { Footer, PostCard } from "../components";
 import HashLoader from "react-spinners/HashLoader";
 import { useInView } from "react-intersection-observer";
 import homeNoPosts from "../assets/homeNoPosts.svg";
 
 const Home = () => {
-  // Scroll to the top of page
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }, []);
+  // Get the DB user
+  const { dbUser } = useDBUser();
 
   const { ref, inView } = useInView();
-
-  // Set window title.
-  useEffect(() => {
-    document.title = "Home | The Thought Journal";
-  }, []);
-
-  // // Get the DB user
-  const { dbUser } = useDBUser();
 
   // Query to get posts by people followed
   const {
@@ -72,6 +61,16 @@ const Home = () => {
       dbUser == null,
   });
 
+  // Scroll to the top of page
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
+
+  // Set window title.
+  useEffect(() => {
+    document.title = "Home | The Thought Journal";
+  }, []);
+
   //Fetch next posts
   useEffect(() => {
     if (
@@ -87,13 +86,14 @@ const Home = () => {
         fetchFollowing();
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inView, fetchNextPage, fetchFollowing, dbUser?.id]);
 
   return (
     <>
       {/* Navbar */}
       <Navbar />
-      <div className="pb-32">
+      <div className="pb-32 dark:bg-darkbg dark:text-darkmodetext">
         <div className="p-5">
           {/* Title - Gradient text */}
           <h1 className="text-4xl font-semibold px-2 py-5">
@@ -104,7 +104,9 @@ const Home = () => {
           </h1>
 
           {/* Subtitle */}
-          <h3 className="text-2xl font-semibold px-2">Let's start reading!</h3>
+          <h3 className="text-2xl font-semibold px-2">
+            Let&apos;s start reading!
+          </h3>
         </div>
         {dbUser?.following?.length > 0 &&
         posts?.pages?.[0]?.data?.posts.length > 0 ? (
@@ -118,8 +120,8 @@ const Home = () => {
                 <div className="mt-5 grid md:grid-cols-2 lg:grid-cols-4 ">
                   {posts &&
                     posts?.pages?.map((page) => {
-                      return page?.data?.posts?.map((post, index) => {
-                        return <PostCard post={post} index={index} />;
+                      return page?.data?.posts?.map((post) => {
+                        return <PostCard key={post?.id} post={post} />;
                       });
                     })}
                 </div>
@@ -133,7 +135,7 @@ const Home = () => {
                   <img src={homeNoPosts} className="max-w-[30%]" />
                 </div>
                 <p className="text-center mt-5 text-2xl font-medium">
-                  Uh oh! Couldn't fetch posts.
+                  Uh oh! Couldn&apos;t fetch posts.
                 </p>
               </div>
             )}
@@ -146,7 +148,7 @@ const Home = () => {
                     <img src={homeNoPosts} className="max-w-[30%]" />
                   </div>
                   <p className="text-center mt-5 text-2xl font-medium">
-                    Uh oh! Couldn't fetch posts.
+                    Uh oh! Couldn&apos;t fetch posts.
                   </p>
                 </div>
               )}
@@ -182,8 +184,8 @@ const Home = () => {
               <div className="grid md:grid-cols-2 lg:grid-cols-4 ">
                 {data &&
                   data?.pages?.map((page) => {
-                    return page?.data?.posts?.map((post, index) => {
-                      return <PostCard post={post} index={index} />;
+                    return page?.data?.posts?.map((post) => {
+                      return <PostCard key={post?.id} post={post} />;
                     });
                   })}
               </div>
@@ -196,7 +198,7 @@ const Home = () => {
                   <img src={homeNoPosts} className="max-w-[30%]" />
                 </div>
                 <p className="text-center mt-5 text-2xl font-medium">
-                  Uh oh! Couldn't fetch posts.
+                  Uh oh! Couldn&apos;t fetch posts.
                 </p>
               </div>
             )}
@@ -209,7 +211,7 @@ const Home = () => {
                     <img src={homeNoPosts} className="max-w-[30%]" />
                   </div>
                   <p className="text-center mt-5 text-2xl font-medium">
-                    Uh oh! Couldn't fetch posts.
+                    Uh oh! Couldn&apos;t fetch posts.
                   </p>
                 </div>
               )}
@@ -231,7 +233,7 @@ const Home = () => {
           </div>
         )}
       </div>
-      <div className="pt-20">
+      <div className="pt-20 dark:bg-darkbg">
         <Footer />
       </div>
     </>

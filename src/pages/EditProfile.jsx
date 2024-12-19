@@ -8,20 +8,14 @@ import {
 } from "../components";
 import { useEffect, useRef, useState } from "react";
 import { IoCloudUploadOutline } from "react-icons/io5";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/authContext";
 import defaultAccount from "../assets/account.png";
 import { axiosInstance } from "../utils/axios";
 import toast, { Toaster } from "react-hot-toast";
 import { isValidUsername } from "../functions/regexFunctions";
 
 const EditProfile = () => {
-  // Navigate function to navigate to different pages.
-  const navigate = useNavigate();
   // Db user object
   const { dbUser, fetchUser } = useDBUser();
-  // Firebase user object
-  const { currentUser } = useAuth();
   // Ref for file input
   const fileRef = useRef();
   // Name of the user to be stored in DB
@@ -135,12 +129,12 @@ const EditProfile = () => {
               .post("/auth/update-user", formData, {
                 headers: { "Content-Type": "multipart/form-data" },
               })
-              .then((res) => {
+              .then(() => {
                 setDisabled(false);
                 fetchUser();
                 toast.success("Profile Updated!");
               })
-              .catch((err) => {
+              .catch(() => {
                 // Display error
                 toast.error("Something went wrong!");
                 // Enable button
@@ -180,12 +174,12 @@ const EditProfile = () => {
         .post("/auth/update-user", formData, {
           headers: { "Content-Type": "multipart/form-data" },
         })
-        .then((res) => {
+        .then(() => {
           setDisabled(false);
           fetchUser();
           toast.success("Profile Updated!");
         })
-        .catch((err) => {
+        .catch(() => {
           // Display error
           toast.error("Something went wrong!");
           // Enable button
@@ -198,10 +192,10 @@ const EditProfile = () => {
     <>
       <Navbar />
       <Toaster />
-      <div className="min-h-[70vh] md:min-h-[65vh] lg:min-h-[60vh] bg-bgwhite flex items-center justify-center pt-12 pb-32">
-        <div className="bg-white border-[1px] px- w-[90%] md:w-[65%] md:mt-5 lg:mt-5 p-5 md:px-20 shadow-xl rounded-xl pb-10">
+      <div className="min-h-[70vh] md:min-h-[65vh] lg:min-h-[60vh] bg-bgwhite dark:bg-darkbg dark:text-darkmodetext flex items-center justify-center pt-12 pb-32">
+        <div className="bg-white dark:bg-darkgrey border-[1px] px- w-[90%] md:w-[65%] md:mt-5 lg:mt-5 p-5 md:px-20 shadow-xl rounded-xl pb-10">
           {/* Title */}
-          <h1 className="text-ink pt-5 font-bold text-2xl text-center">
+          <h1 className="text-ink dark:text-darkmodetext pt-5 font-bold text-2xl text-center">
             Edit your Journal Account!
           </h1>
 
@@ -292,7 +286,7 @@ const EditProfile = () => {
             <p className="font-medium">Bio</p>
             <textarea
               value={bio}
-              className="w-full border-2 h-36 rounded-lg p-4"
+              className="bg-transparent w-full border-2 h-36 rounded-lg p-4"
               onChange={(e) => setBio(e.target.value)}
             ></textarea>
           </div>
@@ -310,7 +304,7 @@ const EditProfile = () => {
           </div>
         </div>
       </div>
-      <div className="pt-20">
+      <div className="pt-20 dark:bg-darkbg">
         <Footer />
       </div>
     </>

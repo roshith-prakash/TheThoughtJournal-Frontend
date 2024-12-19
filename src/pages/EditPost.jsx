@@ -30,9 +30,8 @@ import Avvvatars from "avvvatars-react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import notfound from "../assets/notfound.svg";
 
-const EditPost = (props) => {
+const EditPost = () => {
   let { state } = useLocation();
-  console.log(state);
   // Navigate function
   const navigate = useNavigate();
   // User Object
@@ -77,9 +76,9 @@ const EditPost = (props) => {
   //   Fetch data from server.
   const {
     data,
-    isLoading,
-    error: fetchError,
-    refetch,
+    // isLoading,
+    // error: fetchError,
+    // refetch,
   } = useQuery({
     queryKey: ["post-page", state?.postId],
     queryFn: async () => {
@@ -94,6 +93,7 @@ const EditPost = (props) => {
     setOtherCategory(data?.data?.post?.otherCategory);
     setTitle(data?.data?.post?.title);
     setImageFile(data?.data?.post?.thumbnail);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data?.data?.post?.id, state?.postId]);
 
   // To save the post
@@ -178,7 +178,7 @@ const EditPost = (props) => {
           "Content-Type": "multipart/formdata",
         },
       })
-      .then((res) => {
+      .then(() => {
         toast.success("Post updated!");
         setDisabled(false);
         queryClient.resetQueries({
@@ -204,11 +204,11 @@ const EditPost = (props) => {
     return (
       <>
         <Navbar />
-        <div className="min-h-[70vh] md:min-h-[65vh] lg:min-h-[60vh] flex items-center justify-center pt-12 pb-32">
+        <div className="min-h-[70vh] md:min-h-[65vh] lg:min-h-[60vh] flex items-center justify-center pt-12 pb-32 dark:bg-darkbg dark:text-darkmodetext">
           <div>
             {/* Title for page */}
             <p className="text-3xl lg:text-4xl px-5 text-center mt-14">
-              You haven't selected a post to edit. Let's go back?
+              You haven&apos;t selected a post to edit. Let&apos;s go back?
             </p>
             <div className="mt-10 flex flex-col gap-10 justify-center items-center">
               {/* Image */}
@@ -226,7 +226,7 @@ const EditPost = (props) => {
             </div>
           </div>
         </div>
-        <div className="pt-20">
+        <div className="pt-20 dark:bg-darkbg">
           <Footer />
         </div>
       </>
@@ -235,14 +235,14 @@ const EditPost = (props) => {
 
   if (state?.postId) {
     return (
-      <div className="bg-bgwhite">
+      <div className="bg-bgwhite dark:bg-darkbg">
         <Navbar />
         <Toaster />
 
         {/* Editor box */}
         <div
           ref={inputRef}
-          className="p-10 pb-20 m-5 lg:m-10 bg-white shadow-xl border-[1px] rounded-xl"
+          className="p-10 pb-20 m-5 lg:m-10 bg-white dark:bg-darkgrey dark:text-darkmodetext shadow-xl border-[1px] rounded-xl"
         >
           {/* Title */}
           <h1 className="text-2xl lg:text-4xl text-center font-medium">
@@ -323,7 +323,11 @@ const EditPost = (props) => {
               </SelectTrigger>
               <SelectContent>
                 {categories.map((category) => {
-                  return <SelectItem value={category}>{category}</SelectItem>;
+                  return (
+                    <SelectItem key={category} value={category}>
+                      {category}
+                    </SelectItem>
+                  );
                 })}
               </SelectContent>
             </Select>
@@ -397,7 +401,7 @@ const EditPost = (props) => {
         </h1>
 
         {/* Preview Post */}
-        <div className=" pb-20 m-5 lg:m-10 bg-white shadow-xl border-[1px] rounded-xl">
+        <div className=" pb-20 m-5 lg:m-10 bg-white dark:bg-darkgrey dark:text-darkmodetext shadow-xl border-[1px] rounded-xl">
           {/* Thumbnail Image */}
           <div>
             {imageFile && (
@@ -426,20 +430,20 @@ const EditPost = (props) => {
           <div className="p-5 md:p-10 md:pt-0 mt-8">
             {/* Badge */}
             {category && category != "OTHER" && (
-              <p className="bg-cta text-white text-lg lg:text-xl rounded-full px-3 py-1 w-fit">
+              <p className="bg-cta dark:bg-hovercta text-white text-lg lg:text-xl rounded-full px-3 py-1 w-fit">
                 {category}
               </p>
             )}
 
             {category == "OTHER" && otherCategory && (
-              <p className="bg-cta text-white text-lg lg:text-xl rounded-full px-3 py-1 w-fit">
+              <p className="bg-cta dark:bg-hovercta text-white text-lg lg:text-xl rounded-full px-3 py-1 w-fit">
                 {otherCategory}
               </p>
             )}
 
             {/* Post Title */}
             {title && (
-              <h1 className="mt-10 text-4xl lg:text-6xl font-bold text-ink">
+              <h1 className="mt-10 text-4xl lg:text-6xl font-bold text-ink dark:text-hovercta">
                 {title}
               </h1>
             )}
@@ -490,7 +494,7 @@ const EditPost = (props) => {
           </div>
         </div>
 
-        <div className="pt-20">
+        <div className="pt-20 dark:bg-darkbg">
           <Footer />
         </div>
       </div>

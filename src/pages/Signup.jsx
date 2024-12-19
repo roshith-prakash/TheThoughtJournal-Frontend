@@ -93,7 +93,7 @@ const Signup = () => {
         console.log(user);
 
         // Send verification email
-        sendEmailVerification(user).then((res) => {
+        sendEmailVerification(user).then(() => {
           toast("Email Verification Link sent.");
           // Enable button
           setDisabled(false);
@@ -102,7 +102,7 @@ const Signup = () => {
         navigate("/onboarding");
       })
       .catch((error) => {
-        const errorCode = error.code;
+        // const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorMessage);
         // Enable button
@@ -123,8 +123,8 @@ const Signup = () => {
     signInWithPopup(auth, provider)
       .then((result) => {
         // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
+        // const credential = GoogleAuthProvider.credentialFromResult(result);
+        // const token = credential.accessToken;
         // The signed-in user info.
         const user = result.user;
 
@@ -143,15 +143,15 @@ const Signup = () => {
             }
           });
       })
-      .catch((error) => {
+      .catch(() => {
         setDisabled(false);
         // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
+        // const errorCode = error.code;/
+        // const errorMessage = error.message;
         // The email of the user's account used.
-        const email = error.customData.email;
+        // const email = error.customData.email;
         // The AuthCredential type that was used.
-        const credential = GoogleAuthProvider.credentialFromError(error);
+        // const credential = GoogleAuthProvider.credentialFromError(error);
         toast.error("Something went wrong!");
       });
   };
@@ -160,13 +160,13 @@ const Signup = () => {
     <>
       <Navbar />
       <Toaster />
-      <div className="lg:min-h-[89vh] flex w-full lg:bg-none lg:bg-bgwhite">
+      <div className="lg:min-h-[89vh] flex w-full lg:bg-none lg:bg-bgwhite dark:bg-darkbg">
         {/* Left Div */}
         <div className="min-h-[95vh] lg:h-full lg:min-h-[88vh] pb-10 bg-cover  flex-1 flex justify-center items-center">
           {/* Signup Form Div */}
-          <div className="bg-white border-[1px] px-8 w-[85%] md:w-[65%] md:mt-5 lg:mt-5 p-5 md:px-20 shadow-xl rounded-xl pb-10">
+          <div className="bg-white dark:bg-darkgrey dark:text-darkmodetext border-[1px] px-8 w-[85%] md:w-[65%] md:mt-5 lg:mt-5 p-5 md:px-20 shadow-xl rounded-xl pb-10">
             {/* Title */}
-            <h1 className="text-ink pt-5 font-bold text-2xl italic text-center">
+            <h1 className="text-ink dark:text-darkmodetext pt-5 font-bold text-2xl italic text-center">
               Sign Up to The Journal
             </h1>
 
@@ -243,7 +243,7 @@ const Signup = () => {
             <button
               disabled={disabled}
               onClick={handleGoogleSignup}
-              className="flex w-full gap-x-5 py-4 justify-center items-center px-14 shadow-md rounded-lg font-medium active:shadow transition-all disabled:text-greyText"
+              className="dark:border-2 flex w-full gap-x-5 py-4 justify-center items-center px-14 shadow-md rounded-lg font-medium active:shadow transition-all disabled:text-greyText"
             >
               <p>Sign up with Google</p>
               <img src={google} className="max-h-6 max-w-6" />
@@ -257,7 +257,7 @@ const Signup = () => {
         </div>
       </div>
 
-      <div className="pt-20">
+      <div className="pt-20 dark:bg-darkbg">
         <Footer />
       </div>
     </>

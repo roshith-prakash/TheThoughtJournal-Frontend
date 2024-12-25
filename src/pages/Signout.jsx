@@ -31,7 +31,7 @@ const Signout = () => {
     <>
       <Navbar />
 
-      <div className="min-h-[89vh] py-16 gap-10 flex flex-col justify-center items-center pb-24">
+      <div className="min-h-[89vh] dark:bg-darkgrey dark:text-darkmodetext py-16 gap-10 flex flex-col justify-center items-center pb-24">
         {/* Title */}
         <h1 className="text-3xl lg:text-4xl font-medium">
           Do you want to log out?

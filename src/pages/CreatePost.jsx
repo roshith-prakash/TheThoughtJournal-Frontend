@@ -21,13 +21,13 @@ import {
 import { categories } from "../data/categories";
 import { FaArrowDown } from "react-icons/fa6";
 import { axiosInstance } from "../utils/axios";
-import { useAuth } from "../context/authContext";
 import { toast, Toaster } from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { useDBUser } from "../context/userContext";
 import { getMinsToRead } from "../functions/mathFunctions";
 import { modules, formats, QuillToolbar } from "../components/QuillToolbar";
 import Avvvatars from "avvvatars-react";
+import { useQueryClient } from "@tanstack/react-query";
 
 const CreatePost = () => {
   const navigate = useNavigate();
@@ -56,6 +56,10 @@ const CreatePost = () => {
     other: 0,
   });
 
+  const inputRef = useRef();
+
+  const queryClient = useQueryClient();
+
   // Scroll to top of page
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -78,21 +82,25 @@ const CreatePost = () => {
     // Check if title is empty
     if (title == null || title == undefined || title.length <= 0) {
       setError((prev) => ({ ...prev, title: 1 }));
+      inputRef.current.scrollIntoView({ behavior: "smooth" });
       return;
     }
     // If title is longer than 100 characters.
     else if (title.length > 100) {
       setError((prev) => ({ ...prev, title: 2 }));
+      inputRef.current.scrollIntoView({ behavior: "smooth" });
       return;
     }
     // Check if image has been added
     else if (imageFile == null || imageFile == undefined) {
       setError((prev) => ({ ...prev, image: 1 }));
+      inputRef.current.scrollIntoView({ behavior: "smooth" });
       return;
     }
     // Check if category has been selected
     else if (category == null || category == undefined) {
       setError((prev) => ({ ...prev, category: 1 }));
+      inputRef.current.scrollIntoView({ behavior: "smooth" });
       return;
     }
     // Check if category has been added if "OTHER" was selected
@@ -103,12 +111,15 @@ const CreatePost = () => {
         otherCategory.length <= 0
       ) {
         setError((prev) => ({ ...prev, other: 1 }));
+        inputRef.current.scrollIntoView({ behavior: "smooth" });
         return;
       } else if (otherCategory.length > 20) {
         setError((prev) => ({ ...prev, other: 2 }));
+        inputRef.current.scrollIntoView({ behavior: "smooth" });
         return;
       } else if (String(otherCategory).split(" ").length > 2) {
         setError((prev) => ({ ...prev, other: 3 }));
+        inputRef.current.scrollIntoView({ behavior: "smooth" });
         return;
       }
     }
@@ -116,6 +127,7 @@ const CreatePost = () => {
     // Check if content has been added for blog
     if (isEditorEmpty(value)) {
       setError((prev) => ({ ...prev, content: 1 }));
+      inputRef.current.scrollIntoView({ behavior: "smooth" });
       return;
     }
 
@@ -136,10 +148,12 @@ const CreatePost = () => {
           "Content-Type": "multipart/formdata",
         },
       })
-      .then((res) => {
-        console.log(res.data);
+      .then(() => {
         toast.success("Post created!");
         setDisabled(false);
+        queryClient.resetQueries({
+          queryKey: ["getUserPosts", dbUser?.username],
+        });
         navigate("/profile");
       })
       .catch((err) => {
@@ -157,12 +171,15 @@ const CreatePost = () => {
   };
 
   return (
-    <div className="bg-bgwhite">
+    <div className="bg-bgwhite dark:bg-darkbg dark:text-darkmodetext">
       <Navbar />
       <Toaster />
 
       {/* Editor box */}
-      <div className="p-10 pb-20 m-5 lg:m-10 bg-white shadow-xl border-[1px] rounded-xl">
+      <div
+        ref={inputRef}
+        className="p-10 pb-20 m-5 lg:m-10 bg-white dark:bg-darkgrey shadow-xl border-[1px] rounded-xl"
+      >
         {/* Title */}
         <h1 className="text-2xl lg:text-4xl text-center font-medium">
           Create a new Journal post{" "}
@@ -203,8 +220,9 @@ const CreatePost = () => {
               onChange={handleFileChange}
             />
             {/* Flex div - button & image name */}
-            <div className="mt-3 flex flex-col gap-y-2 md:gap-y-0 md:flex-row md:gap-x-5 items-center">
-              <div className="w-full md:flex-1">
+            <div className="mt-3">
+              {/* Flex div - button & image name */}
+              <div>
                 {/* Button to open file input  */}
                 <OutlineButton
                   text={
@@ -216,9 +234,11 @@ const CreatePost = () => {
                   }
                   onClick={() => fileRef.current.click()}
                 />
+                {/* Display file name */}
+                <p className="mt-3 overflow-clip">
+                  {typeof imageFile == "string" ? imageFile : imageFile?.name}
+                </p>
               </div>
-              {/* Display file name */}
-              <p className="flex-1 overflow-hidden">{imageFile?.name}</p>
             </div>
             {error.image == 1 && (
               <ErrorStatement text={"Please add an image for your post."} />
@@ -232,12 +252,16 @@ const CreatePost = () => {
           <Select
             onValueChange={(selectedCategory) => setCategory(selectedCategory)}
           >
-            <SelectTrigger className="md:w-[180px]">
+            <SelectTrigger className="md:w-[180px] dark:bg-darkgrey dark:border-2">
               <SelectValue placeholder="Select a Category" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="dark:bg-darkgrey">
               {categories.map((category) => {
-                return <SelectItem value={category}>{category}</SelectItem>;
+                return (
+                  <SelectItem key={category} value={category}>
+                    {category}
+                  </SelectItem>
+                );
               })}
             </SelectContent>
           </Select>
@@ -305,7 +329,7 @@ const CreatePost = () => {
       </h1>
 
       {/* Preview Post */}
-      <div className=" pb-20 m-5 lg:m-10 bg-white shadow-xl border-[1px] rounded-xl">
+      <div className=" pb-20 m-5 lg:m-10 bg-white dark:bg-darkgrey dark:text-darkmodetext shadow-xl border-[1px] rounded-xl">
         {/* Thumbnail Image */}
         <div>
           {imageFile && (
@@ -330,7 +354,7 @@ const CreatePost = () => {
         <div className="p-5 md:p-10 md:pt-0 mt-8">
           {/* Badge */}
           {category && category != "OTHER" && (
-            <p className="bg-cta text-white text-lg lg:text-xl rounded-full px-3 py-1 w-fit">
+            <p className="bg-cta dark:bg-hovercta text-white dark:text-darkmodetext text-lg lg:text-xl rounded-full px-3 py-1 w-fit">
               {category}
             </p>
           )}
@@ -343,7 +367,7 @@ const CreatePost = () => {
 
           {/* Post Title */}
           {title && (
-            <h1 className="mt-10 text-4xl lg:text-6xl font-bold text-ink">
+            <h1 className="mt-10 text-4xl lg:text-6xl font-bold text-ink dark:text-hovercta">
               {title}
             </h1>
           )}

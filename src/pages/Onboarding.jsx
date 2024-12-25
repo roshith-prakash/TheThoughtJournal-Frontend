@@ -16,8 +16,8 @@ import { toast, Toaster } from "react-hot-toast";
 import { auth } from "../firebase/firebase";
 import { IoCloudUploadOutline } from "react-icons/io5";
 import { axiosInstance } from "../utils/axios";
-import defaultAccount from "../assets/account.png";
 import { isValidUsername } from "../functions/regexFunctions";
+import { MdOutlineAccountCircle } from "react-icons/md";
 
 const Onboarding = () => {
   // Navigate function to navigate to different pages.
@@ -73,10 +73,10 @@ const Onboarding = () => {
   const sendVerification = () => {
     const user = auth.currentUser;
     sendEmailVerification(user)
-      .then((res) => {
+      .then(() => {
         toast("Email Verification Link sent.");
       })
-      .catch((err) => {
+      .catch(() => {
         toast.error("Something went wrong.");
       });
   };
@@ -101,7 +101,7 @@ const Onboarding = () => {
     ) {
       setError((prev) => ({ ...prev, username: 1 }));
       return;
-    } else if (username.length > 15) {
+    } else if (username.length > 20) {
       setError((prev) => ({ ...prev, username: 3 }));
       return;
     } else if (!isValidUsername(username)) {
@@ -148,12 +148,12 @@ const Onboarding = () => {
             .post("/auth/create-user", formData, {
               headers: { "Content-Type": "multipart/form-data" },
             })
-            .then((res) => {
+            .then(() => {
               setDisabled(false);
               fetchUser();
               navigate("/");
             })
-            .catch((err) => {
+            .catch(() => {
               // Display error
               toast.error("Something went wrong!");
               // Enable button
@@ -174,7 +174,7 @@ const Onboarding = () => {
     return (
       <div>
         <Navbar />
-        <div className="min-h-[70vh] md:min-h-[65vh] lg:min-h-[60vh] flex items-center justify-center pt-12 pb-32">
+        <div className="min-h-[70vh] md:min-h-[65vh] dark:bg-darkgrey dark:text-darkmodetext lg:min-h-[60vh] flex items-center justify-center pt-12 pb-32">
           <div>
             {/* Title for page */}
             <p className="text-3xl lg:text-4xl px-5 text-center mt-14">
@@ -207,11 +207,11 @@ const Onboarding = () => {
       <div>
         <Navbar />
         <Toaster />
-        <div className="min-h-[70vh] md:min-h-[65vh] lg:min-h-[60vh] flex items-center justify-center pt-12 pb-32">
+        <div className="min-h-[70vh] md:min-h-[65vh] dark:bg-darkgrey dark:text-darkmodetext lg:min-h-[60vh] flex items-center justify-center pt-12 pb-32">
           <div>
             {/* Title for page */}
             <p className="text-3xl lg:text-4xl px-5 text-center mt-14">
-              Oops! Your email isn't verified.
+              Oops! Your email isn&apos;t verified.
             </p>
             <div className="mt-10 flex flex-col gap-10 justify-center items-center">
               {/* Image */}
@@ -230,10 +230,10 @@ const Onboarding = () => {
                 <OutlineButton
                   onClick={() => window.location.reload()}
                   text={
-                    <>
+                    <div className="flex flex-col">
                       <p>Already verified?</p>
                       <p> Reload the page</p>
-                    </>
+                    </div>
                   }
                 />
               </div>
@@ -250,7 +250,7 @@ const Onboarding = () => {
     return (
       <div>
         <Navbar />
-        <div className="min-h-[70vh] md:min-h-[65vh] lg:min-h-[60vh] flex items-center justify-center pt-12 pb-32">
+        <div className="min-h-[70vh] dark:bg-darkgrey dark:text-darkmodetext md:min-h-[65vh] lg:min-h-[60vh] flex items-center justify-center pt-12 pb-32">
           <div>
             {/* Title for page */}
             <p className="text-3xl lg:text-4xl px-5 text-center mt-14">
@@ -282,10 +282,10 @@ const Onboarding = () => {
     <div>
       <Navbar />
       <Toaster />
-      <div className="min-h-[70vh] md:min-h-[65vh] lg:min-h-[60vh] bg-bgwhite flex items-center justify-center pt-12 pb-32">
-        <div className="bg-white border-[1px] px- w-[90%] md:w-[65%] md:mt-5 lg:mt-5 p-5 md:px-20 shadow-xl rounded-xl pb-10">
+      <div className="dark:bg-darkbg min-h-[70vh] md:min-h-[65vh] lg:min-h-[60vh] bg-bgwhite flex items-center justify-center pt-12 pb-32">
+        <div className="bg-white dark:bg-darkgrey dark:text-darkmodetext border-[1px] px- w-[90%] md:w-[65%] md:mt-5 lg:mt-5 p-5 md:px-20 shadow-xl rounded-xl pb-10">
           {/* Title */}
-          <h1 className="text-ink pt-5 font-bold text-2xl text-center">
+          <h1 className="text-ink dark:text-darkmodetext pt-5 font-bold text-2xl text-center">
             Set up your Journal Account!
           </h1>
 
@@ -294,7 +294,7 @@ const Onboarding = () => {
               className="hidden"
               type="file"
               ref={fileRef}
-              accept="image/.jpg,.jpeg,.png"
+              accept="image/jpg, image/jpeg, image/png"
               onChange={handleFileChange}
             />
             <div className="flex justify-center">
@@ -308,7 +308,8 @@ const Onboarding = () => {
                   className="h-24 w-24 rounded-full"
                 />
               ) : (
-                <img src={defaultAccount} className="h-24 w-24 rounded-full" />
+                <MdOutlineAccountCircle className="text-[8rem]" />
+                // <img src={defaultAccount} className="h-24 w-24 rounded-full" />
               )}
             </div>
             <button
@@ -353,7 +354,7 @@ const Onboarding = () => {
               )}
               {error.username == 3 && (
                 <ErrorStatement
-                  text={"Username cannot exceed 15 characters."}
+                  text={"Username cannot exceed 20 characters."}
                 />
               )}
               {error.username == 4 && (
@@ -370,7 +371,7 @@ const Onboarding = () => {
           <div className="mt-10 px-2 flex flex-col gap-y-5">
             <p className="font-medium">Bio</p>
             <textarea
-              className="w-full border-2 h-36 rounded-lg p-4"
+              className="bg-transparent w-full border-2 h-36 rounded-lg p-4"
               onChange={(e) => setBio(e.target.value)}
             ></textarea>
           </div>

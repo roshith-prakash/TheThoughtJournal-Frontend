@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import useDebounce from "../utils/useDebounce";
-import { Footer, Input, Navbar, OutlineButton, PostCard } from "../components";
+import { Footer, Input, Navbar, PostCard } from "../components";
 import { IoIosSearch } from "react-icons/io";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useInView } from "react-intersection-observer";
@@ -9,6 +9,7 @@ import { axiosInstance } from "../utils/axios";
 import Avvvatars from "avvvatars-react";
 import { Link } from "react-router-dom";
 import homeNoPosts from "../assets/homeNoPosts.svg";
+import HashLoader from "react-spinners/HashLoader";
 
 const Search = () => {
   // State for user input - passed to debouncer
@@ -29,8 +30,9 @@ const Search = () => {
   const {
     data: posts,
     isLoading: loadingPosts,
-    error: postsError,
+    // error: postsError,
     fetchNextPage: fetchNextPosts,
+    isFetchingNextPage: loadingNextPosts,
   } = useInfiniteQuery({
     queryKey: ["searchPosts", debouncedSearch],
     queryFn: ({ pageParam }) => {
@@ -54,8 +56,9 @@ const Search = () => {
   const {
     data: users,
     isLoading: loadingUsers,
-    error: usersError,
+    // error: usersError,
     fetchNextPage: fetchNextUsers,
+    isFetchingNextPage: loadingNextUsers,
   } = useInfiniteQuery({
     queryKey: ["searchUsers", debouncedSearch],
     queryFn: ({ pageParam }) => {
@@ -87,12 +90,22 @@ const Search = () => {
         fetchNextUsers();
       }
     }
-  }, [inView, fetchNextPosts, fetchNextUsers]);
+  }, [
+    inView,
+    fetchNextPosts,
+    fetchNextUsers,
+    users?.pages?.length,
+    posts?.pages?.length,
+    searchTerm,
+  ]);
+
+  console.log(users);
+  console.log(inView);
 
   return (
     <>
       <Navbar />
-      <div className="min-h-[70vh] md:min-h-[65vh] lg:min-h-[60vh] px-8 lg:px-10 py-10">
+      <div className="min-h-[70vh] dark:bg-darkbg dark:text-darkmodetext md:min-h-[65vh] lg:min-h-[60vh] px-8 lg:px-10 py-10">
         <div>
           {/* Gradient Title */}
           <h1 className="bg-gradient-to-r from-cta to-hovercta bg-clip-text text-transparent text-4xl font-semibold">
@@ -116,7 +129,7 @@ const Search = () => {
           {/* Showing the input entered by the user */}
           {debouncedSearch && (
             <p className="font-medium">
-              Showing search results for "{debouncedSearch}"
+              Showing search results for &quot;{debouncedSearch}&quot;
             </p>
           )}
 
@@ -132,7 +145,7 @@ const Search = () => {
                 className={`${
                   searchTerm == "posts"
                     ? "text-cta border-b-2 border-cta"
-                    : "text-ink border-b-2"
+                    : "text-ink dark:text-darkmodetext border-b-2"
                 } text-xl flex-1`}
               >
                 Posts
@@ -146,7 +159,7 @@ const Search = () => {
                 className={`${
                   searchTerm == "users"
                     ? "text-cta border-b-2 border-cta"
-                    : "text-ink border-b-2"
+                    : "text-ink dark:text-darkmodetext border-b-2"
                 } text-xl flex-1 `}
               >
                 Users
@@ -161,10 +174,24 @@ const Search = () => {
                     posts?.pages?.map((page) => {
                       return page?.data.posts?.map((post, index) => {
                         if (post?.title) {
-                          return <PostCard post={post} index={index} />;
+                          return (
+                            <PostCard key={index} post={post} index={index} />
+                          );
                         }
                       });
                     })}
+                </div>
+              )}
+
+              {(loadingPosts || loadingNextPosts) && (
+                <div className="flex justify-center items-center py-10">
+                  <HashLoader
+                    color={"#9b0ced"}
+                    loading={loadingPosts || loadingNextPosts}
+                    size={100}
+                    aria-label="Loading Spinner"
+                    data-testid="loader"
+                  />
                 </div>
               )}
 
@@ -179,7 +206,7 @@ const Search = () => {
                       <img src={homeNoPosts} className="max-w-[30%]" />
                     </div>
                     <p className="text-center mt-5 text-2xl font-medium">
-                      Uh oh! Couldn't find any posts.
+                      Uh oh! Couldn&apos;t find any posts.
                     </p>
                   </div>
                 )}
@@ -191,12 +218,13 @@ const Search = () => {
                 {/* If users are present in DB */}
                 {users &&
                   users?.pages?.map((page) => {
-                    return page?.data.users?.map((user, index) => {
+                    return page?.data.users?.map((user) => {
                       if (user?.name) {
                         return (
                           <Link
+                            key={user?.username}
                             to={`/user/${user?.username}`}
-                            className="py-5 px-4 flex gap-x-5 items-center rounded hover:bg-slate-100"
+                            className="py-5 px-4 flex gap-x-5 items-center rounded hover:bg-slate-100 dark:hover:bg-darkgrey"
                           >
                             {user?.photoURL ? (
                               <img
@@ -219,6 +247,20 @@ const Search = () => {
                     });
                   })}
 
+                <div ref={ref}></div>
+
+                {(loadingUsers || loadingNextUsers) && (
+                  <div className="flex justify-center items-center py-10">
+                    <HashLoader
+                      color={"#9b0ced"}
+                      loading={loadingUsers || loadingNextUsers}
+                      size={100}
+                      aria-label="Loading Spinner"
+                      data-testid="loader"
+                    />
+                  </div>
+                )}
+
                 {/* If no users couldn't be found */}
                 {searchTerm != null &&
                   searchTerm != undefined &&
@@ -230,17 +272,16 @@ const Search = () => {
                         <img src={homeNoPosts} className="max-w-[30%]" />
                       </div>
                       <p className="text-center mt-5 text-2xl font-medium">
-                        Uh oh! Couldn't find any users.
+                        Uh oh! Couldn&apos;t find any users.
                       </p>
                     </div>
                   )}
               </div>
-              <div ref={ref}></div>
             </TabsContent>
           </Tabs>
         </div>
       </div>
-      <div className="pt-20">
+      <div className="pt-20 dark:bg-darkbg">
         <Footer />
       </div>
     </>

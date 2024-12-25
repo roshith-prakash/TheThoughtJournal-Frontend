@@ -19,11 +19,11 @@ const NotFound = () => {
   return (
     <>
       <Navbar />
-      <div className="min-h-[70vh] md:min-h-[65vh] lg:min-h-[60vh] flex items-center justify-center pt-12 pb-32">
+      <div className="dark:bg-darkgrey dark:text-darkmodetext min-h-[70vh] md:min-h-[65vh] lg:min-h-[60vh] flex items-center justify-center pt-12 pb-32">
         <div>
           {/* Title for page */}
           <p className="text-3xl lg:text-4xl px-5 text-center mt-14">
-            I think we are lost. Let's go back?
+            I think we are lost. Let&apos;s go back?
           </p>
           <div className="mt-10 flex flex-col gap-10 justify-center items-center">
             {/* Image */}
@@ -41,7 +41,7 @@ const NotFound = () => {
           </div>
         </div>
       </div>
-      <div className="pt-20">
+      <div className="pt-20 dark:bg-darkgrey">
         <Footer />
       </div>
     </>

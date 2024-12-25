@@ -1,0 +1,12 @@
+{
+	"appId": "com.thethoughtjournal.app",
+	"appName": "TheThoughtJournal",
+	"webDir": "dist",
+	"server": {
+		"androidScheme": "https",
+		"cleartext": true,
+		"allowNavigation": [
+			"https://blog-backend-3u5c.onrender.com.*"
+		]
+	}
+}

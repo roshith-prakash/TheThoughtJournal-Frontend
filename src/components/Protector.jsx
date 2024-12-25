@@ -8,6 +8,7 @@ import { auth } from "../firebase/firebase";
 import notfound from "../assets/notfound.svg";
 import { useEffect, useState } from "react";
 import HashLoader from "react-spinners/HashLoader";
+import PropTypes from "prop-types";
 
 const Protector = ({ children }) => {
   // Navigate function to navigate to different pages.
@@ -29,23 +30,23 @@ const Protector = ({ children }) => {
     } else {
       setLoading(false);
     }
-  }, []);
+  }, [dbUser]);
 
   // To resend email verification link.
   const sendVerification = () => {
     const user = auth.currentUser;
     sendEmailVerification(user)
-      .then((res) => {
+      .then(() => {
         toast("Email Verification Link sent.");
       })
-      .catch((err) => {
+      .catch(() => {
         toast.error("Something went wrong.");
       });
   };
 
   if (loading) {
     return (
-      <div className="h-screen flex justify-center items-center">
+      <div className="dark:bg-darkbg h-screen flex justify-center items-center">
         <HashLoader
           color={"#9b0ced"}
           loading={loading}
@@ -60,9 +61,9 @@ const Protector = ({ children }) => {
   // If user hasn't signed in using firebase
   if (!currentUser) {
     return (
-      <div>
+      <div className="dark:bg-darkbg dark:text-darkmodetext h-screen">
         <Navbar />
-        <div className="min-h-[70vh] md:min-h-[65vh] lg:min-h-[60vh] flex items-center justify-center pt-12 pb-32">
+        <div className=" min-h-[70vh] md:min-h-[65vh] lg:min-h-[65vh] flex items-center justify-center pt-12 pb-32">
           <div>
             {/* Title for page */}
             <p className="text-3xl lg:text-4xl px-5 text-center mt-14">
@@ -91,14 +92,14 @@ const Protector = ({ children }) => {
   // If user has signed up via email but has not verified their email.
   if (!currentUser?.emailVerified) {
     return (
-      <div>
+      <div className="dark:bg-darkbg dark:text-darkmodetext h-screen">
         <Navbar />
         <Toaster />
         <div className="min-h-[70vh] md:min-h-[65vh] lg:min-h-[60vh] flex items-center justify-center pt-12 pb-32">
           <div>
             {/* Title for page */}
             <p className="text-3xl lg:text-4xl px-5 text-center mt-14">
-              Oops! Your email isn't verified.
+              Oops! Your email isn&apos;t verified.
             </p>
             <div className="mt-10 flex flex-col gap-10 justify-center items-center">
               {/* Image */}
@@ -134,7 +135,7 @@ const Protector = ({ children }) => {
   // If user hasn't onboarded to the site
   if (currentUser && !dbUser) {
     return (
-      <div>
+      <div className="dark:bg-darkbg dark:text-darkmodetext h-screen">
         <Navbar />
         <div className="min-h-[70vh] md:min-h-[65vh] lg:min-h-[60vh] flex items-center justify-center pt-12 pb-32">
           <div>
@@ -166,6 +167,10 @@ const Protector = ({ children }) => {
   if (dbUser) {
     return <>{!loading && children}</>;
   }
+};
+
+Protector.propTypes = {
+  children: PropTypes.element,
 };
 
 export default Protector;

@@ -16,32 +16,7 @@ export function UserProvider({ children }) {
   const [dbUser, setDbUser] = useState(null);
   const { currentUser } = useAuth();
 
-  // // Fetch current user information from database - Use Effect Method
-
-  // const fetchUser = () => {
-  //   if (currentUser) {
-  //     axiosInstance
-  //       .post("/auth/get-current-user", { user: currentUser })
-  //       .then((res) => {
-  //         setDbUser(res?.data?.user);
-  //       })
-  //       .catch((err) => {
-  //         setDbUser(null);
-  //         console.log(err);
-  //       });
-  //   } else {
-  //     setDbUser(null);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     fetchUser();
-  //   }, 1000);
-  // }, [currentUser?.email]);
-
-  // // Fetch current user information from database - UseQuery Method
-
+  // Fetch current user information from database - UseQuery Method
   const {
     data,
     isLoading,
@@ -54,9 +29,11 @@ export function UserProvider({ children }) {
         user: currentUser,
       });
     },
+    refetchInterval: 60000,
     enabled: !!currentUser,
   });
 
+  // Set the state value
   useEffect(() => {
     if (data?.data?.user) {
       setDbUser(data?.data?.user);

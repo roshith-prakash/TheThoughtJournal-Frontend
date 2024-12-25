@@ -1,4 +1,3 @@
-import React from "react";
 import { Quill } from "react-quill";
 
 // Custom Undo button icon component for Quill editor.
@@ -67,7 +66,6 @@ export const formats = [
   "list",
   "bullet",
   "indent",
-
   "color",
   "code-block",
 ];

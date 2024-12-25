@@ -15,12 +15,20 @@ import {
   Profile,
   EditProfile,
   Search,
+  EditPost,
 } from "./pages";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import { Protector } from "./components";
 import { prodURL } from "./utils/axios";
 import SecurityHeaders from "./components/SecurityHeaders";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "./components/ui/dialog";
 
 // Creating Tanstack query client
 const queryClient = new QueryClient();
@@ -40,6 +48,8 @@ function App() {
     return () => clearInterval(interval);
   }, []);
 
+  const [open, setOpen] = useState(true);
+
   return (
     <>
       {/* Providing client to children */}
@@ -48,6 +58,19 @@ function App() {
         <AuthProvider>
           {/* Providing Db user data to children */}
           <UserProvider>
+            <Dialog open={open} onOpenChange={setOpen}>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle className="dark:text-darkmodetext">
+                    Please Note
+                  </DialogTitle>
+                  <DialogDescription className="pt-5 text-md text-black">
+                    Initial request may take upto a minute due to server
+                    limitations. Please be patient.
+                  </DialogDescription>
+                </DialogHeader>
+              </DialogContent>
+            </Dialog>
             <SecurityHeaders />
             <BrowserRouter>
               <Routes>
@@ -72,6 +95,16 @@ function App() {
                   element={
                     <Protector>
                       <CreatePost />
+                    </Protector>
+                  }
+                />
+
+                {/* Route to edit a post. */}
+                <Route
+                  path="/editPost"
+                  element={
+                    <Protector>
+                      <EditPost />
                     </Protector>
                   }
                 />

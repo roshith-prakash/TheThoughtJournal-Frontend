@@ -212,7 +212,7 @@ const Profile = () => {
       <Toaster />
       <div className="lg:min-h-screen bg-bgwhite dark:bg-darkbg dark:text-darkmodetext w-full pb-20">
         {/* Background color div */}
-        <div className="bg-[#cf86f9] dark:bg-darkgrey border-b-4 border-black h-48"></div>
+        <div className="bg-darkmodeCTA dark:bg-darkgrey border-b-4 border-black h-48"></div>
 
         {/* Profile Info Div */}
         <div className="bg-white dark:bg-darkgrey shadow-xl -translate-y-14 border-2 min-h-52 pt-20 pb-10 rounded-lg mx-5 md:mx-10 lg:mx-20">
@@ -220,7 +220,7 @@ const Profile = () => {
           <div className="absolute w-full -top-16 flex justify-center">
             <img
               src={dbUser?.photoURL ? dbUser?.photoURL : defaultAccount}
-              className="bg-white rounded-full h-32 w-32 border-8 border-[#cf86f9] dark:border-darkgrey pointer-events-none"
+              className="bg-white rounded-full h-32 w-32 border-8 border-darkmodeCTA dark:border-darkgrey pointer-events-none"
             />
           </div>
 

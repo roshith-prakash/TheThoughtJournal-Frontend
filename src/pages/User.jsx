@@ -225,7 +225,7 @@ const User = () => {
                           ? user?.data?.user?.photoURL
                           : defaultAccount
                       }
-                      className={`bg-white rounded-full h-32 w-32 border-8 border-[#dcbbf0] dark:border-darkgrey ${
+                      className={`bg-white rounded-full h-32 w-32 border-8 border-darkmodeCTA dark:border-darkgrey ${
                         user?.data?.user?.photoURL && "cursor-pointer"
                       } `}
                     />

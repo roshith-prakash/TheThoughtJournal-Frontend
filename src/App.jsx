@@ -17,10 +17,8 @@ import {
   Search,
   EditPost,
 } from "./pages";
-import { useEffect, useState } from "react";
-import { io } from "socket.io-client";
+import { useState } from "react";
 import { Protector } from "./components";
-import { prodURL } from "./utils/axios";
 import SecurityHeaders from "./components/SecurityHeaders";
 import {
   Dialog,
@@ -34,20 +32,6 @@ import {
 const queryClient = new QueryClient();
 
 function App() {
-  // Maintain connection to render server so it doesn't die.
-  useEffect(() => {
-    const socket = io(prodURL);
-
-    const interval = setInterval(() => {
-      socket.emit("toMaintainConnection");
-    }, 5000);
-
-    socket.on("maintainReply", () => {});
-
-    // Clear the loop
-    return () => clearInterval(interval);
-  }, []);
-
   const [open, setOpen] = useState(true);
 
   return (

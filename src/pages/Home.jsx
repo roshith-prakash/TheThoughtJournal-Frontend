@@ -98,7 +98,7 @@ const Home = () => {
           {/* Title - Gradient text */}
           <h1 className="text-4xl font-semibold px-2 py-5">
             Welcome{" "}
-            <span className="bg-gradient-to-r from-hovercta to-hovercta bg-clip-text text-transparent">
+            <span className="text-hovercta dark:text-darkmodeCTA">
               {dbUser?.name ? dbUser?.name : "Journaler"}!
             </span>
           </h1>
@@ -114,7 +114,7 @@ const Home = () => {
             {/* Mapping posts if available */}
             {posts && (
               <div className="mt-5">
-                <p className="px-7 text-2xl font-medium text-transparent bg-clip-text bg-gradient-to-b from-cta to-hovercta">
+                <p className="px-7 text-2xl font-medium text-hovercta dark:text-darkmodeCTA">
                   From the people you follow:
                 </p>
                 <div className="mt-5 grid md:grid-cols-2 lg:grid-cols-4 ">

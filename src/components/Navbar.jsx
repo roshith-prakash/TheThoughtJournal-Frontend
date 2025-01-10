@@ -124,7 +124,7 @@ const Navbar = () => {
                     <>
                       <Link
                         to="/profile"
-                        className={`flex flex-col gap-y-2 font-medium text-cta dark:text-hovercta  hover:bg-slate-50 dark:hover:bg-darkgrey hover:text-hovercta dark:hover:text-cta text-lg py-2 px-5 rounded  w-full transition-all`}
+                        className={`flex flex-col gap-y-2 font-medium text-cta dark:text-darkmodeCTA  hover:bg-slate-50 dark:hover:bg-darkgrey hover:text-hovercta dark:hover:text-cta text-lg py-2 px-5 rounded  w-full transition-all`}
                       >
                         <p className="text-center">{dbUser?.name}</p>
                         <p className="text-center">@{dbUser?.username}</p>

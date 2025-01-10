@@ -108,7 +108,7 @@ const Search = () => {
       <div className="min-h-[70vh] dark:bg-darkbg dark:text-darkmodetext md:min-h-[65vh] lg:min-h-[60vh] px-8 lg:px-10 py-10">
         <div>
           {/* Gradient Title */}
-          <h1 className="bg-gradient-to-r from-cta to-hovercta bg-clip-text text-transparent text-4xl font-semibold">
+          <h1 className="text-hovercta dark:text-darkmodeCTA text-4xl font-semibold">
             Search the Journal!
           </h1>
 

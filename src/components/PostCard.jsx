@@ -22,7 +22,7 @@ const PostCard = ({ post }) => {
         {/* Card Content Section */}
         <div className="bg-bgwhite dark:bg-darkbg dark:text-darkmodetext p-5">
           {/* Badge for post category */}
-          <p className="bg-cta dark:bg-hovercta text-white dark:text-darkmodetext text-sm rounded-full px-3 py-1 w-fit">
+          <p className="bg-cta  text-white dark:text-darkmodetext text-sm rounded-full px-3 py-1 w-fit">
             {post?.category != "OTHER" ? post?.category : post?.otherCategory}
           </p>
           {/* Post title - ellipsized if too long. */}

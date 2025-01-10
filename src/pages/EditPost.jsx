@@ -428,20 +428,20 @@ const EditPost = () => {
           <div className="p-5 md:p-10 md:pt-0 mt-8">
             {/* Badge */}
             {category && category != "OTHER" && (
-              <p className="bg-cta dark:bg-hovercta text-white text-lg lg:text-xl rounded-full px-3 py-1 w-fit">
+              <p className="bg-cta  text-white text-lg lg:text-xl rounded-full px-3 py-1 w-fit">
                 {category}
               </p>
             )}
 
             {category == "OTHER" && otherCategory && (
-              <p className="bg-cta dark:bg-hovercta text-white text-lg lg:text-xl rounded-full px-3 py-1 w-fit">
+              <p className="bg-cta  text-white text-lg lg:text-xl rounded-full px-3 py-1 w-fit">
                 {otherCategory}
               </p>
             )}
 
             {/* Post Title */}
             {title && (
-              <h1 className="mt-10 text-4xl lg:text-6xl font-bold text-ink dark:text-hovercta">
+              <h1 className="mt-10 text-4xl lg:text-6xl font-bold text-ink dark:text-darkmodeCTA">
                 {title}
               </h1>
             )}

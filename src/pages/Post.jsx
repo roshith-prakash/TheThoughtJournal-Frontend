@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { axiosInstance } from "../utils/axios";
@@ -301,6 +302,7 @@ const Post = () => {
     } else {
       setLiked(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data?.data?.post?.id, dbUser?.id]);
 
   // Fetch next comments
@@ -586,7 +588,7 @@ const Post = () => {
             <div className="p-5 md:p-10 md:pt-0 mt-8">
               {/* Badge */}
               <div className="flex justify-between items-center">
-                <p className="bg-cta dark:bg-hovercta text-white dark:text-darkmodetext text-lg lg:text-xl rounded-full px-3 py-1 w-fit">
+                <p className="bg-cta text-white dark:text-darkmodetext text-lg lg:text-xl rounded-full px-3 py-1 w-fit">
                   {data?.data?.post?.category != "OTHER"
                     ? data?.data?.post?.category
                     : data?.data?.post?.otherCategory}
@@ -693,7 +695,7 @@ const Post = () => {
               </div>
 
               {/* Post Title */}
-              <h1 className="mt-10 text-4xl lg:text-6xl font-bold text-ink dark:text-hovercta">
+              <h1 className="mt-10 text-4xl lg:text-6xl font-bold text-ink dark:text-darkmodeCTA">
                 {data?.data?.post?.title}
               </h1>
 

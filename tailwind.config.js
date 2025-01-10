@@ -50,6 +50,7 @@ module.exports = {
         "darkbg": "#181818",
         "secondarydarkbg": "#211f1f",
         "darkmodetext": "#E4E4E4",
+        "darkmodeCTA":"#b458ff"
       }
     },
   },

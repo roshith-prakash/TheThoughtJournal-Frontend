@@ -210,7 +210,7 @@ const User = () => {
       {user && (
         <div className="lg:min-h-screen bg-bgwhite dark:bg-darkbg dark:text-darkmodetext w-full pb-20">
           {/* Background color div */}
-          <div className="bg-[#dcbbf0] dark:bg-darkgrey border-b-4 border-black h-48"></div>
+          <div className="bg-darkmodeCTA dark:bg-darkgrey border-b-4 border-black h-48"></div>
 
           {/* Profile Info Div */}
           <div className="bg-white dark:bg-darkgrey shadow-xl -translate-y-14 border-2 min-h-52 pt-20 pb-10 rounded-lg mx-5 md:mx-10 lg:mx-20">

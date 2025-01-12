@@ -2,11 +2,13 @@ import { useContext, useState, useEffect, createContext } from "react";
 import { useAuth } from "./authContext";
 import { axiosInstance } from "../utils/axios";
 import { useQuery } from "@tanstack/react-query";
+import PropTypes from "prop-types";
 
 // Creating Context
 const UserContext = createContext();
 
 // Hook to consume the context
+// eslint-disable-next-line react-refresh/only-export-components
 export function useDBUser() {
   return useContext(UserContext);
 }
@@ -17,12 +19,7 @@ export function UserProvider({ children }) {
   const { currentUser } = useAuth();
 
   // Fetch current user information from database - UseQuery Method
-  const {
-    data,
-    isLoading,
-    error,
-    refetch: fetchUser,
-  } = useQuery({
+  const { data, refetch: fetchUser } = useQuery({
     queryKey: ["dbUser", currentUser],
     queryFn: async () => {
       return axiosInstance.post("/auth/get-current-user", {
@@ -54,3 +51,7 @@ export function UserProvider({ children }) {
     <UserContext.Provider value={value}>{children}</UserContext.Provider>
   );
 }
+
+UserProvider.propTypes = {
+  children: PropTypes.element,
+};

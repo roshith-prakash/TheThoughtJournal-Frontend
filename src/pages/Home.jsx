@@ -121,7 +121,11 @@ const Home = () => {
                   {posts &&
                     posts?.pages?.map((page) => {
                       return page?.data?.posts?.map((post) => {
-                        return <PostCard key={post?.id} post={post} />;
+                        return (
+                          <div key={post?.id} data-aos="fade-up">
+                            <PostCard post={post} />
+                          </div>
+                        );
                       });
                     })}
                 </div>
@@ -185,7 +189,11 @@ const Home = () => {
                 {data &&
                   data?.pages?.map((page) => {
                     return page?.data?.posts?.map((post) => {
-                      return <PostCard key={post?.id} post={post} />;
+                      return (
+                        <div key={post?.id} data-aos="fade-up">
+                          <PostCard post={post} />
+                        </div>
+                      );
                     });
                   })}
               </div>

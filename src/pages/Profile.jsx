@@ -379,27 +379,31 @@ const Profile = () => {
                             return page?.data.users?.map((user) => {
                               if (user?.name) {
                                 return (
-                                  <Link
-                                    key={user?.username}
-                                    to={`/user/${user?.username}`}
-                                    className="py-3 px-4 flex items-center gap-x-5 rounded hover:bg-slate-100 dark:hover:bg-darkgrey dark:text-darkmodetext"
-                                  >
-                                    {user?.photoURL ? (
-                                      <img
-                                        src={user?.photoURL}
-                                        className="h-12 w-12 rounded-full"
-                                      />
-                                    ) : (
-                                      <Avvvatars size={50} value={user?.name} />
-                                    )}
+                                  <div key={user?.username} data-aos="fade-up">
+                                    <Link
+                                      to={`/user/${user?.username}`}
+                                      className="py-3 px-4 flex items-center gap-x-5 rounded hover:bg-slate-100 dark:hover:bg-darkgrey dark:text-darkmodetext"
+                                    >
+                                      {user?.photoURL ? (
+                                        <img
+                                          src={user?.photoURL}
+                                          className="h-12 w-12 rounded-full"
+                                        />
+                                      ) : (
+                                        <Avvvatars
+                                          size={50}
+                                          value={user?.name}
+                                        />
+                                      )}
 
-                                    <div className="flex-col text-left gap-y-2">
-                                      <p className="text-lg font-medium">
-                                        {user?.name}
-                                      </p>
-                                      <p>@{user?.username}</p>
-                                    </div>
-                                  </Link>
+                                      <div className="flex-col text-left gap-y-2">
+                                        <p className="text-lg font-medium">
+                                          {user?.name}
+                                        </p>
+                                        <p>@{user?.username}</p>
+                                      </div>
+                                    </Link>
+                                  </div>
                                 );
                               }
                             });
@@ -442,27 +446,31 @@ const Profile = () => {
                             return page?.data.users?.map((user) => {
                               if (user?.name) {
                                 return (
-                                  <Link
-                                    key={user?.username}
-                                    to={`/user/${user?.username}`}
-                                    className="py-3 px-4 flex gap-x-5 items-center rounded hover:bg-slate-100 dark:hover:bg-darkgrey dark:text-darkmodetext"
-                                  >
-                                    {user?.photoURL ? (
-                                      <img
-                                        src={user?.photoURL}
-                                        className="h-12 w-12 rounded-full"
-                                      />
-                                    ) : (
-                                      <Avvvatars size={50} value={user?.name} />
-                                    )}
+                                  <div key={user?.username} data-aos="fade-up">
+                                    <Link
+                                      to={`/user/${user?.username}`}
+                                      className="py-3 px-4 flex gap-x-5 items-center rounded hover:bg-slate-100 dark:hover:bg-darkgrey dark:text-darkmodetext"
+                                    >
+                                      {user?.photoURL ? (
+                                        <img
+                                          src={user?.photoURL}
+                                          className="h-12 w-12 rounded-full"
+                                        />
+                                      ) : (
+                                        <Avvvatars
+                                          size={50}
+                                          value={user?.name}
+                                        />
+                                      )}
 
-                                    <div className="flex-col text-left gap-y-2">
-                                      <p className="text-lg font-medium">
-                                        {user?.name}
-                                      </p>
-                                      <p>@{user?.username}</p>
-                                    </div>
-                                  </Link>
+                                      <div className="flex-col text-left gap-y-2">
+                                        <p className="text-lg font-medium">
+                                          {user?.name}
+                                        </p>
+                                        <p>@{user?.username}</p>
+                                      </div>
+                                    </Link>
+                                  </div>
                                 );
                               }
                             });
@@ -540,8 +548,13 @@ const Profile = () => {
             {data?.pages?.[0]?.data?.posts.length > 0 && (
               <div className="mt-10 grid md:grid-cols-2 lg:grid-cols-4 mx-5 md:mx-10 lg:mx-10">
                 {data?.pages?.map((page) => {
-                  return page?.data?.posts?.map((post, index) => {
-                    return <PostCard key={index} post={post} index={index} />;
+                  return page?.data?.posts?.map((post) => {
+                    return (
+                      <div data-aos="fade-up" key={post?.id}>
+                        {" "}
+                        <PostCard post={post} />{" "}
+                      </div>
+                    );
                   });
                 })}
               </div>
@@ -598,10 +611,13 @@ const Profile = () => {
               likedPosts?.pages?.[0]?.data?.posts[0] != null && (
                 <div className="mt-10 grid md:grid-cols-2 lg:grid-cols-4 mx-5 md:mx-10 lg:mx-10">
                   {likedPosts?.pages?.map((page) => {
-                    return page?.data?.posts?.map((post, index) => {
+                    return page?.data?.posts?.map((post) => {
                       if (post) {
                         return (
-                          <PostCard key={index} post={post} index={index} />
+                          <div data-aos="fade-up" key={post?.id}>
+                            {" "}
+                            <PostCard post={post} />{" "}
+                          </div>
                         );
                       }
                     });

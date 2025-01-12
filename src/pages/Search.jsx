@@ -172,10 +172,12 @@ const Search = () => {
                   {/* Map posts if posts are found */}
                   {posts &&
                     posts?.pages?.map((page) => {
-                      return page?.data.posts?.map((post, index) => {
+                      return page?.data.posts?.map((post) => {
                         if (post?.title) {
                           return (
-                            <PostCard key={index} post={post} index={index} />
+                            <div data-aos="fade-up" key={post?.id}>
+                              <PostCard post={post} />
+                            </div>
                           );
                         }
                       });
@@ -221,27 +223,28 @@ const Search = () => {
                     return page?.data.users?.map((user) => {
                       if (user?.name) {
                         return (
-                          <Link
-                            key={user?.username}
-                            to={`/user/${user?.username}`}
-                            className="py-5 px-4 flex gap-x-5 items-center rounded hover:bg-slate-100 dark:hover:bg-darkgrey"
-                          >
-                            {user?.photoURL ? (
-                              <img
-                                src={user?.photoURL}
-                                className="h-12 w-12 rounded-full"
-                              />
-                            ) : (
-                              <Avvvatars size={50} value={user?.name} />
-                            )}
+                          <div key={user?.username} data-aos="fade-up">
+                            <Link
+                              to={`/user/${user?.username}`}
+                              className="py-5 px-4 flex gap-x-5 items-center rounded hover:bg-slate-100 dark:hover:bg-darkgrey"
+                            >
+                              {user?.photoURL ? (
+                                <img
+                                  src={user?.photoURL}
+                                  className="h-12 w-12 rounded-full"
+                                />
+                              ) : (
+                                <Avvvatars size={50} value={user?.name} />
+                              )}
 
-                            <div className="flex-col gap-y-2">
-                              <p className="text-lg font-medium">
-                                {user?.name}
-                              </p>
-                              <p>@{user?.username}</p>
-                            </div>
-                          </Link>
+                              <div className="flex-col gap-y-2">
+                                <p className="text-lg font-medium">
+                                  {user?.name}
+                                </p>
+                                <p>@{user?.username}</p>
+                              </div>
+                            </Link>
+                          </div>
                         );
                       }
                     });

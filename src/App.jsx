@@ -17,7 +17,7 @@ import {
   Search,
   EditPost,
 } from "./pages";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Protector } from "./components";
 import SecurityHeaders from "./components/SecurityHeaders";
 import {
@@ -27,12 +27,22 @@ import {
   DialogHeader,
   DialogTitle,
 } from "./components/ui/dialog";
+import Aos from "aos";
+import "aos/dist/aos.css";
 
 // Creating Tanstack query client
 const queryClient = new QueryClient();
 
 function App() {
   const [open, setOpen] = useState(true);
+
+  // AOS Setting
+  useEffect(() => {
+    Aos.init({
+      easing: "ease-in-sine",
+      delay: 100,
+    });
+  }, []);
 
   return (
     <>

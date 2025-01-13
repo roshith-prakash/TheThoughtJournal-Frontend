@@ -9,7 +9,6 @@ import {
   Navbar,
   OutlineButton,
 } from "../components";
-import gallery from "../assets/gallery.png";
 import { isEditorEmpty } from "../functions/regexFunctions";
 import {
   Select,
@@ -34,19 +33,19 @@ const CreatePost = () => {
   // User Object
   const { dbUser } = useDBUser();
   // Ref for file input
-  const fileRef = useRef();
+  const fileRef = useRef<HTMLInputElement | null>();
   // State for text editor input
-  const [value, setValue] = useState();
+  const [value, setValue] = useState<string>();
   // State for disabling button
   const [disabled, setDisabled] = useState(false);
   // State for adding image
-  const [imageFile, setImageFile] = useState();
+  const [imageFile, setImageFile] = useState<File | string>();
   // State for adding title of post
-  const [title, setTitle] = useState();
+  const [title, setTitle] = useState<string>("");
   // State for selecting post category
-  const [category, setCategory] = useState();
+  const [category, setCategory] = useState<string>("");
   // State for adding category if "other" was selected
-  const [otherCategory, setOtherCategory] = useState();
+  const [otherCategory, setOtherCategory] = useState<string>("");
   // Error states
   const [error, setError] = useState({
     title: 0,
@@ -56,7 +55,7 @@ const CreatePost = () => {
     other: 0,
   });
 
-  const inputRef = useRef();
+  const inputRef = useRef<HTMLDivElement | null>();
 
   const queryClient = useQueryClient();
 
@@ -77,6 +76,7 @@ const CreatePost = () => {
       category: 0,
       image: 0,
       content: 0,
+      other: 0,
     });
 
     // Check if title is empty
@@ -86,7 +86,7 @@ const CreatePost = () => {
       return;
     }
     // If title is longer than 100 characters.
-    else if (title.length > 100) {
+    else if (title && title.length > 100) {
       setError((prev) => ({ ...prev, title: 2 }));
       inputRef.current.scrollIntoView({ behavior: "smooth" });
       return;
@@ -167,7 +167,10 @@ const CreatePost = () => {
   const handleFileChange = (e) => {
     console.log(e.target.files[0]);
     setImageFile(e.target.files[0]);
-    fileRef.current.value = null;
+
+    if (fileRef.current) {
+      fileRef.current.value = null;
+    }
   };
 
   return (
@@ -229,7 +232,12 @@ const CreatePost = () => {
                     <p className="flex gap-x-3 justify-center items-center">
                       Select your image
                       {/* Icon */}
-                      <img src={gallery} className="h-5" />
+                      <img
+                        src={
+                          "https://res.cloudinary.com/do8rpl9l4/image/upload/v1736740227/gallery_zmqd5v.png"
+                        }
+                        className="h-5"
+                      />
                     </p>
                   }
                   onClick={() => fileRef.current.click()}
@@ -334,7 +342,7 @@ const CreatePost = () => {
         <div>
           {imageFile && (
             <img
-              src={URL.createObjectURL(imageFile)}
+              src={URL.createObjectURL(imageFile as Blob)}
               className="h-96 lg:h-[30rem] w-full rounded-t object-cover object-center"
             ></img>
           )}

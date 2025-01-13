@@ -1,15 +1,10 @@
 import { useState } from "react";
-import logo from "../assets/logo.png";
 import CTAButton from "./CTAButton";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/authContext";
 import { useDBUser } from "../context/userContext";
 import { useLocation, NavLink } from "react-router-dom";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "../components/ui/popover";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import Avvvatars from "avvvatars-react";
 import { CgProfile, CgLogOut } from "react-icons/cg";
 import { BsPen } from "react-icons/bs";
@@ -36,7 +31,9 @@ const Navbar = () => {
         {/* Logo on the left side - linked to home page */}
         <Link className="flex items-center gap-x-2" to="/">
           <img
-            src={logo}
+            src={
+              "https://res.cloudinary.com/do8rpl9l4/image/upload/v1736738811/logo_wbqnwt.png"
+            }
             alt="The Thought Journal"
             className="h-6 w-6 md:h-10 md:w-10 cursor-pointer bg-transparent -translate-y-0.5"
           ></img>
@@ -259,7 +256,9 @@ const Navbar = () => {
           {/* Logo */}
           <div className="flex items-center">
             <img
-              src={logo}
+              src={
+                "https://res.cloudinary.com/do8rpl9l4/image/upload/v1736738811/logo_wbqnwt.png"
+              }
               alt="Logo"
               className="h-10 w-10 md:h-10 md:w-10 cursor-pointer bg-transparent -translate-y-0.5"
             ></img>

@@ -9,7 +9,6 @@ import {
   Navbar,
   OutlineButton,
 } from "../components";
-import gallery from "../assets/gallery.png";
 import { isEditorEmpty } from "../functions/regexFunctions";
 import {
   Select,
@@ -28,7 +27,6 @@ import { getMinsToRead } from "../functions/mathFunctions";
 import { modules, formats, QuillToolbar } from "../components/QuillToolbar";
 import Avvvatars from "avvvatars-react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import notfound from "../assets/notfound.svg";
 
 const EditPost = () => {
   let { state } = useLocation();
@@ -37,19 +35,19 @@ const EditPost = () => {
   // User Object
   const { dbUser } = useDBUser();
   // Ref for file input
-  const fileRef = useRef();
+  const fileRef = useRef<HTMLInputElement | null>();
   // State for text editor input
-  const [value, setValue] = useState();
+  const [value, setValue] = useState<string>();
   // State for disabling button
   const [disabled, setDisabled] = useState(false);
   // State for adding image
-  const [imageFile, setImageFile] = useState();
+  const [imageFile, setImageFile] = useState<File | string>();
   // State for adding title of post
-  const [title, setTitle] = useState();
+  const [title, setTitle] = useState("");
   // State for selecting post category
-  const [category, setCategory] = useState();
+  const [category, setCategory] = useState("");
   // State for adding category if "other" was selected
-  const [otherCategory, setOtherCategory] = useState();
+  const [otherCategory, setOtherCategory] = useState("");
   // Error states
   const [error, setError] = useState({
     title: 0,
@@ -59,7 +57,7 @@ const EditPost = () => {
     other: 0,
   });
 
-  const inputRef = useRef();
+  const inputRef = useRef<HTMLDivElement | null>();
 
   const queryClient = useQueryClient();
 
@@ -103,6 +101,7 @@ const EditPost = () => {
       category: 0,
       image: 0,
       content: 0,
+      other: 0,
     });
 
     // Check if title is empty
@@ -213,7 +212,9 @@ const EditPost = () => {
             <div className="mt-10 flex flex-col gap-10 justify-center items-center">
               {/* Image */}
               <img
-                src={notfound}
+                src={
+                  "https://res.cloudinary.com/do8rpl9l4/image/upload/v1736738810/notfound_eqfykw.svg"
+                }
                 className="max-w-[50%] lg:max-w-[40%] pointer-events-none"
               />
               {/* Button to navigate back to home page */}
@@ -291,7 +292,12 @@ const EditPost = () => {
                     <p className="flex gap-x-3 justify-center items-center">
                       Select your image
                       {/* Icon */}
-                      <img src={gallery} className="h-5" />
+                      <img
+                        src={
+                          "https://res.cloudinary.com/do8rpl9l4/image/upload/v1736740227/gallery_zmqd5v.png"
+                        }
+                        className="h-5"
+                      />
                     </p>
                   }
                   onClick={() => fileRef.current.click()}

@@ -9,7 +9,6 @@ import {
   Navbar,
   OutlineButton,
 } from "../components";
-import notfound from "../assets/notfound.svg";
 import { useNavigate } from "react-router-dom";
 import { sendEmailVerification } from "firebase/auth";
 import { toast, Toaster } from "react-hot-toast";
@@ -27,15 +26,15 @@ const Onboarding = () => {
   // Firebase user object
   const { currentUser } = useAuth();
   // Ref for file input
-  const fileRef = useRef();
+  const fileRef = useRef<HTMLInputElement | null>();
   // Name of the user to be stored in DB
-  const [name, setName] = useState();
+  const [name, setName] = useState("");
   // Profile image of user
   const [image, setImage] = useState();
   // Bio of the user
-  const [bio, setBio] = useState();
+  const [bio, setBio] = useState("");
   // Username to be stored in DB
-  const [username, setUsername] = useState();
+  const [username, setUsername] = useState("");
   // To disable button
   const [disabled, setDisabled] = useState(false);
   // Error
@@ -183,7 +182,9 @@ const Onboarding = () => {
             <div className="mt-10 flex flex-col gap-10 justify-center items-center">
               {/* Image */}
               <img
-                src={notfound}
+                src={
+                  "https://res.cloudinary.com/do8rpl9l4/image/upload/v1736738810/notfound_eqfykw.svg"
+                }
                 className="max-w-[50%] lg:max-w-[40%] pointer-events-none"
               />
               {/* Button to navigate back to home page */}
@@ -216,7 +217,9 @@ const Onboarding = () => {
             <div className="mt-10 flex flex-col gap-10 justify-center items-center">
               {/* Image */}
               <img
-                src={notfound}
+                src={
+                  "https://res.cloudinary.com/do8rpl9l4/image/upload/v1736738810/notfound_eqfykw.svg"
+                }
                 className="max-w-[50%] lg:max-w-[40%] pointer-events-none"
               />
               {/* Button to navigate back to home page */}
@@ -259,7 +262,9 @@ const Onboarding = () => {
             <div className="mt-10 flex flex-col gap-10 justify-center items-center">
               {/* Image */}
               <img
-                src={notfound}
+                src={
+                  "https://res.cloudinary.com/do8rpl9l4/image/upload/v1736738810/notfound_eqfykw.svg"
+                }
                 className="max-w-[50%] lg:max-w-[40%] pointer-events-none"
               />
               {/* Button to navigate back to home page */}

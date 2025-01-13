@@ -1,9 +1,6 @@
-import React from "react";
 import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa6";
-import footer from "../assets/footer.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { BsPen } from "react-icons/bs";
-import logo from "../assets/logo.png";
 import { useAuth } from "../context/authContext";
 
 const Footer = () => {
@@ -26,13 +23,18 @@ const Footer = () => {
           <div className="flex-1">
             {/* Logo */}
             <div className="flex justify-center items-center gap-x-3">
-              <img src={logo} className="h-16" />
+              <img
+                src={
+                  "https://res.cloudinary.com/do8rpl9l4/image/upload/v1736738811/logo_wbqnwt.png"
+                }
+                className="h-16"
+              />
             </div>
             {/* Title */}
             <p className="mt-5 text-3xl text-center">The Thought Journal</p>
             {/* Subtitle */}
             <p className="text-center mt-3 text-sm">
-              "Thoughts That Inspire and Enlighten"
+              &quot;Thoughts That Inspire and Enlighten&quot;
             </p>
 
             <div className="mt-14 flex justify-center">
@@ -99,7 +101,12 @@ const Footer = () => {
             <p className="mt-5 text-center">Developed by Roshith Prakash.</p>
           </div>
           <div className="hidden flex-1 lg:flex justify-center items-center">
-            <img src={footer} className="h-60 pointer-events-none" />
+            <img
+              src={
+                "https://res.cloudinary.com/do8rpl9l4/image/upload/v1736738810/footer_yoppab.svg"
+              }
+              className="h-60 pointer-events-none"
+            />
           </div>
         </div>
       </div>

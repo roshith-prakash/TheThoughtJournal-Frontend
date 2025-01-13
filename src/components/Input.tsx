@@ -1,5 +1,17 @@
+import { ChangeEventHandler } from "react";
+
 // Styled Text input
-const Input = ({ value, placeholder, onChange, className = "" }) => {
+const Input = ({
+  value,
+  placeholder,
+  onChange,
+  className = "",
+}: {
+  value: string;
+  placeholder: string;
+  onChange: ChangeEventHandler<HTMLInputElement>;
+  className: string;
+}) => {
   return (
     <input
       type="text"

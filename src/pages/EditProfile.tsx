@@ -8,7 +8,6 @@ import {
 } from "../components";
 import { useEffect, useRef, useState } from "react";
 import { IoCloudUploadOutline } from "react-icons/io5";
-import defaultAccount from "../assets/account.png";
 import { axiosInstance } from "../utils/axios";
 import toast, { Toaster } from "react-hot-toast";
 import { isValidUsername } from "../functions/regexFunctions";
@@ -17,15 +16,15 @@ const EditProfile = () => {
   // Db user object
   const { dbUser, fetchUser } = useDBUser();
   // Ref for file input
-  const fileRef = useRef();
+  const fileRef = useRef<HTMLInputElement | null>();
   // Name of the user to be stored in DB
-  const [name, setName] = useState();
+  const [name, setName] = useState("");
   // Profile image of user
   const [image, setImage] = useState();
   // Bio of the user
-  const [bio, setBio] = useState();
+  const [bio, setBio] = useState("");
   // Username to be stored in DB
-  const [username, setUsername] = useState();
+  const [username, setUsername] = useState("");
   // To disable button
   const [disabled, setDisabled] = useState(false);
   // Error
@@ -221,7 +220,12 @@ const EditProfile = () => {
                   className="h-24 w-24 rounded-full"
                 />
               ) : (
-                <img src={defaultAccount} className="h-24 w-24 rounded-full" />
+                <img
+                  src={
+                    "https://res.cloudinary.com/do8rpl9l4/image/upload/v1736740649/account_glotqh.png"
+                  }
+                  className="h-24 w-24 rounded-full"
+                />
               )}
             </div>
 

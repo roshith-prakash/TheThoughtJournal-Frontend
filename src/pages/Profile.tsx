@@ -6,7 +6,6 @@ import {
   PostCard,
 } from "../components";
 import { useDBUser } from "../context/userContext";
-import defaultAccount from "../assets/account.png";
 import { BsPen, BsFillTrash3Fill } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -22,14 +21,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../components/ui/dialog";
-import noPosts from "../assets/noposts.svg";
 import { auth } from "../firebase/firebase";
 import { Toaster, toast } from "react-hot-toast";
 import { useInView } from "react-intersection-observer";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { numberFormat } from "../functions/numberFormatter";
 import Avvvatars from "avvvatars-react";
-import homeNoPosts from "../assets/homeNoPosts.svg";
 import HashLoader from "react-spinners/HashLoader";
 
 const Profile = () => {
@@ -219,7 +216,11 @@ const Profile = () => {
           {/* Floating Image */}
           <div className="absolute w-full -top-16 flex justify-center">
             <img
-              src={dbUser?.photoURL ? dbUser?.photoURL : defaultAccount}
+              src={
+                dbUser?.photoURL
+                  ? dbUser?.photoURL
+                  : "https://res.cloudinary.com/do8rpl9l4/image/upload/v1736740649/account_glotqh.png"
+              }
               className="bg-white rounded-full h-32 w-32 border-8 border-darkmodeCTA dark:border-darkgrey pointer-events-none"
             />
           </div>
@@ -363,7 +364,9 @@ const Profile = () => {
                             <div className="flex flex-col justify-center pt-10">
                               <div className="flex justify-center">
                                 <img
-                                  src={homeNoPosts}
+                                  src={
+                                    "https://res.cloudinary.com/do8rpl9l4/image/upload/v1736740067/homeNoPosts_bxhmtk.svg"
+                                  }
                                   className="max-w-[50%]"
                                 />
                               </div>
@@ -482,7 +485,9 @@ const Profile = () => {
                             <div className="flex flex-col justify-center pt-10">
                               <div className="flex justify-center">
                                 <img
-                                  src={homeNoPosts}
+                                  src={
+                                    "https://res.cloudinary.com/do8rpl9l4/image/upload/v1736740067/homeNoPosts_bxhmtk.svg"
+                                  }
                                   className="max-w-[50%]"
                                 />
                               </div>
@@ -568,7 +573,12 @@ const Profile = () => {
                     You have not journalled any posts.
                   </p>
                   <div className="flex justify-center mt-16">
-                    <img src={noPosts} className="max-w-[50%]" />
+                    <img
+                      src={
+                        "https://res.cloudinary.com/do8rpl9l4/image/upload/v1736741571/noposts_ygokwh.svg"
+                      }
+                      className="max-w-[50%]"
+                    />
                   </div>
                   <div className="mt-20 flex justify-center">
                     <div className="max-w-[50%]">
@@ -635,7 +645,12 @@ const Profile = () => {
                       You have not liked any posts.
                     </p>
                     <div className="flex justify-center mt-16">
-                      <img src={noPosts} className="max-w-[50%]" />
+                      <img
+                        src={
+                          "https://res.cloudinary.com/do8rpl9l4/image/upload/v1736741571/noposts_ygokwh.svg"
+                        }
+                        className="max-w-[50%]"
+                      />
                     </div>
                   </div>
                 </div>

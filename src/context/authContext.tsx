@@ -3,7 +3,7 @@ import { auth } from "../firebase/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 
 // Creating Context
-const AuthContext = createContext();
+const AuthContext = createContext(null);
 
 // Hook to consume the context
 export function useAuth() {

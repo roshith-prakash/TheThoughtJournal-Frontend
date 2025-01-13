@@ -1,5 +1,17 @@
+import { MouseEventHandler } from "react";
+
 // Primary button - colored background and white text
-const CTAButton = ({ text, onClick, disabled, disabledText }) => {
+const CTAButton = ({
+  text,
+  onClick,
+  disabled,
+  disabledText,
+}: {
+  text: string | React.ReactNode;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
+  disabled?: boolean;
+  disabledText?: string;
+}) => {
   return (
     <button
       disabled={disabled}

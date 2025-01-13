@@ -17,8 +17,6 @@ import { useNavigate } from "react-router-dom";
 import { isValidEmail, isValidPassword } from "../functions/regexFunctions";
 import toast, { Toaster } from "react-hot-toast";
 import { axiosInstance } from "../utils/axios";
-import google from "../assets/google.png";
-import login from "../assets/login.svg";
 
 const provider = new GoogleAuthProvider();
 
@@ -166,7 +164,12 @@ const Login = () => {
       <div className="lg:min-h-[89vh] flex w-full bg-none lg:bg-bgwhite dark:bg-darkbg">
         {/* Image Div - displayed only on laptop */}
         <div className="hidden lg:flex lg:flex-1 items-center justify-center">
-          <img src={login} className="max-w-[70%]" />
+          <img
+            src={
+              "https://res.cloudinary.com/do8rpl9l4/image/upload/v1736740835/login_wgdxys.svg"
+            }
+            className="max-w-[70%]"
+          />
         </div>
 
         {/* Right Div */}
@@ -238,7 +241,12 @@ const Login = () => {
               className="flex dark:border-2 w-full gap-x-5 py-4 justify-center items-center px-14 shadow-md rounded-lg font-medium active:shadow transition-all disabled:text-greyText"
             >
               <p>Log in with Google</p>
-              <img src={google} className="max-h-6 max-w-6" />
+              <img
+                src={
+                  "https://res.cloudinary.com/do8rpl9l4/image/upload/v1736740835/google_gjqfmj.png"
+                }
+                className="max-h-6 max-w-6"
+              />
             </button>
           </div>
         </div>

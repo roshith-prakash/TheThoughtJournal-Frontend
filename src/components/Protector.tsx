@@ -1,11 +1,10 @@
 import { useAuth } from "../context/authContext";
 import { useDBUser } from "../context/userContext";
-import { Navbar, OutlineButton } from "../components";
+import { Navbar, OutlineButton } from ".";
 import { useNavigate } from "react-router-dom";
 import { toast, Toaster } from "react-hot-toast";
 import { sendEmailVerification } from "firebase/auth";
 import { auth } from "../firebase/firebase";
-import notfound from "../assets/notfound.svg";
 import { useEffect, useState } from "react";
 import HashLoader from "react-spinners/HashLoader";
 import PropTypes from "prop-types";
@@ -72,7 +71,9 @@ const Protector = ({ children }) => {
             <div className="mt-10 flex flex-col gap-10 justify-center items-center">
               {/* Image */}
               <img
-                src={notfound}
+                src={
+                  "https://res.cloudinary.com/do8rpl9l4/image/upload/v1736738810/notfound_eqfykw.svg"
+                }
                 className="max-w-[50%] lg:max-w-[40%] pointer-events-none"
               />
               {/* Button to navigate back to home page */}
@@ -104,7 +105,9 @@ const Protector = ({ children }) => {
             <div className="mt-10 flex flex-col gap-10 justify-center items-center">
               {/* Image */}
               <img
-                src={notfound}
+                src={
+                  "https://res.cloudinary.com/do8rpl9l4/image/upload/v1736738810/notfound_eqfykw.svg"
+                }
                 className="max-w-[50%] lg:max-w-[40%] pointer-events-none"
               />
               {/* Button to navigate back to home page */}
@@ -146,7 +149,9 @@ const Protector = ({ children }) => {
             <div className="mt-10 flex flex-col gap-10 justify-center items-center">
               {/* Image */}
               <img
-                src={notfound}
+                src={
+                  "https://res.cloudinary.com/do8rpl9l4/image/upload/v1736738810/notfound_eqfykw.svg"
+                }
                 className="max-w-[50%] lg:max-w-[40%] pointer-events-none"
               />
               {/* Button to navigate back to home page */}

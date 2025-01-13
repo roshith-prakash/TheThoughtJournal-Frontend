@@ -3,10 +3,10 @@
 module.exports = {
   darkMode: "class",
   content: [
-    './pages/**/*.{js,jsx}',
-    './components/**/*.{js,jsx}',
-    './app/**/*.{js,jsx}',
-    './src/**/*.{js,jsx}',
+    './pages/**/*.{js,jsx,tsx}',
+    './components/**/*.{js,jsx,tsx}',
+    './app/**/*.{js,jsx,tsx}',
+    './src/**/*.{js,jsx,tsx}',
   ],
   prefix: "",
   theme: {
@@ -50,7 +50,7 @@ module.exports = {
         "darkbg": "#181818",
         "secondarydarkbg": "#211f1f",
         "darkmodetext": "#E4E4E4",
-        "darkmodeCTA":"#b458ff"
+        "darkmodeCTA": "#b458ff"
       }
     },
   },

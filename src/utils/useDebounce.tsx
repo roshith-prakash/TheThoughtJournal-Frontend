@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 // Hook to debounce user input
-const useDebounce = (value, delay = 1000) => {
+const useDebounce = (value: string, delay: number = 1000) => {
   const [debouncedValue, setDebouncedValue] = useState(value);
 
   // Runs each time value is changed - clearing timeout if user is still typing & changing value only when user stops typing & one second has passed.

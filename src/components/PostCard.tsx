@@ -5,7 +5,23 @@ import relativeTime from "dayjs/plugin/relativeTime";
 
 dayjs.extend(relativeTime);
 
-const PostCard = ({ post }) => {
+const PostCard = ({
+  post,
+}: {
+  post: {
+    id: string;
+    thumbnail: string;
+    category?: string;
+    otherCategory?: string;
+    title: string;
+    createdAt: Date;
+    User: {
+      name: string;
+      username: string;
+      photoURL: string;
+    };
+  };
+}) => {
   return (
     // Card container
     <div className="flex justify-center">

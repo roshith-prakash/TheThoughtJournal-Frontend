@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { Footer, Navbar, OutlineButton } from "../components";
 import { useNavigate } from "react-router-dom";
-import notfound from "../assets/notfound.svg";
 
 const NotFound = () => {
   const navigate = useNavigate();
@@ -28,7 +27,9 @@ const NotFound = () => {
           <div className="mt-10 flex flex-col gap-10 justify-center items-center">
             {/* Image */}
             <img
-              src={notfound}
+              src={
+                "https://res.cloudinary.com/do8rpl9l4/image/upload/v1736738810/notfound_eqfykw.svg"
+              }
               className="max-w-[50%] lg:max-w-[40%] pointer-events-none"
             />
             {/* Button to navigate back to home page */}

@@ -2,7 +2,6 @@ import { Footer, Navbar, OutlineButton } from "../components";
 import { auth } from "../firebase/firebase";
 import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import logout from "../assets/signout.svg";
 import { useEffect } from "react";
 
 const Signout = () => {
@@ -38,7 +37,9 @@ const Signout = () => {
         </h1>
         {/* Image */}
         <img
-          src={logout}
+          src={
+            "https://res.cloudinary.com/do8rpl9l4/image/upload/v1736741825/signout_xm5pl2.svg"
+          }
           className="max-w-[35%] lg:max-w-[20%] pointer-events-none"
         />
         {/* Button to log out */}

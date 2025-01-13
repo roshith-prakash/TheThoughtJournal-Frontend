@@ -1,9 +1,16 @@
+import { MouseEventHandler } from "react";
+
 // Styled button - button with shadow
 const OutlineButton = ({
   text,
   onClick,
   disabled,
   disabledText = "Please Wait...",
+}: {
+  text: string;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
+  disabled?: boolean;
+  disabledText?: string;
 }) => {
   return (
     <button

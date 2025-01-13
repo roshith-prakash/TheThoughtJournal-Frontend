@@ -8,7 +8,6 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { axiosInstance } from "../utils/axios";
 import Avvvatars from "avvvatars-react";
 import { Link } from "react-router-dom";
-import homeNoPosts from "../assets/homeNoPosts.svg";
 import HashLoader from "react-spinners/HashLoader";
 
 const Search = () => {
@@ -205,7 +204,12 @@ const Search = () => {
                 posts?.pages?.[0]?.data?.posts.length == 0 && (
                   <div className="flex flex-col justify-center pt-10">
                     <div className="flex justify-center">
-                      <img src={homeNoPosts} className="max-w-[30%]" />
+                      <img
+                        src={
+                          "https://res.cloudinary.com/do8rpl9l4/image/upload/v1736740067/homeNoPosts_bxhmtk.svg"
+                        }
+                        className="max-w-[30%]"
+                      />
                     </div>
                     <p className="text-center mt-5 text-2xl font-medium">
                       Uh oh! Couldn&apos;t find any posts.
@@ -272,7 +276,12 @@ const Search = () => {
                   users?.pages?.[0]?.data?.users.length == 0 && (
                     <div className="flex flex-col justify-center pt-10">
                       <div className="flex justify-center">
-                        <img src={homeNoPosts} className="max-w-[30%]" />
+                        <img
+                          src={
+                            "https://res.cloudinary.com/do8rpl9l4/image/upload/v1736740067/homeNoPosts_bxhmtk.svg"
+                          }
+                          className="max-w-[30%]"
+                        />
                       </div>
                       <p className="text-center mt-5 text-2xl font-medium">
                         Uh oh! Couldn&apos;t find any users.

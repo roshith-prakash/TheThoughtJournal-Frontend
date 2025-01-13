@@ -6,7 +6,6 @@ import { useDBUser } from "../context/userContext";
 import { Footer, PostCard } from "../components";
 import HashLoader from "react-spinners/HashLoader";
 import { useInView } from "react-intersection-observer";
-import homeNoPosts from "../assets/homeNoPosts.svg";
 
 const Home = () => {
   // Get the DB user
@@ -136,7 +135,12 @@ const Home = () => {
             {followingError && (
               <div className="flex flex-col justify-center pt-10">
                 <div className="flex justify-center">
-                  <img src={homeNoPosts} className="max-w-[30%]" />
+                  <img
+                    src={
+                      "https://res.cloudinary.com/do8rpl9l4/image/upload/v1736740067/homeNoPosts_bxhmtk.svg"
+                    }
+                    className="max-w-[30%]"
+                  />
                 </div>
                 <p className="text-center mt-5 text-2xl font-medium">
                   Uh oh! Couldn&apos;t fetch posts.
@@ -149,7 +153,12 @@ const Home = () => {
               (!posts?.pages || posts?.pages?.[0]?.data?.posts.length == 0) && (
                 <div className="flex flex-col justify-center pt-10">
                   <div className="flex justify-center">
-                    <img src={homeNoPosts} className="max-w-[30%]" />
+                    <img
+                      src={
+                        "https://res.cloudinary.com/do8rpl9l4/image/upload/v1736740067/homeNoPosts_bxhmtk.svg"
+                      }
+                      className="max-w-[30%]"
+                    />
                   </div>
                   <p className="text-center mt-5 text-2xl font-medium">
                     Uh oh! Couldn&apos;t fetch posts.
@@ -203,7 +212,12 @@ const Home = () => {
             {error && (
               <div className="flex flex-col justify-center pt-10">
                 <div className="flex justify-center">
-                  <img src={homeNoPosts} className="max-w-[30%]" />
+                  <img
+                    src={
+                      "https://res.cloudinary.com/do8rpl9l4/image/upload/v1736740067/homeNoPosts_bxhmtk.svg"
+                    }
+                    className="max-w-[30%]"
+                  />
                 </div>
                 <p className="text-center mt-5 text-2xl font-medium">
                   Uh oh! Couldn&apos;t fetch posts.
@@ -216,7 +230,12 @@ const Home = () => {
               (!data?.pages || data?.pages?.[0]?.data?.posts.length == 0) && (
                 <div className="flex flex-col justify-center pt-10">
                   <div className="flex justify-center">
-                    <img src={homeNoPosts} className="max-w-[30%]" />
+                    <img
+                      src={
+                        "https://res.cloudinary.com/do8rpl9l4/image/upload/v1736740067/homeNoPosts_bxhmtk.svg"
+                      }
+                      className="max-w-[30%]"
+                    />
                   </div>
                   <p className="text-center mt-5 text-2xl font-medium">
                     Uh oh! Couldn&apos;t fetch posts.

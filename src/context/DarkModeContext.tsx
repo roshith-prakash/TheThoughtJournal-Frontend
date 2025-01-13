@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
 // Create the context
-const DarkModeContext = createContext();
+const DarkModeContext = createContext(null);
 
 // Provide the context
 export const DarkModeProvider = ({ children }) => {

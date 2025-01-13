@@ -1,7 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { Footer, Navbar, OutlineButton, PostCard } from "../components";
 import { useDBUser } from "../context/userContext";
-import defaultAccount from "../assets/account.png";
 import dayjs from "dayjs";
 import { TfiWrite } from "react-icons/tfi";
 import {
@@ -11,10 +10,8 @@ import {
 } from "@tanstack/react-query";
 import { axiosInstance } from "../utils/axios";
 import Profile from "./Profile";
-import userNotFound from "../assets/user.svg";
 import HashLoader from "react-spinners/HashLoader";
 import { useEffect, useState } from "react";
-import noPosts from "../assets/noposts.svg";
 import { useInView } from "react-intersection-observer";
 import { numberFormat } from "../functions/numberFormatter";
 import { GoPlusCircle } from "react-icons/go";
@@ -223,7 +220,7 @@ const User = () => {
                       src={
                         user?.data?.user?.photoURL
                           ? user?.data?.user?.photoURL
-                          : defaultAccount
+                          : "https://res.cloudinary.com/do8rpl9l4/image/upload/v1736740649/account_glotqh.png"
                       }
                       className={`bg-white rounded-full h-32 w-32 border-8 border-darkmodeCTA dark:border-darkgrey ${
                         user?.data?.user?.photoURL && "cursor-pointer"
@@ -236,7 +233,7 @@ const User = () => {
                         src={
                           user?.data?.user?.photoURL
                             ? user?.data?.user?.photoURL
-                            : defaultAccount
+                            : "https://res.cloudinary.com/do8rpl9l4/image/upload/v1736740649/account_glotqh.png"
                         }
                         className={`h-80 w-80 md:w-96 md:h-96 rounded`}
                       />
@@ -248,7 +245,7 @@ const User = () => {
                   src={
                     user?.data?.user?.photoURL
                       ? user?.data?.user?.photoURL
-                      : defaultAccount
+                      : "https://res.cloudinary.com/do8rpl9l4/image/upload/v1736740649/account_glotqh.png"
                   }
                   onClick={() => {
                     if (user?.data?.user?.photoURL) {
@@ -408,7 +405,12 @@ const User = () => {
                   {user?.data?.user?.name} has not journalled any posts.
                 </p>
                 <div className="flex justify-center mt-16">
-                  <img src={noPosts} className="max-w-[50%]" />
+                  <img
+                    src={
+                      "https://res.cloudinary.com/do8rpl9l4/image/upload/v1736741571/noposts_ygokwh.svg"
+                    }
+                    className="max-w-[50%]"
+                  />
                 </div>
               </div>
             </div>
@@ -429,7 +431,9 @@ const User = () => {
             <div className="mt-10 flex flex-col gap-10 justify-center items-center">
               {/* Image */}
               <img
-                src={userNotFound}
+                src={
+                  "https://res.cloudinary.com/do8rpl9l4/image/upload/v1736742020/user_nbfigi.svg"
+                }
                 className="max-w-[70%] lg:max-w-[60%] pointer-events-none"
               />
               {/* Button to navigate back */}

@@ -19,7 +19,6 @@ import Avvvatars from "avvvatars-react";
 import { getMinsToRead } from "../functions/mathFunctions";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import doesNotExist from "../assets/exist.svg";
 import HashLoader from "react-spinners/HashLoader";
 import {
   Dialog,
@@ -248,7 +247,7 @@ const Post = () => {
   const [commentError, setCommentError] = useState(0);
 
   // Ref to take upto input box
-  const replyRef = useRef();
+  const replyRef = useRef<HTMLDivElement | null>();
 
   const { ref, inView } = useInView();
 
@@ -935,7 +934,9 @@ const Post = () => {
             <div className="mt-10 flex flex-col gap-10 justify-center items-center">
               {/* Image */}
               <img
-                src={doesNotExist}
+                src={
+                  "https://res.cloudinary.com/do8rpl9l4/image/upload/v1736741174/exist_jm4kb5.svg"
+                }
                 className="max-w-[50%] lg:max-w-[40%] pointer-events-none"
               />
               {/* Button to navigate back to home page */}

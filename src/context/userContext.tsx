@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import PropTypes from "prop-types";
 
 // Creating Context
-const UserContext = createContext();
+const UserContext = createContext(null);
 
 // Hook to consume the context
 // eslint-disable-next-line react-refresh/only-export-components

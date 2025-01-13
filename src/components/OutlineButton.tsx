@@ -7,7 +7,7 @@ const OutlineButton = ({
   disabled,
   disabledText = "Please Wait...",
 }: {
-  text: string;
+  text: string | React.ReactNode;
   onClick?: MouseEventHandler<HTMLButtonElement>;
   disabled?: boolean;
   disabledText?: string;

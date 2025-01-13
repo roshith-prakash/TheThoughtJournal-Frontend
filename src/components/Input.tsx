@@ -10,7 +10,7 @@ const Input = ({
   value: string;
   placeholder: string;
   onChange: ChangeEventHandler<HTMLInputElement>;
-  className: string;
+  className?: string;
 }) => {
   return (
     <input

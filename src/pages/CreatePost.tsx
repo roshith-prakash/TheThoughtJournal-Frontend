@@ -27,6 +27,7 @@ import { getMinsToRead } from "../functions/mathFunctions";
 import { modules, formats, QuillToolbar } from "../components/QuillToolbar";
 import Avvvatars from "avvvatars-react";
 import { useQueryClient } from "@tanstack/react-query";
+import { compressImage } from "@/functions/compressImage";
 
 const CreatePost = () => {
   const navigate = useNavigate();
@@ -70,7 +71,7 @@ const CreatePost = () => {
   }, []);
 
   // To save the post
-  const handleSave = () => {
+  const handleSave = async () => {
     setError({
       title: 0,
       category: 0,
@@ -131,15 +132,18 @@ const CreatePost = () => {
       return;
     }
 
+    setDisabled(true);
+
+    const compressedFile = await compressImage(imageFile);
+
     // Adding data to FormData object
     const formData = new FormData();
-    formData.append("file", imageFile);
+    formData.append("file", compressedFile);
     formData.append("title", title);
     formData.append("category", category);
     formData.append("otherCategory", otherCategory);
     formData.append("content", String(value));
     formData.append("user", JSON.stringify(dbUser));
-    setDisabled(true);
 
     // Sending request to server
     axiosInstance

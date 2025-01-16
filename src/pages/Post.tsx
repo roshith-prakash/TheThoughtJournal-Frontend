@@ -381,6 +381,9 @@ const Post = () => {
       .then(() => {
         setDisabled(false);
         toast.success("Post deleted");
+        queryClient.resetQueries({
+          queryKey: ["getUserPosts", dbUser?.username],
+        });
         navigate("/profile");
       })
       .catch((err) => {

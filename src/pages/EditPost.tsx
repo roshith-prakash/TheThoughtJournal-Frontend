@@ -27,6 +27,7 @@ import { getMinsToRead } from "../functions/mathFunctions";
 import { modules, formats, QuillToolbar } from "../components/QuillToolbar";
 import Avvvatars from "avvvatars-react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { compressImage } from "@/functions/compressImage";
 
 const EditPost = () => {
   let { state } = useLocation();
@@ -95,7 +96,7 @@ const EditPost = () => {
   }, [data?.data?.post?.id, state?.postId]);
 
   // To save the post
-  const handleSave = () => {
+  const handleSave = async () => {
     setError({
       title: 0,
       category: 0,
@@ -155,11 +156,14 @@ const EditPost = () => {
       return;
     }
 
+    setDisabled(true);
+
     // Adding data to FormData object
     const formData = new FormData();
 
     if (typeof imageFile != "string") {
-      formData.append("file", imageFile);
+      const compressedFile = await compressImage(imageFile);
+      formData.append("file", compressedFile);
     }
 
     formData.append("postId", data?.data?.post?.id);
@@ -168,7 +172,6 @@ const EditPost = () => {
     formData.append("otherCategory", otherCategory);
     formData.append("content", String(value));
     formData.append("user", JSON.stringify(dbUser));
-    setDisabled(true);
 
     // Sending request to server
     axiosInstance

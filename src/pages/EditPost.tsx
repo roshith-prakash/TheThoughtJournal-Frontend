@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, ChangeEvent } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import {
@@ -193,9 +193,19 @@ const EditPost = () => {
   };
 
   // To get image input
-  const handleFileChange = (e) => {
-    console.log(e.target.files[0]);
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    let extension = e.target.files[0]?.name?.split(".").pop();
+
+    let allowedExtensions = ["jpg", "png", "jpeg"];
+
+    if (!allowedExtensions.includes(extension)) {
+      toast.error("Invalid Image Format.");
+      fileRef.current.value = null;
+      return;
+    }
+
     setImageFile(e.target.files[0]);
+
     fileRef.current.value = null;
   };
 

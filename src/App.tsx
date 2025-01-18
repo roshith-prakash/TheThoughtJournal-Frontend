@@ -17,16 +17,9 @@ import {
   Search,
   EditPost,
 } from "./pages";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Protector } from "./components";
 import SecurityHeaders from "./components/SecurityHeaders";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "./components/ui/dialog";
 import Aos from "aos";
 import "aos/dist/aos.css";
 
@@ -34,8 +27,6 @@ import "aos/dist/aos.css";
 const queryClient = new QueryClient();
 
 function App() {
-  const [open, setOpen] = useState(true);
-
   // AOS Setting
   useEffect(() => {
     Aos.init({
@@ -53,19 +44,6 @@ function App() {
           {/* Providing Db user data to children */}
           <UserProvider>
             <>
-              <Dialog open={open} onOpenChange={setOpen}>
-                <DialogContent>
-                  <DialogHeader>
-                    <DialogTitle className="dark:text-darkmodetext">
-                      Please Note
-                    </DialogTitle>
-                    <DialogDescription className="pt-5 text-md text-black">
-                      Initial request may take upto a minute due to server
-                      limitations. Please be patient.
-                    </DialogDescription>
-                  </DialogHeader>
-                </DialogContent>
-              </Dialog>
               <SecurityHeaders />
               <BrowserRouter>
                 <Routes>

@@ -372,23 +372,23 @@ const CreatePost = () => {
           )}
 
         {/* Title + Content Section */}
-        <div className="p-5 md:p-10 md:pt-0 mt-8">
+        <div className="p-5 max-w-5xl mx-auto md:p-10 md:pt-0 mt-8">
           {/* Badge */}
           {category && category != "OTHER" && (
-            <p className="bg-cta text-white dark:text-darkmodetext text-lg lg:text-xl rounded-full px-3 py-1 w-fit">
+            <p className="bg-cta ml-3 text-white dark:text-darkmodetext text-lg lg:text-xl rounded-full px-3 py-1 w-fit">
               {category}
             </p>
           )}
 
           {category == "OTHER" && otherCategory && (
-            <p className="bg-cta text-white text-lg lg:text-xl rounded-full px-3 py-1 w-fit">
+            <p className="bg-cta ml-3 text-white text-lg lg:text-xl rounded-full px-3 py-1 w-fit">
               {otherCategory}
             </p>
           )}
 
           {/* Post Title */}
           {title && (
-            <h1 className="mt-10 text-4xl lg:text-6xl font-bold text-ink dark:text-darkmodeCTA">
+            <h1 className="mt-10 text-4xl px-3.5 lg:text-6xl font-bold text-ink dark:text-darkmodeCTA">
               {title}
             </h1>
           )}
@@ -397,7 +397,7 @@ const CreatePost = () => {
           {(title?.length > 0 || (value && !isEditorEmpty(value))) && (
             <Link
               to={`/user/${dbUser?.username}`}
-              className="mt-14 flex gap-x-4 text-xl items-center w-fit"
+              className="mt-14 px-3 flex gap-x-4 text-xl items-center w-fit"
             >
               {/* User Image or Avatar */}
               {dbUser?.photoURL ? (
@@ -419,7 +419,7 @@ const CreatePost = () => {
 
           {/* Time to read */}
           {value && !isEditorEmpty(value) && (
-            <div className="mt-4 px-2 text-greyText font-medium">
+            <div className="mt-4 px-3.5 text-greyText font-medium">
               {getMinsToRead(value)} min read.
             </div>
           )}

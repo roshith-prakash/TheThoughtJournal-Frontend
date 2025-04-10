@@ -117,7 +117,6 @@ const Search = () => {
               <IoIosSearch className="absolute left-2 top-6 text-greyText text-xl" />
               <Input
                 value={search}
-                type="text"
                 className="pl-10"
                 placeholder={"Search for posts or users!"}
                 onChange={(e) => setSearch(e.target.value)}

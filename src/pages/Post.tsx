@@ -587,10 +587,10 @@ const Post = () => {
                 className="h-96 lg:h-[30rem] w-full rounded-t object-cover object-center"
               ></img>
             </div>
-            <div className="p-5 md:p-10 md:pt-0 mt-8">
+            <div className="p-5 max-w-5xl mx-auto md:p-10 md:pt-0 mt-8">
               {/* Badge */}
               <div className="flex justify-between items-center">
-                <p className="bg-cta text-white dark:text-darkmodetext text-lg lg:text-xl rounded-full px-3 py-1 w-fit">
+                <p className="bg-cta text-white dark:text-darkmodetext text-lg lg:text-xl rounded-full px-3 ml-3 py-1 w-fit">
                   {data?.data?.post?.category != "OTHER"
                     ? data?.data?.post?.category
                     : data?.data?.post?.otherCategory}
@@ -697,14 +697,14 @@ const Post = () => {
               </div>
 
               {/* Post Title */}
-              <h1 className="mt-10 text-4xl lg:text-6xl font-bold text-ink dark:text-darkmodeCTA">
+              <h1 className="mt-10 text-4xl px-3 lg:text-6xl font-bold text-ink dark:text-darkmodeCTA">
                 {data?.data?.post?.title}
               </h1>
 
               {/* Post Author */}
               <Link
                 to={`/user/${data?.data?.post?.User?.username}`}
-                className="mt-14 flex gap-x-4 text-xl items-center w-fit"
+                className="mt-14 px-3 flex gap-x-4 text-xl items-center w-fit"
               >
                 {/* User Image or Avatar */}
                 {data?.data?.post?.User?.photoURL ? (
@@ -728,7 +728,7 @@ const Post = () => {
               </Link>
 
               {/* Time required to read + post date */}
-              <div className="mt-4 px-2 text-greyText font-medium">
+              <div className="mt-4 px-3.5 text-greyText font-medium">
                 {getMinsToRead(data?.data?.post?.content)} min read | Posted on{" "}
                 {dayjs(data?.data?.post?.createdAt).format("MMM DD, YYYY")}.
               </div>
@@ -745,7 +745,7 @@ const Post = () => {
               </div>
 
               {/* Like + Share */}
-              <div className="mt-10 border-t-2 px-5 lg:px-10 py-10 ">
+              <div className="mt-10 border-t-2 px-3 py-10 ">
                 <p className="mb-8 text-xl font-medium">
                   Enjoyed the post? Like & Share it!
                 </p>
@@ -807,121 +807,119 @@ const Post = () => {
                 </div>
               </div>
             </div>
-          </div>
-          <div
-            ref={replyRef}
-            className=" m-2 mt-5 md:m-5 lg:m-10 bg-white shadow-xl border-[1px] dark:border-darkgrey dark:bg-darkgrey dark:text-darkmodetext rounded-xl"
-          >
-            <div className="p-5 md:p-10 md:pt-0 mt-8">
-              {/* Title */}
-              <p className="text-xl font-semibold">Comments</p>
-              {/* Input box */}
-              <div className="p-4">
-                {/* If replying to a comment, display the comment */}
-                {reply && (
-                  <div className="bg-slate-50 dark:bg-darkgrey dark:border-2 my-5 py-3 px-4 rounded shadow relative">
-                    <RxCross2
-                      className="absolute top-8 text-xl right-5 cursor-pointer"
-                      onClick={() => {
-                        setReply(null);
-                        setParentId(null);
-                      }}
-                    />
-                    <p className="my-3 font-medium pb-3">Replying to :</p>
-                    <div className="flex gap-x-4">
-                      {/* User Image or Avatar */}
-                      {reply?.User?.photoURL ? (
-                        <img
-                          src={reply?.User?.photoURL}
-                          className="h-12 w-12 rounded-full"
-                        />
-                      ) : (
-                        <Avvvatars size={50} value={reply?.User?.name} />
-                      )}
 
-                      {/* User's name & username */}
-                      <div>
-                        <p className="break-all font-medium">
-                          {reply?.User?.name}
-                        </p>
-                        <p className="break-all">@{reply?.User?.username}</p>
+            <div ref={replyRef} className="max-w-5xl mx-auto">
+              <div className="p-5 md:p-10 md:pt-0 mt-8">
+                {/* Title */}
+                <p className="text-xl font-semibold">Comments</p>
+                {/* Input box */}
+                <div className="p-4">
+                  {/* If replying to a comment, display the comment */}
+                  {reply && (
+                    <div className="bg-slate-50 dark:bg-darkgrey dark:border-2 my-5 py-3 px-4 rounded shadow relative">
+                      <RxCross2
+                        className="absolute top-8 text-xl right-5 cursor-pointer"
+                        onClick={() => {
+                          setReply(null);
+                          setParentId(null);
+                        }}
+                      />
+                      <p className="my-3 font-medium pb-3">Replying to :</p>
+                      <div className="flex gap-x-4">
+                        {/* User Image or Avatar */}
+                        {reply?.User?.photoURL ? (
+                          <img
+                            src={reply?.User?.photoURL}
+                            className="h-12 w-12 rounded-full"
+                          />
+                        ) : (
+                          <Avvvatars size={50} value={reply?.User?.name} />
+                        )}
+
+                        {/* User's name & username */}
+                        <div>
+                          <p className="break-all font-medium">
+                            {reply?.User?.name}
+                          </p>
+                          <p className="break-all">@{reply?.User?.username}</p>
+                        </div>
                       </div>
+                      <p className="text-sm text-greyText mt-1 ml-16">
+                        {" "}
+                        {dayjs(reply?.createdAt).fromNow()}
+                      </p>
+                      <p className="mt-4 text-justify">{reply?.content}</p>
                     </div>
-                    <p className="text-sm text-greyText mt-1 ml-16">
-                      {" "}
-                      {dayjs(reply?.createdAt).fromNow()}
-                    </p>
-                    <p className="mt-4 text-justify">{reply?.content}</p>
-                  </div>
-                )}
+                  )}
 
-                {/* Input box + send button */}
-                <div className="relative">
-                  <Input
-                    value={comment}
-                    onChange={(e) => setComment(e.target.value)}
-                    placeholder="Write your comment..."
-                    className="pr-10"
-                  />
-                  {!disableSend ? (
-                    <LuSend
-                      onClick={handleComment}
-                      className="absolute right-2 top-6 text-xl cursor-pointer hover:text-cta transiton-all"
+                  {/* Input box + send button */}
+                  <div className="relative">
+                    <Input
+                      value={comment}
+                      onChange={(e) => setComment(e.target.value)}
+                      placeholder="Write your comment..."
+                      className="pr-10"
                     />
-                  ) : (
-                    <AiOutlineLoading3Quarters className="absolute right-2 top-6 text-xl animate-spin" />
+                    {!disableSend ? (
+                      <LuSend
+                        onClick={handleComment}
+                        className="absolute right-2 top-6 text-xl cursor-pointer hover:text-cta transiton-all"
+                      />
+                    ) : (
+                      <AiOutlineLoading3Quarters className="absolute right-2 top-6 text-xl animate-spin" />
+                    )}
+                  </div>
+                  {commentError == 1 && (
+                    <ErrorStatement text={"Please type your comment."} />
                   )}
                 </div>
-                {commentError == 1 && (
-                  <ErrorStatement text={"Please type your comment."} />
-                )}
               </div>
+
+              {/* If comments are present, map the comments */}
+              {comments && comments?.pages?.[0]?.data?.comments?.length > 0 && (
+                <div className="mt-5 px-7">
+                  {comments?.pages?.map((page, pageIndex) => {
+                    return page?.data?.comments?.map(
+                      (DBcomment, commentIndex) => {
+                        return (
+                          <Comment
+                            key={commentIndex}
+                            comment={DBcomment}
+                            handleReply={handleReply}
+                            pageIndex={pageIndex}
+                            commentIndex={commentIndex}
+                            loadMoreReplies={loadMoreReplies}
+                            fetchDisable={fetchDisable}
+                            repliesPageNumber={repliesPageNumber}
+                            refetchComments={refetchComments}
+                            refetchPost={refetchPost}
+                            setRepliesPageNumber={setRepliesPageNumber}
+                            author={data?.data?.post?.User?.id}
+                            currentUser={dbUser?.id}
+                          />
+                        );
+                      }
+                    );
+                  })}
+                </div>
+              )}
+
+              {/* While loading comments */}
+              {loadingComments && (
+                <div className="py-20 flex w-full justify-center items-center">
+                  <HashLoader
+                    color={"#9b0ced"}
+                    loading={loadingComments}
+                    size={100}
+                    aria-label="Loading Spinner"
+                    data-testid="loader"
+                  />
+                </div>
+              )}
+
+              {/* Ref for infinte querying comments */}
+              <div ref={ref}></div>
             </div>
-
-            {/* If comments are present, map the comments */}
-            {comments && comments?.pages?.[0]?.data?.comments?.length > 0 && (
-              <div className="mt-5 px-7">
-                {comments?.pages?.map((page, pageIndex) => {
-                  return page?.data?.comments?.map(
-                    (DBcomment, commentIndex) => {
-                      return (
-                        <Comment
-                          key={commentIndex}
-                          comment={DBcomment}
-                          handleReply={handleReply}
-                          pageIndex={pageIndex}
-                          commentIndex={commentIndex}
-                          loadMoreReplies={loadMoreReplies}
-                          fetchDisable={fetchDisable}
-                          repliesPageNumber={repliesPageNumber}
-                          refetchComments={refetchComments}
-                          refetchPost={refetchPost}
-                          setRepliesPageNumber={setRepliesPageNumber}
-                          author={data?.data?.post?.User?.id}
-                          currentUser={dbUser?.id}
-                        />
-                      );
-                    }
-                  );
-                })}
-              </div>
-            )}
-
-            {/* While loading comments */}
-            {loadingComments && (
-              <div className="py-20 flex w-full justify-center items-center">
-                <HashLoader
-                  color={"#9b0ced"}
-                  loading={loadingComments}
-                  size={100}
-                  aria-label="Loading Spinner"
-                  data-testid="loader"
-                />
-              </div>
-            )}
-
-            {/* Ref for infinte querying comments */}
-            <div ref={ref}></div>
           </div>
         </>
       )}

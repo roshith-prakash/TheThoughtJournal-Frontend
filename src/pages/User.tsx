@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { Footer, Navbar, OutlineButton, PostCard } from "../components";
+import { OutlineButton, PostCard } from "../components";
 import { useDBUser } from "../context/userContext";
 import dayjs from "dayjs";
 import { TfiWrite } from "react-icons/tfi";
@@ -186,13 +186,9 @@ const User = () => {
 
   return (
     <>
-      <Toaster />
-      <div className="max-w-screen overflow-hidden">
-        <Navbar />
-      </div>
       {/* If data is being fetched*/}
       {loadingUser && (
-        <div className="dark:bg-darkbg min-h-[70vh] md:min-h-[65vh] lg:min-h-[60vh] p-20 pb-40 flex justify-center items-center">
+        <div className="min-h-[70vh] md:min-h-[65vh] lg:min-h-[60vh] p-20 pb-40 flex justify-center items-center">
           <HashLoader
             color={"#9b0ced"}
             loading={loadingUser}
@@ -205,7 +201,7 @@ const User = () => {
 
       {/* If user was found */}
       {user && (
-        <div className="lg:min-h-screen bg-bgwhite dark:bg-darkbg dark:text-darkmodetext w-full pb-20">
+        <div className="lg:min-h-screen w-full pb-20">
           {/* Background color div */}
           <div className="bg-darkmodeCTA dark:bg-darkgrey border-b-4 border-black h-48"></div>
 
@@ -447,10 +443,6 @@ const User = () => {
           </div>
         </div>
       )}
-
-      <div>
-        <Footer />
-      </div>
     </>
   );
 };

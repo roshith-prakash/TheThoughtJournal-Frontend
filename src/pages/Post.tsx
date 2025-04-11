@@ -8,13 +8,7 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 import ReactQuill from "react-quill";
-import {
-  ErrorStatement,
-  Footer,
-  Input,
-  Navbar,
-  OutlineButton,
-} from "../components";
+import { ErrorStatement, Input, OutlineButton } from "../components";
 import Avvvatars from "avvvatars-react";
 import { getMinsToRead } from "../functions/mathFunctions";
 import dayjs from "dayjs";
@@ -559,13 +553,10 @@ const Post = () => {
   };
 
   return (
-    <div className="bg-bgwhite dark:bg-darkbg min-h-screen">
-      <Navbar />
-      <Toaster />
-
+    <div>
       {/* If data is being fetched */}
       {isLoading && (
-        <div className="dark:bg-darkbg min-h-[70vh] md:min-h-[65vh] lg:min-h-[60vh]  flex justify-center items-center">
+        <div className="min-h-[70vh] md:min-h-[65vh] lg:min-h-[60vh]  flex justify-center items-center">
           <HashLoader
             color={"#9b0ced"}
             loading={isLoading}
@@ -578,15 +569,17 @@ const Post = () => {
 
       {/* When post is available */}
       {data && data?.data?.post && (
-        <>
-          <div className="pb-10 m-2 md:m-5 lg:m-10 bg-white shadow-xl border-[1px] dark:border-darkgrey dark:bg-darkgrey dark:text-darkmodetext rounded-xl">
+        <div className="p-10">
+          <div className="pb-10 m-2 md:m-5  bg-white shadow-xl border-[1px] dark:border-darkgrey dark:bg-darkgrey dark:text-darkmodetext rounded-xl">
             {/* Thumbnail Image */}
             <div>
               <img
                 src={data?.data?.post?.thumbnail}
-                className="h-96 lg:h-[30rem] w-full rounded-t object-cover object-center"
+                className="max-h-96 lg:max-h-[30rem] w-full rounded-t object-cover object-center"
               ></img>
             </div>
+
+            {/* Content */}
             <div className="p-5 max-w-5xl mx-auto md:p-10 md:pt-0 mt-8">
               {/* Badge */}
               <div className="flex justify-between items-center">
@@ -697,14 +690,14 @@ const Post = () => {
               </div>
 
               {/* Post Title */}
-              <h1 className="mt-10 text-4xl px-3 lg:text-6xl font-bold text-ink dark:text-darkmodeCTA">
+              <h1 className="mt-10 text-4xl px-3 tracking-tight lg:text-6xl font-bold text-ink dark:text-darkmodeCTA">
                 {data?.data?.post?.title}
               </h1>
 
               {/* Post Author */}
               <Link
                 to={`/user/${data?.data?.post?.User?.username}`}
-                className="mt-14 px-3 flex gap-x-4 text-xl items-center w-fit"
+                className="mt-14 hover:underline underline-offset-2 px-3 flex gap-x-4 text-xl items-center w-fit"
               >
                 {/* User Image or Avatar */}
                 {data?.data?.post?.User?.photoURL ? (
@@ -808,6 +801,7 @@ const Post = () => {
               </div>
             </div>
 
+            {/* Comments section */}
             <div ref={replyRef} className="max-w-5xl mx-auto">
               <div className="p-5 md:p-10 md:pt-0 mt-8">
                 {/* Title */}
@@ -921,7 +915,7 @@ const Post = () => {
               <div ref={ref}></div>
             </div>
           </div>
-        </>
+        </div>
       )}
 
       {/* When post is NOT available */}
@@ -948,10 +942,6 @@ const Post = () => {
           </div>
         </div>
       )}
-
-      <div className="pt-32">
-        <Footer />
-      </div>
     </div>
   );
 };

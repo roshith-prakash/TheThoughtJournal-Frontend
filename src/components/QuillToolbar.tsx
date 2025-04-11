@@ -72,14 +72,12 @@ export const formats = [
 
 // Quill Toolbar component
 export const QuillToolbar = () => (
-  <div id="toolbar">
+  <div id="toolbar" className="rounded-lg">
     <span className="ql-formats">
       {/* Select tab for font sizes */}
-      <select className="ql-size" defaultValue="medium">
+      <select className="ql-size">
         <option value="small">Small</option>
-        <option selected value="medium">
-          Medium
-        </option>
+        <option value="medium">Medium</option>
         <option value="large">Large</option>
       </select>
       {/* Select tab for text format */}

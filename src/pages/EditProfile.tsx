@@ -1,15 +1,9 @@
 import { useDBUser } from "../context/userContext";
-import {
-  CTAButton,
-  ErrorStatement,
-  Footer,
-  Input,
-  Navbar,
-} from "../components";
+import { CTAButton, ErrorStatement, Input } from "../components";
 import { useEffect, useRef, useState } from "react";
 import { IoCloudUploadOutline } from "react-icons/io5";
 import { axiosInstance } from "../utils/axios";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { isValidUsername } from "../functions/regexFunctions";
 
 const EditProfile = () => {
@@ -189,9 +183,7 @@ const EditProfile = () => {
 
   return (
     <>
-      <Navbar />
-      <Toaster />
-      <div className="min-h-[70vh] md:min-h-[65vh] lg:min-h-[60vh] bg-bgwhite dark:bg-darkbg dark:text-darkmodetext flex items-center justify-center pt-12 pb-32">
+      <div className="min-h-[70vh] md:min-h-[65vh] lg:min-h-[60vh] flex items-center justify-center pt-12 pb-32">
         <div className="bg-white dark:bg-darkgrey border-[1px] px- w-[90%] md:w-[65%] md:mt-5 lg:mt-5 p-5 md:px-20 shadow-xl rounded-xl pb-10">
           {/* Title */}
           <h1 className="text-ink dark:text-darkmodetext pt-5 font-bold text-2xl text-center">
@@ -307,9 +299,6 @@ const EditProfile = () => {
             </div>
           </div>
         </div>
-      </div>
-      <div className="pt-20 dark:bg-darkbg">
-        <Footer />
       </div>
     </>
   );

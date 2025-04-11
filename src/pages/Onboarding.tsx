@@ -1,14 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useAuth } from "../context/authContext";
 import { useDBUser } from "../context/userContext";
-import {
-  CTAButton,
-  ErrorStatement,
-  Footer,
-  Input,
-  Navbar,
-  OutlineButton,
-} from "../components";
+import { CTAButton, ErrorStatement, Input, OutlineButton } from "../components";
 import { useNavigate } from "react-router-dom";
 import { sendEmailVerification } from "firebase/auth";
 import { toast, Toaster } from "react-hot-toast";
@@ -171,33 +164,29 @@ const Onboarding = () => {
   // If user hasn't signed in using firebase
   if (!currentUser) {
     return (
-      <div>
-        <Navbar />
-        <div className="min-h-[70vh] md:min-h-[65vh] dark:bg-darkgrey dark:text-darkmodetext lg:min-h-[60vh] flex items-center justify-center pt-12 pb-32">
-          <div>
-            {/* Title for page */}
-            <p className="text-3xl lg:text-4xl px-5 text-center mt-14">
-              You have not signed in!
-            </p>
-            <div className="mt-10 flex flex-col gap-10 justify-center items-center">
-              {/* Image */}
-              <img
-                src={
-                  "https://res.cloudinary.com/do8rpl9l4/image/upload/v1736738810/notfound_eqfykw.svg"
-                }
-                className="max-w-[50%] lg:max-w-[40%] pointer-events-none"
+      <div className="min-h-[70vh] md:min-h-[65vh] lg:min-h-[60vh] flex items-center justify-center pt-12 pb-32">
+        <div>
+          {/* Title for page */}
+          <p className="text-3xl lg:text-4xl px-5 text-center mt-14">
+            You have not signed in!
+          </p>
+          <div className="mt-10 flex flex-col gap-10 justify-center items-center">
+            {/* Image */}
+            <img
+              src={
+                "https://res.cloudinary.com/do8rpl9l4/image/upload/v1736738810/notfound_eqfykw.svg"
+              }
+              className="max-w-[50%] lg:max-w-[40%] pointer-events-none"
+            />
+            {/* Button to navigate back to home page */}
+            <div className="w-[40%] lg:w-[30%]">
+              <OutlineButton
+                onClick={() => navigate("/signup")}
+                text="Sign Up"
               />
-              {/* Button to navigate back to home page */}
-              <div className="w-[40%] lg:w-[30%]">
-                <OutlineButton
-                  onClick={() => navigate("/signup")}
-                  text="Sign Up"
-                />
-              </div>
             </div>
           </div>
         </div>
-        <Footer />
       </div>
     );
   }
@@ -205,45 +194,40 @@ const Onboarding = () => {
   // If user has signed up via email but has not verified their email.
   if (!currentUser?.emailVerified) {
     return (
-      <div>
-        <Navbar />
-        <Toaster />
-        <div className="min-h-[70vh] md:min-h-[65vh] dark:bg-darkgrey dark:text-darkmodetext lg:min-h-[60vh] flex items-center justify-center pt-12 pb-32">
-          <div>
-            {/* Title for page */}
-            <p className="text-3xl lg:text-4xl px-5 text-center mt-14">
-              Oops! Your email isn&apos;t verified.
-            </p>
-            <div className="mt-10 flex flex-col gap-10 justify-center items-center">
-              {/* Image */}
-              <img
-                src={
-                  "https://res.cloudinary.com/do8rpl9l4/image/upload/v1736738810/notfound_eqfykw.svg"
-                }
-                className="max-w-[50%] lg:max-w-[40%] pointer-events-none"
+      <div className="min-h-[70vh] md:min-h-[65vh] lg:min-h-[60vh] flex items-center justify-center pt-12 pb-32">
+        <div>
+          {/* Title for page */}
+          <p className="text-3xl lg:text-4xl px-5 text-center mt-14">
+            Oops! Your email isn&apos;t verified.
+          </p>
+          <div className="mt-10 flex flex-col gap-10 justify-center items-center">
+            {/* Image */}
+            <img
+              src={
+                "https://res.cloudinary.com/do8rpl9l4/image/upload/v1736738810/notfound_eqfykw.svg"
+              }
+              className="max-w-[50%] lg:max-w-[40%] pointer-events-none"
+            />
+            {/* Button to navigate back to home page */}
+            <div className="w-[40%] lg:w-[30%]">
+              <OutlineButton
+                onClick={sendVerification}
+                text="Resend Verification Link"
               />
-              {/* Button to navigate back to home page */}
-              <div className="w-[40%] lg:w-[30%]">
-                <OutlineButton
-                  onClick={sendVerification}
-                  text="Resend Verification Link"
-                />
-              </div>
-              <div className="w-[40%] lg:w-[30%]">
-                <OutlineButton
-                  onClick={() => window.location.reload()}
-                  text={
-                    <div className="flex flex-col">
-                      <p>Already verified?</p>
-                      <p> Reload the page</p>
-                    </div>
-                  }
-                />
-              </div>
+            </div>
+            <div className="w-[40%] lg:w-[30%]">
+              <OutlineButton
+                onClick={() => window.location.reload()}
+                text={
+                  <div className="flex flex-col">
+                    <p>Already verified?</p>
+                    <p> Reload the page</p>
+                  </div>
+                }
+              />
             </div>
           </div>
         </div>
-        <Footer />
       </div>
     );
   }
@@ -251,150 +235,135 @@ const Onboarding = () => {
   // If user already exists
   if (dbUser) {
     return (
-      <div>
-        <Navbar />
-        <div className="min-h-[70vh] dark:bg-darkgrey dark:text-darkmodetext md:min-h-[65vh] lg:min-h-[60vh] flex items-center justify-center pt-12 pb-32">
-          <div>
-            {/* Title for page */}
-            <p className="text-3xl lg:text-4xl px-5 text-center mt-14">
-              You have already created your profile!
-            </p>
-            <div className="mt-10 flex flex-col gap-10 justify-center items-center">
-              {/* Image */}
-              <img
-                src={
-                  "https://res.cloudinary.com/do8rpl9l4/image/upload/v1736738810/notfound_eqfykw.svg"
-                }
-                className="max-w-[50%] lg:max-w-[40%] pointer-events-none"
+      <div className="min-h-[70vh] md:min-h-[65vh] lg:min-h-[60vh] flex items-center justify-center pt-12 pb-32">
+        <div>
+          {/* Title for page */}
+          <p className="text-3xl lg:text-4xl px-5 text-center mt-14">
+            You have already created your profile!
+          </p>
+          <div className="mt-10 flex flex-col gap-10 justify-center items-center">
+            {/* Image */}
+            <img
+              src={
+                "https://res.cloudinary.com/do8rpl9l4/image/upload/v1736738810/notfound_eqfykw.svg"
+              }
+              className="max-w-[50%] lg:max-w-[40%] pointer-events-none"
+            />
+            {/* Button to navigate back to home page */}
+            <div className="w-[40%] lg:w-[30%]">
+              <OutlineButton
+                onClick={() => navigate("/")}
+                text="Go Back Home"
               />
-              {/* Button to navigate back to home page */}
-              <div className="w-[40%] lg:w-[30%]">
-                <OutlineButton
-                  onClick={() => navigate("/")}
-                  text="Go Back Home"
-                />
-              </div>
             </div>
           </div>
         </div>
-        <Footer />
       </div>
     );
   }
 
   // If onboarding process was left.
   return (
-    <div>
-      <Navbar />
-      <Toaster />
-      <div className="dark:bg-darkbg min-h-[70vh] md:min-h-[65vh] lg:min-h-[60vh] bg-bgwhite flex items-center justify-center pt-12 pb-32">
-        <div className="bg-white dark:bg-darkgrey dark:text-darkmodetext border-[1px] px- w-[90%] md:w-[65%] md:mt-5 lg:mt-5 p-5 md:px-20 shadow-xl rounded-xl pb-10">
-          {/* Title */}
-          <h1 className="text-ink dark:text-darkmodetext pt-5 font-bold text-2xl text-center">
-            Set up your Journal Account!
-          </h1>
+    <div className="min-h-[70vh] md:min-h-[65vh] lg:min-h-[60vh] flex items-center justify-center pt-12 pb-32">
+      <div className="bg-white dark:bg-darkgrey dark:text-darkmodetext border-[1px] px- w-[90%] md:w-[65%] md:mt-5 lg:mt-5 p-5 md:px-20 shadow-xl rounded-xl pb-10">
+        {/* Title */}
+        <h1 className="text-ink dark:text-darkmodetext pt-5 font-bold text-2xl text-center">
+          Set up your Journal Account!
+        </h1>
 
-          <div className="mt-10 flex flex-col gap-y-5">
-            <input
-              className="hidden"
-              type="file"
-              ref={fileRef}
-              accept="image/jpg, image/jpeg, image/png"
-              onChange={handleFileChange}
+        <div className="mt-10 flex flex-col gap-y-5">
+          <input
+            className="hidden"
+            type="file"
+            ref={fileRef}
+            accept="image/jpg, image/jpeg, image/png"
+            onChange={handleFileChange}
+          />
+          <div className="flex justify-center">
+            {image ? (
+              <img
+                src={
+                  typeof image == "string" ? image : URL.createObjectURL(image)
+                }
+                className="h-24 w-24 rounded-full"
+              />
+            ) : (
+              <MdOutlineAccountCircle className="text-[8rem]" />
+              // <img src={defaultAccount} className="h-24 w-24 rounded-full" />
+            )}
+          </div>
+          <button
+            onClick={() => fileRef.current.click()}
+            className="flex justify-center items-center gap-x-2"
+          >
+            Upload <IoCloudUploadOutline className="translate-y-0.5" />
+          </button>
+        </div>
+
+        {/* Name & Username */}
+        <div className="mt-14 flex flex-col gap-y-8 lg:flex-row lg:gap-x-5">
+          {/* Name Input field */}
+          <div className="lg:flex-1 px-2">
+            <p className="font-medium">Name</p>
+            <Input
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder={"Enter your name"}
             />
-            <div className="flex justify-center">
-              {image ? (
-                <img
-                  src={
-                    typeof image == "string"
-                      ? image
-                      : URL.createObjectURL(image)
-                  }
-                  className="h-24 w-24 rounded-full"
-                />
-              ) : (
-                <MdOutlineAccountCircle className="text-[8rem]" />
-                // <img src={defaultAccount} className="h-24 w-24 rounded-full" />
-              )}
-            </div>
-            <button
-              onClick={() => fileRef.current.click()}
-              className="flex justify-center items-center gap-x-2"
-            >
-              Upload <IoCloudUploadOutline className="translate-y-0.5" />
-            </button>
+            {error.name == 1 && (
+              <ErrorStatement text={"Please enter your name."} />
+            )}
+            {error.name == 2 && (
+              <ErrorStatement text={"Name cannot exceed 30 characters."} />
+            )}
           </div>
 
-          {/* Name & Username */}
-          <div className="mt-14 flex flex-col gap-y-8 lg:flex-row lg:gap-x-5">
-            {/* Name Input field */}
-            <div className="lg:flex-1 px-2">
-              <p className="font-medium">Name</p>
-              <Input
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder={"Enter your name"}
+          {/* Username Input field */}
+          <div className="lg:flex-1 px-2">
+            <p className="font-medium">Username</p>
+            <Input
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder={"Enter a username"}
+            />
+            {error.username == 1 && (
+              <ErrorStatement text={"Please enter a username."} />
+            )}
+            {error.username == 2 && (
+              <ErrorStatement text={"Username already exists."} />
+            )}
+            {error.username == 3 && (
+              <ErrorStatement text={"Username cannot exceed 20 characters."} />
+            )}
+            {error.username == 4 && (
+              <ErrorStatement
+                text={"Username can contain alphabets, numbers and underscore."}
               />
-              {error.name == 1 && (
-                <ErrorStatement text={"Please enter your name."} />
-              )}
-              {error.name == 2 && (
-                <ErrorStatement text={"Name cannot exceed 30 characters."} />
-              )}
-            </div>
-
-            {/* Username Input field */}
-            <div className="lg:flex-1 px-2">
-              <p className="font-medium">Username</p>
-              <Input
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                placeholder={"Enter a username"}
-              />
-              {error.username == 1 && (
-                <ErrorStatement text={"Please enter a username."} />
-              )}
-              {error.username == 2 && (
-                <ErrorStatement text={"Username already exists."} />
-              )}
-              {error.username == 3 && (
-                <ErrorStatement
-                  text={"Username cannot exceed 20 characters."}
-                />
-              )}
-              {error.username == 4 && (
-                <ErrorStatement
-                  text={
-                    "Username can contain alphabets, numbers and underscore."
-                  }
-                />
-              )}
-            </div>
+            )}
           </div>
+        </div>
 
-          {/* Bio */}
-          <div className="mt-10 px-2 flex flex-col gap-y-5">
-            <p className="font-medium">Bio</p>
-            <textarea
-              className="bg-transparent w-full border-2 h-36 rounded-lg p-4"
-              onChange={(e) => setBio(e.target.value)}
-            ></textarea>
-          </div>
+        {/* Bio */}
+        <div className="mt-10 px-2 flex flex-col gap-y-5">
+          <p className="font-medium">Bio</p>
+          <textarea
+            className="bg-transparent w-full border-2 h-36 rounded-lg p-4"
+            onChange={(e) => setBio(e.target.value)}
+          ></textarea>
+        </div>
 
-          {/* Submit Button */}
-          <div className="mt-10 flex justify-center items-center">
-            <div className="w-[40%]">
-              <CTAButton
-                onClick={handleSubmit}
-                disabled={disabled}
-                disabledText={"Please Wait..."}
-                text={"Submit"}
-              />
-            </div>
+        {/* Submit Button */}
+        <div className="mt-10 flex justify-center items-center">
+          <div className="w-[40%]">
+            <CTAButton
+              onClick={handleSubmit}
+              disabled={disabled}
+              disabledText={"Please Wait..."}
+              text={"Submit"}
+            />
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

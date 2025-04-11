@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import useDebounce from "../utils/useDebounce";
-import { Footer, Input, Navbar, PostCard } from "../components";
+import { Input, PostCard } from "../components";
 import { IoIosSearch } from "react-icons/io";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useInView } from "react-intersection-observer";
@@ -98,13 +98,9 @@ const Search = () => {
     searchTerm,
   ]);
 
-  console.log(users);
-  console.log(inView);
-
   return (
     <>
-      <Navbar />
-      <div className="min-h-[70vh] dark:bg-darkbg dark:text-darkmodetext md:min-h-[65vh] lg:min-h-[60vh] px-8 lg:px-10 py-10">
+      <div className="min-h-[70vh md:min-h-[65vh] lg:min-h-[60vh] px-8 lg:px-10 py-10">
         <div>
           {/* Gradient Title */}
           <h1 className="text-hovercta dark:text-darkmodeCTA text-4xl font-semibold">
@@ -229,7 +225,7 @@ const Search = () => {
                           <div key={user?.username} data-aos="fade-up">
                             <Link
                               to={`/user/${user?.username}`}
-                              className="py-5 px-4 flex gap-x-5 items-center rounded hover:bg-slate-100 dark:hover:bg-darkgrey"
+                              className="py-5 px-4 flex gap-x-5 items-center rounded transition-all hover:bg-black/5 dark:hover:bg-darkgrey"
                             >
                               {user?.photoURL ? (
                                 <img
@@ -291,9 +287,6 @@ const Search = () => {
             </TabsContent>
           </Tabs>
         </div>
-      </div>
-      <div className="pt-20 dark:bg-darkbg">
-        <Footer />
       </div>
     </>
   );

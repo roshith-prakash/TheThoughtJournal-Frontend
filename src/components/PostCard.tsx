@@ -28,7 +28,7 @@ const PostCard = ({
       {/* Entire card is a link to post page to view the post */}
       <Link
         to={`/post/${post?.id}`}
-        className="my-5 mx-5  w-full md:w-96 lg:w-80 overflow-hidden rounded-lg cursor-pointer shadow-lg hover:shadow-xl hover:scale-105 transition-all dark:border-2 dark:border-white/25"
+        className="my-5 mx-5 w-full max-w-lg  overflow-hidden rounded-2xl cursor-pointer shadow-lg hover:shadow-xl hover:scale-105 transition-all border-2 border-transparent dark:border-white/15"
       >
         {/* Thumbnail for post card. */}
         <img
@@ -36,26 +36,26 @@ const PostCard = ({
           className="h-60 w-full rounded-t-x object-top object-cover"
         />
         {/* Card Content Section */}
-        <div className="bg-bgwhite dark:bg-darkbg dark:text-darkmodetext p-5">
+        <div className="bg-white dark:bg-secondarydarkbg/25 dark:text-darkmodetext p-5">
           {/* Badge for post category */}
           <p className="bg-cta text-white dark:text-darkmodetext text-xs rounded-full px-3 py-1 w-fit">
             {post?.category != "OTHER" ? post?.category : post?.otherCategory}
           </p>
-          {/* Post title - ellipsized if too long. */}
 
+          {/* Post title - ellipsized if too long. */}
           <p className="ml-1 mt-5 text-2xl font-medium h-16 line-clamp-2 overflow-hidden">
             {post?.title}
           </p>
 
           {/* How long ago the post was posted. */}
-          <p className="ml-1 my-5 text-sm overflow-hidden text-ellipsis text-greyText">
+          <p className="ml-1 my-5 text-xs overflow-hidden text-ellipsis text-greyText">
             Posted {dayjs(post?.createdAt).fromNow()}
           </p>
 
           {/* Author section - link to user's page. */}
           <Link
             to={`/user/${post?.User?.username}`}
-            className="mt-5 flex gap-x-3 items-center w-fit"
+            className="mt-5 hover:underline underline-offset-2 rounded py-2 pr-4 transition-all flex gap-x-3 items-center w-fit"
           >
             {/* User's profile picture or avatar on left */}
             {post?.User?.photoURL ? (

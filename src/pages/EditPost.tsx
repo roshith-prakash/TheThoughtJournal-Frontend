@@ -1,14 +1,7 @@
 import { useState, useRef, useEffect, ChangeEvent } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import {
-  CTAButton,
-  ErrorStatement,
-  Footer,
-  Input,
-  Navbar,
-  OutlineButton,
-} from "../components";
+import { CTAButton, ErrorStatement, Input, OutlineButton } from "../components";
 import { isEditorEmpty } from "../functions/regexFunctions";
 import {
   Select,
@@ -215,8 +208,7 @@ const EditPost = () => {
   if (!state?.postId) {
     return (
       <>
-        <Navbar />
-        <div className="min-h-[70vh] md:min-h-[65vh] lg:min-h-[60vh] flex items-center justify-center pt-12 pb-32 dark:bg-darkbg dark:text-darkmodetext">
+        <div className="min-h-[70vh] md:min-h-[65vh] lg:min-h-[60vh] flex items-center justify-center pt-12 pb-32">
           <div>
             {/* Title for page */}
             <p className="text-3xl lg:text-4xl px-5 text-center mt-14">
@@ -240,23 +232,17 @@ const EditPost = () => {
             </div>
           </div>
         </div>
-        <div className="pt-20 dark:bg-darkbg">
-          <Footer />
-        </div>
       </>
     );
   }
 
   if (state?.postId) {
     return (
-      <div className="bg-bgwhite dark:bg-darkbg">
-        <Navbar />
-        <Toaster />
-
+      <div className="p-10">
         {/* Editor box */}
         <div
           ref={inputRef}
-          className="p-10 pb-20 m-5 lg:m-10 bg-white dark:bg-darkgrey dark:text-darkmodetext shadow-xl border-[1px] rounded-xl"
+          className="p-10 pb-20 bg-white dark:bg-darkgrey dark:text-darkmodetext shadow-xl border-[1px] rounded-xl"
         >
           {/* Title */}
           <h1 className="text-2xl lg:text-4xl text-center font-medium">
@@ -316,7 +302,7 @@ const EditPost = () => {
                   onClick={() => fileRef.current.click()}
                 />
                 {/* Display file name */}
-                <p className="mt-3 overflow-clip">
+                <p className="mt-3 overflow-clip line-clamp-1 text-ellipsis">
                   {typeof imageFile == "string" ? imageFile : imageFile?.name}
                 </p>
               </div>
@@ -418,7 +404,7 @@ const EditPost = () => {
         </h1>
 
         {/* Preview Post */}
-        <div className=" pb-20 m-5 lg:m-10 bg-white dark:bg-darkgrey dark:text-darkmodetext shadow-xl border-[1px] rounded-xl">
+        <div className="mt-5 overflow-hidden pb-20  bg-white dark:bg-darkgrey dark:text-darkmodetext shadow-xl border-[1px] rounded-xl">
           {/* Thumbnail Image */}
           <div>
             {imageFile && (
@@ -509,10 +495,6 @@ const EditPost = () => {
               </div>
             )}
           </div>
-        </div>
-
-        <div className="pt-20 dark:bg-darkbg">
-          <Footer />
         </div>
       </div>
     );

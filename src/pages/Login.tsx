@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import {
   ErrorStatement,
-  Footer,
   Input,
-  Navbar,
   OutlineButton,
   PasswordInput,
 } from "../components";
@@ -159,9 +157,7 @@ const Login = () => {
 
   return (
     <>
-      <Navbar />
-      <Toaster />
-      <div className="lg:min-h-[89vh] flex w-full bg-none lg:bg-bgwhite dark:bg-darkbg">
+      <div className="lg:min-h-[89vh] flex w-full">
         {/* Image Div - displayed only on laptop */}
         <div className="hidden lg:flex lg:flex-1 items-center justify-center">
           <img
@@ -250,9 +246,6 @@ const Login = () => {
             </button>
           </div>
         </div>
-      </div>
-      <div className="pt-20 dark:bg-darkbg">
-        <Footer />
       </div>
     </>
   );

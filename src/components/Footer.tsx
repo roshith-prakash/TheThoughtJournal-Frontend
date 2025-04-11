@@ -8,8 +8,8 @@ const Footer = () => {
   const navigate = useNavigate();
   return (
     <>
-      <div className="bg-hovercta dark:bg-darkbg dark:border-t-2 font-inter pb-20 min-h-50vh relative text-white">
-        <div className="absolute dark:border-2 -top-16 w-[90vw] lg:w-[80vw] left-1/2 -translate-x-1/2 rounded-lg h-32 flex flex-col py-2 lg:flex-row justify-around items-center bg-darkgrey text-white">
+      <div className="bg-darkbg/95 dark:border-t-2 font-inter pb-20 min-h-50vh relative text-white">
+        <div className="absolute border-2 border-white/50 dark:border-2 -top-16 w-[90vw] lg:w-[80vw] left-1/2 -translate-x-1/2 rounded-lg h-32 flex flex-col py-2 lg:flex-row justify-around items-center bg-darkgrey text-white">
           <p className="text-xl font-medium">Have a thought to share?</p>
           <button
             onClick={() => navigate("/addPost")}
@@ -19,6 +19,7 @@ const Footer = () => {
             Create a Post!
           </button>
         </div>
+
         <div className="pt-32 font-medium flex">
           <div className="flex-1">
             {/* Logo */}

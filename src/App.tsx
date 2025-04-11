@@ -18,10 +18,11 @@ import {
   EditPost,
 } from "./pages";
 import { useEffect } from "react";
-import { Protector } from "./components";
+import { Footer, Navbar, Protector } from "./components";
 import SecurityHeaders from "./components/SecurityHeaders";
 import Aos from "aos";
 import "aos/dist/aos.css";
+import { Toaster } from "react-hot-toast";
 
 // Creating Tanstack query client
 const queryClient = new QueryClient();
@@ -44,76 +45,83 @@ function App() {
           {/* Providing Db user data to children */}
           <UserProvider>
             <>
+              <Toaster />
               <SecurityHeaders />
               <BrowserRouter>
-                <Routes>
-                  {/* Home Page */}
-                  <Route path="/" element={<Home />} />
+                <Navbar />
+                <main className="min-h-screen bg-bgwhite dark:bg-black/90 dark:text-darkmodetext">
+                  <Routes>
+                    {/* Home Page */}
+                    <Route path="/" element={<Home />} />
 
-                  {/* Signup route */}
-                  <Route path="/signup" element={<Signup />} />
+                    {/* Signup route */}
+                    <Route path="/signup" element={<Signup />} />
 
-                  {/* Login route */}
-                  <Route path="/login" element={<Login />} />
+                    {/* Login route */}
+                    <Route path="/login" element={<Login />} />
 
-                  {/* Route to onboard a new user */}
-                  <Route path="/onboarding" element={<Onboarding />} />
+                    {/* Route to onboard a new user */}
+                    <Route path="/onboarding" element={<Onboarding />} />
 
-                  {/* Log out route */}
-                  <Route path="/signout" element={<Signout />} />
+                    {/* Log out route */}
+                    <Route path="/signout" element={<Signout />} />
 
-                  {/* Route to create a new post. */}
-                  <Route
-                    path="/addPost"
-                    element={
-                      <Protector>
-                        <CreatePost />
-                      </Protector>
-                    }
-                  />
+                    {/* Route to create a new post. */}
+                    <Route
+                      path="/addPost"
+                      element={
+                        <Protector>
+                          <CreatePost />
+                        </Protector>
+                      }
+                    />
 
-                  {/* Route to edit a post. */}
-                  <Route
-                    path="/editPost"
-                    element={
-                      <Protector>
-                        <EditPost />
-                      </Protector>
-                    }
-                  />
+                    {/* Route to edit a post. */}
+                    <Route
+                      path="/editPost"
+                      element={
+                        <Protector>
+                          <EditPost />
+                        </Protector>
+                      }
+                    />
 
-                  {/* Logged in User's Profile */}
-                  <Route
-                    path="/profile"
-                    element={
-                      <Protector>
-                        <Profile />
-                      </Protector>
-                    }
-                  />
+                    {/* Logged in User's Profile */}
+                    <Route
+                      path="/profile"
+                      element={
+                        <Protector>
+                          <Profile />
+                        </Protector>
+                      }
+                    />
 
-                  {/* Edit Current User's Profile */}
-                  <Route
-                    path="/editProfile"
-                    element={
-                      <Protector>
-                        <EditProfile />
-                      </Protector>
-                    }
-                  />
+                    {/* Edit Current User's Profile */}
+                    <Route
+                      path="/editProfile"
+                      element={
+                        <Protector>
+                          <EditProfile />
+                        </Protector>
+                      }
+                    />
 
-                  {/* View a Post */}
-                  <Route path="/post/:postId" element={<Post />} />
+                    {/* View a Post */}
+                    <Route path="/post/:postId" element={<Post />} />
 
-                  {/* View a User's Profile (Non Logged in user) */}
-                  <Route path="/user/:username" element={<User />} />
+                    {/* View a User's Profile (Non Logged in user) */}
+                    <Route path="/user/:username" element={<User />} />
 
-                  {/* Search a user or post */}
-                  <Route path="/search" element={<Search />} />
+                    {/* Search a user or post */}
+                    <Route path="/search" element={<Search />} />
 
-                  {/* 404 error page */}
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
+                    {/* 404 error page */}
+                    <Route path="*" element={<NotFound />} />
+                  </Routes>
+                  <div className="pt-28">
+                    <Footer />
+                  </div>
+                </main>
               </BrowserRouter>
             </>
           </UserProvider>

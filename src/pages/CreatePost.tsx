@@ -1,14 +1,7 @@
 import { useState, useRef, useEffect, ChangeEvent } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import {
-  CTAButton,
-  ErrorStatement,
-  Footer,
-  Input,
-  Navbar,
-  OutlineButton,
-} from "../components";
+import { CTAButton, ErrorStatement, Input, OutlineButton } from "../components";
 import { isEditorEmpty } from "../functions/regexFunctions";
 import {
   Select,
@@ -187,14 +180,11 @@ const CreatePost = () => {
   };
 
   return (
-    <div className="bg-bgwhite dark:bg-darkbg dark:text-darkmodetext">
-      <Navbar />
-      <Toaster />
-
+    <div className="p-10">
       {/* Editor box */}
       <div
         ref={inputRef}
-        className="p-10 pb-20 m-5 lg:m-10 bg-white dark:bg-darkgrey shadow-xl border-[1px] rounded-xl"
+        className="p-10 pb-20 bg-white dark:bg-darkgrey shadow-xl border-[1px] rounded-xl"
       >
         {/* Title */}
         <h1 className="text-2xl lg:text-4xl text-center font-medium">
@@ -323,7 +313,7 @@ const CreatePost = () => {
           <QuillToolbar />
           <ReactQuill
             theme="snow"
-            className="h-96 mt-1"
+            className="h-[30rem] mt-2"
             value={value}
             onChange={setValue}
             modules={modules}
@@ -350,7 +340,7 @@ const CreatePost = () => {
       </h1>
 
       {/* Preview Post */}
-      <div className=" pb-20 m-5 lg:m-10 bg-white dark:bg-darkgrey dark:text-darkmodetext shadow-xl border-[1px] rounded-xl">
+      <div className="mt-5 overflow-hidden pb-20  bg-white dark:bg-darkgrey dark:text-darkmodetext shadow-xl border-[1px] rounded-xl">
         {/* Thumbnail Image */}
         <div>
           {imageFile && (
@@ -366,7 +356,7 @@ const CreatePost = () => {
           !title &&
           !category &&
           (!value || isEditorEmpty(value)) && (
-            <div className="flex justify-center items-center pt-20 text-2xl">
+            <div className="flex justify-center h-max  items-center pt-48 text-2xl">
               Create your Post Above!
             </div>
           )}
@@ -437,10 +427,6 @@ const CreatePost = () => {
             </div>
           )}
         </div>
-      </div>
-
-      <div className="pt-20">
-        <Footer />
       </div>
     </div>
   );

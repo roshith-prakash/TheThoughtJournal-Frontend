@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Footer, Navbar, OutlineButton } from "../components";
+import { OutlineButton } from "../components";
 import { useNavigate } from "react-router-dom";
 
 const NotFound = () => {
@@ -17,8 +17,7 @@ const NotFound = () => {
 
   return (
     <>
-      <Navbar />
-      <div className="dark:bg-darkgrey dark:text-darkmodetext min-h-[70vh] md:min-h-[65vh] lg:min-h-[60vh] flex items-center justify-center pt-12 pb-32">
+      <div className="min-h-[70vh] md:min-h-[65vh] lg:min-h-[60vh] flex items-center justify-center pt-12 pb-32">
         <div>
           {/* Title for page */}
           <p className="text-3xl lg:text-4xl px-5 text-center mt-14">
@@ -41,9 +40,6 @@ const NotFound = () => {
             </div>
           </div>
         </div>
-      </div>
-      <div className="pt-20 dark:bg-darkgrey">
-        <Footer />
       </div>
     </>
   );

@@ -16,7 +16,7 @@ const OutlineButton = ({
     <button
       disabled={disabled}
       onClick={onClick}
-      className="min-w-14 dark:border-2 flex dark:text-darkmodetext justify-center font-medium shadow-md py-2 px-5 rounded-lg w-full text-ink active:shadow transition-all disabled:text-greyText hover:scale-105"
+      className="min-w-14 dark:border-2 dark:border-white/25 flex dark:text-darkmodetext justify-center font-medium shadow-md py-2 px-5 rounded-lg w-full text-ink active:shadow transition-all disabled:text-greyText hover:scale-105"
     >
       {disabled ? disabledText : text}
     </button>

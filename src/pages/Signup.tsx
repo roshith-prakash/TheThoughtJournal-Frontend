@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import {
   ErrorStatement,
-  Footer,
   Input,
-  Navbar,
   OutlineButton,
   PasswordInput,
 } from "../components";
@@ -52,7 +50,6 @@ const Signup = () => {
     });
 
     // Validation Checks
-
     if (email == null || email == undefined || email.length == 0) {
       setError((prev) => ({ ...prev, email: 1 }));
       return;
@@ -88,7 +85,6 @@ const Signup = () => {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        console.log(user);
 
         // Send verification email
         sendEmailVerification(user).then(() => {
@@ -117,12 +113,12 @@ const Signup = () => {
 
   // Handle Google Signup
   const handleGoogleSignup = () => {
+    // Disable button
     setDisabled(true);
+
+    // Sign in with google
     signInWithPopup(auth, provider)
       .then((result) => {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        // const credential = GoogleAuthProvider.credentialFromResult(result);
-        // const token = credential.accessToken;
         // The signed-in user info.
         const user = result.user;
 
@@ -143,132 +139,117 @@ const Signup = () => {
       })
       .catch(() => {
         setDisabled(false);
-        // Handle Errors here.
-        // const errorCode = error.code;/
-        // const errorMessage = error.message;
-        // The email of the user's account used.
-        // const email = error.customData.email;
-        // The AuthCredential type that was used.
-        // const credential = GoogleAuthProvider.credentialFromError(error);
         toast.error("Something went wrong!");
       });
   };
 
   return (
-    <>
-      <Navbar />
-      <Toaster />
-      <div className="lg:min-h-[89vh] flex w-full lg:bg-none lg:bg-bgwhite dark:bg-darkbg">
-        {/* Left Div */}
-        <div className="min-h-[95vh] lg:h-full lg:min-h-[88vh] pb-10 bg-cover  flex-1 flex justify-center items-center">
-          {/* Signup Form Div */}
-          <div className="bg-white dark:bg-darkgrey dark:text-darkmodetext border-[1px] px-8 w-[85%] md:w-[65%] md:mt-5 lg:mt-5 p-5 md:px-20 shadow-xl rounded-xl pb-10">
-            {/* Title */}
-            <h1 className="text-ink dark:text-darkmodetext pt-5 font-bold text-2xl italic text-center">
-              Sign Up to The Journal
-            </h1>
+    <div className="lg:min-h-[89vh] flex w-full">
+      {/* Left Div */}
+      <div className="min-h-[95vh] lg:h-full lg:min-h-[88vh] pb-10 bg-cover  flex-1 flex justify-center items-center">
+        {/* Signup Form Div */}
+        <div className="bg-white dark:bg-darkgrey dark:text-darkmodetext border-[1px] px-8 w-[85%] md:w-[65%] md:mt-5 lg:mt-5 p-5 md:px-20 shadow-xl rounded-xl pb-10">
+          {/* Title */}
+          <h1 className="text-ink dark:text-darkmodetext pt-5 font-bold text-2xl italic text-center">
+            Sign Up to The Journal
+          </h1>
 
-            {/* Email Input field */}
-            <div className="mt-8 px-2">
-              <p className="font-medium">Email</p>
-              <Input
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder={"Enter your email address"}
-              />
-              {error.email == 1 && (
-                <ErrorStatement text={"Please enter your email."} />
-              )}
-              {error.email == 2 && (
-                <ErrorStatement text={"Please enter a valid email address."} />
-              )}
-            </div>
-
-            {/* Password Input field */}
-            <div className="mt-6 px-2">
-              <p className="font-medium">Password</p>
-              <PasswordInput
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder={"Enter your password"}
-              />
-              {error.pw == 1 && (
-                <ErrorStatement text={"Please enter a password."} />
-              )}
-              {error.pw == 2 && (
-                <ErrorStatement
-                  text={
-                    "Password must be 8 characters long and must contain an uppercase letter, lowercase letter, number and special character."
-                  }
-                />
-              )}
-            </div>
-
-            {/* Confirm Password Input field */}
-            <div className="mt-6 px-2">
-              <p className="font-medium">Confirm Password</p>
-              <PasswordInput
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                placeholder={"Confirm your password"}
-              />
-              {error.confirmpw == 1 && (
-                <ErrorStatement text={"Please re-enter your password."} />
-              )}
-              {error.confirmpw == 2 && (
-                <ErrorStatement text={"Passwords do not match."} />
-              )}
-            </div>
-
-            {/* Submit Button */}
-            <div className="mt-12">
-              <OutlineButton
-                disabled={disabled}
-                disabledText="Please Wait..."
-                onClick={handleEmailSignup}
-                text={"Sign Up"}
-              />
-            </div>
-
-            {/* OR */}
-            <div className="flex mt-10 mb-5 items-center">
-              <div className="flex-1 h-0 border-[1px] border-greyText"></div>
-              <p className="text-center px-2 font-semibold text-greyText">OR</p>
-              <div className="flex-1 h-0 border-[1px] border-greyText"></div>
-            </div>
-
-            {/* Google Sign Up Button */}
-            <button
-              disabled={disabled}
-              onClick={handleGoogleSignup}
-              className="dark:border-2 flex w-full gap-x-5 py-4 justify-center items-center px-14 shadow-md rounded-lg font-medium active:shadow transition-all disabled:text-greyText"
-            >
-              <p>Sign up with Google</p>
-              <img
-                src={
-                  "https://res.cloudinary.com/do8rpl9l4/image/upload/v1736740835/google_gjqfmj.png"
-                }
-                className="max-h-6 max-w-6"
-              />
-            </button>
+          {/* Email Input field */}
+          <div className="mt-8 px-2">
+            <p className="font-medium">Email</p>
+            <Input
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder={"Enter your email address"}
+            />
+            {error.email == 1 && (
+              <ErrorStatement text={"Please enter your email."} />
+            )}
+            {error.email == 2 && (
+              <ErrorStatement text={"Please enter a valid email address."} />
+            )}
           </div>
-        </div>
 
-        {/* Image Div - displayed only on laptop */}
-        <div className="hidden lg:flex lg:flex-1  items-center justify-center">
-          <img
-            src={
-              "https://res.cloudinary.com/do8rpl9l4/image/upload/v1736741891/signup_x6s5aa.svg"
-            }
-            className="max-w-[70%]"
-          />
+          {/* Password Input field */}
+          <div className="mt-6 px-2">
+            <p className="font-medium">Password</p>
+            <PasswordInput
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder={"Enter your password"}
+            />
+            {error.pw == 1 && (
+              <ErrorStatement text={"Please enter a password."} />
+            )}
+            {error.pw == 2 && (
+              <ErrorStatement
+                text={
+                  "Password must be 8 characters long and must contain an uppercase letter, lowercase letter, number and special character."
+                }
+              />
+            )}
+          </div>
+
+          {/* Confirm Password Input field */}
+          <div className="mt-6 px-2">
+            <p className="font-medium">Confirm Password</p>
+            <PasswordInput
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              placeholder={"Confirm your password"}
+            />
+            {error.confirmpw == 1 && (
+              <ErrorStatement text={"Please re-enter your password."} />
+            )}
+            {error.confirmpw == 2 && (
+              <ErrorStatement text={"Passwords do not match."} />
+            )}
+          </div>
+
+          {/* Submit Button */}
+          <div className="mt-12">
+            <OutlineButton
+              disabled={disabled}
+              disabledText="Please Wait..."
+              onClick={handleEmailSignup}
+              text={"Sign Up"}
+            />
+          </div>
+
+          {/* OR */}
+          <div className="flex mt-10 mb-5 items-center">
+            <div className="flex-1 h-0 border-[1px] border-greyText"></div>
+            <p className="text-center px-2 font-semibold text-greyText">OR</p>
+            <div className="flex-1 h-0 border-[1px] border-greyText"></div>
+          </div>
+
+          {/* Google Sign Up Button */}
+          <button
+            disabled={disabled}
+            onClick={handleGoogleSignup}
+            className="dark:border-2 flex w-full gap-x-5 py-4 justify-center items-center px-14 shadow-md rounded-lg font-medium active:shadow transition-all disabled:text-greyText"
+          >
+            <p>Sign up with Google</p>
+            <img
+              src={
+                "https://res.cloudinary.com/do8rpl9l4/image/upload/v1736740835/google_gjqfmj.png"
+              }
+              className="max-h-6 max-w-6"
+            />
+          </button>
         </div>
       </div>
 
-      <div className="pt-20 dark:bg-darkbg">
-        <Footer />
+      {/* Image Div - displayed only on laptop */}
+      <div className="hidden lg:flex lg:flex-1  items-center justify-center">
+        <img
+          src={
+            "https://res.cloudinary.com/do8rpl9l4/image/upload/v1736741891/signup_x6s5aa.svg"
+          }
+          className="max-w-[70%]"
+        />
       </div>
-    </>
+    </div>
   );
 };
 

@@ -3,7 +3,7 @@ import Navbar from "../components/Navbar";
 import { axiosInstance } from "../utils/axios";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useDBUser } from "../context/userContext";
-import { Footer, PostCard } from "../components";
+import { PostCard } from "../components";
 import HashLoader from "react-spinners/HashLoader";
 import { useInView } from "react-intersection-observer";
 
@@ -90,113 +90,32 @@ const Home = () => {
 
   return (
     <>
-      {/* Navbar */}
-      <Navbar />
-      <div className="pb-32 dark:bg-darkbg dark:text-darkmodetext">
-        <div className="p-5">
-          {/* Title - Gradient text */}
-          <h1 className="text-4xl font-semibold px-2 py-5">
-            Welcome{" "}
-            <span className="text-hovercta dark:text-darkmodeCTA">
-              {dbUser?.name ? dbUser?.name : "Journaler"}!
-            </span>
-          </h1>
+      <div className="p-5">
+        {/* Title - Gradient text */}
+        <h1 className="text-4xl font-semibold px-2 py-5">
+          Welcome{" "}
+          <span className="text-hovercta dark:text-darkmodeCTA">
+            {dbUser?.name ? dbUser?.name : "Journaler"}!
+          </span>
+        </h1>
 
-          {/* Subtitle */}
-          <h3 className="text-2xl font-semibold px-2">
-            Let&apos;s start reading!
-          </h3>
-        </div>
-        {dbUser?.following?.length > 0 &&
-        posts?.pages?.[0]?.data?.posts.length > 0 ? (
-          <div>
-            {/* Mapping posts if available */}
-            {posts && (
-              <div className="mt-5">
-                <p className="px-7 text-2xl font-medium text-hovercta dark:text-darkmodeCTA">
-                  From the people you follow:
-                </p>
-                <div className="mt-5 grid md:grid-cols-2 lg:grid-cols-4 ">
-                  {posts &&
-                    posts?.pages?.map((page) => {
-                      return page?.data?.posts?.map((post) => {
-                        return (
-                          <div key={post?.id} data-aos="fade-up">
-                            <PostCard post={post} />
-                          </div>
-                        );
-                      });
-                    })}
-                </div>
-              </div>
-            )}
-
-            {/* Error while fetching */}
-            {followingError && (
-              <div className="flex flex-col justify-center pt-10">
-                <div className="flex justify-center">
-                  <img
-                    src={
-                      "https://res.cloudinary.com/do8rpl9l4/image/upload/v1736740067/homeNoPosts_bxhmtk.svg"
-                    }
-                    className="max-w-[30%]"
-                  />
-                </div>
-                <p className="text-center mt-5 text-2xl font-medium">
-                  Uh oh! Couldn&apos;t fetch posts.
-                </p>
-              </div>
-            )}
-
-            {/* No content found */}
-            {posts &&
-              (!posts?.pages || posts?.pages?.[0]?.data?.posts.length == 0) && (
-                <div className="flex flex-col justify-center pt-10">
-                  <div className="flex justify-center">
-                    <img
-                      src={
-                        "https://res.cloudinary.com/do8rpl9l4/image/upload/v1736740067/homeNoPosts_bxhmtk.svg"
-                      }
-                      className="max-w-[30%]"
-                    />
-                  </div>
-                  <p className="text-center mt-5 text-2xl font-medium">
-                    Uh oh! Couldn&apos;t fetch posts.
-                  </p>
-                </div>
-              )}
-
-            {(loading || fetchingFollowedPosts) && (
-              <div className="h-96 flex justify-center items-center">
-                <HashLoader
-                  color={"#9b0ced"}
-                  loading={loading || fetchingFollowedPosts}
-                  size={100}
-                  aria-label="Loading Spinner"
-                  data-testid="loader"
-                />
-              </div>
-            )}
-
-            {/* Fetch Next page div - infinite loading */}
-            {data && <div ref={ref}></div>}
-
-            {/* Read other posts by going to search page */}
-            <div className="mt-10 flex justify-center">
-              <p className="w-fit text-xl hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-b hover:from-cta hover:to-hovercta transition-all">
-                You can read other recent posts by clicking on the search
-                button!
+        {/* Subtitle */}
+        <h3 className="text-2xl font-semibold px-2">
+          Let&apos;s start reading!
+        </h3>
+      </div>
+      {dbUser?.following?.length > 0 &&
+      posts?.pages?.[0]?.data?.posts.length > 0 ? (
+        <div>
+          {/* Mapping posts if available */}
+          {posts && (
+            <div className="mt-5">
+              <p className="px-7 text-2xl font-medium text-hovercta dark:text-darkmodeCTA">
+                From the people you follow:
               </p>
-            </div>
-          </div>
-        ) : (
-          <div>
-            {/* Loading indicator */}
-            {/* Mapping posts if available */}
-            {data && (
-              <div className="grid md:grid-cols-2 lg:grid-cols-4 ">
-                {data &&
-                  data?.pages?.map((page) => {
+              <div className="mt-5 grid md:grid-cols-2 lg:grid-cols-4 ">
+                {posts &&
+                  posts?.pages?.map((page) => {
                     return page?.data?.posts?.map((post) => {
                       return (
                         <div key={post?.id} data-aos="fade-up">
@@ -206,10 +125,29 @@ const Home = () => {
                     });
                   })}
               </div>
-            )}
+            </div>
+          )}
 
-            {/* Error while fetching */}
-            {error && (
+          {/* Error while fetching */}
+          {followingError && (
+            <div className="flex flex-col justify-center pt-10">
+              <div className="flex justify-center">
+                <img
+                  src={
+                    "https://res.cloudinary.com/do8rpl9l4/image/upload/v1736740067/homeNoPosts_bxhmtk.svg"
+                  }
+                  className="max-w-[30%]"
+                />
+              </div>
+              <p className="text-center mt-5 text-2xl font-medium">
+                Uh oh! Couldn&apos;t fetch posts.
+              </p>
+            </div>
+          )}
+
+          {/* No content found */}
+          {posts &&
+            (!posts?.pages || posts?.pages?.[0]?.data?.posts.length == 0) && (
               <div className="flex flex-col justify-center pt-10">
                 <div className="flex justify-center">
                   <img
@@ -225,44 +163,98 @@ const Home = () => {
               </div>
             )}
 
-            {/* No content found */}
-            {data &&
-              (!data?.pages || data?.pages?.[0]?.data?.posts.length == 0) && (
-                <div className="flex flex-col justify-center pt-10">
-                  <div className="flex justify-center">
-                    <img
-                      src={
-                        "https://res.cloudinary.com/do8rpl9l4/image/upload/v1736740067/homeNoPosts_bxhmtk.svg"
-                      }
-                      className="max-w-[30%]"
-                    />
-                  </div>
-                  <p className="text-center mt-5 text-2xl font-medium">
-                    Uh oh! Couldn&apos;t fetch posts.
-                  </p>
-                </div>
-              )}
+          {(loading || fetchingFollowedPosts) && (
+            <div className="h-96 flex justify-center items-center">
+              <HashLoader
+                color={"#9b0ced"}
+                loading={loading || fetchingFollowedPosts}
+                size={100}
+                aria-label="Loading Spinner"
+                data-testid="loader"
+              />
+            </div>
+          )}
 
-            {(isLoading || fetchingRecentPosts) && (
-              <div className="h-96 flex justify-center items-center">
-                <HashLoader
-                  color={"#9b0ced"}
-                  loading={isLoading || fetchingRecentPosts}
-                  size={100}
-                  aria-label="Loading Spinner"
-                  data-testid="loader"
+          {/* Fetch Next page div - infinite loading */}
+          {data && <div ref={ref}></div>}
+
+          {/* Read other posts by going to search page */}
+          <div className="mt-10 flex justify-center">
+            <p className="px-5 text-justify w-fit text-xl hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-b hover:from-cta hover:to-hovercta transition-all">
+              You can read other recent posts by clicking on the search button!
+            </p>
+          </div>
+        </div>
+      ) : (
+        <div>
+          {/* Loading indicator */}
+          {/* Mapping posts if available */}
+          {data && (
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 ">
+              {data &&
+                data?.pages?.map((page) => {
+                  return page?.data?.posts?.map((post) => {
+                    return (
+                      <div key={post?.id} data-aos="fade-up">
+                        <PostCard post={post} />
+                      </div>
+                    );
+                  });
+                })}
+            </div>
+          )}
+
+          {/* Error while fetching */}
+          {error && (
+            <div className="flex flex-col justify-center pt-10">
+              <div className="flex justify-center">
+                <img
+                  src={
+                    "https://res.cloudinary.com/do8rpl9l4/image/upload/v1736740067/homeNoPosts_bxhmtk.svg"
+                  }
+                  className="max-w-[30%]"
                 />
+              </div>
+              <p className="text-center mt-5 text-2xl font-medium">
+                Uh oh! Couldn&apos;t fetch posts.
+              </p>
+            </div>
+          )}
+
+          {/* No content found */}
+          {data &&
+            (!data?.pages || data?.pages?.[0]?.data?.posts.length == 0) && (
+              <div className="flex flex-col justify-center pt-10">
+                <div className="flex justify-center">
+                  <img
+                    src={
+                      "https://res.cloudinary.com/do8rpl9l4/image/upload/v1736740067/homeNoPosts_bxhmtk.svg"
+                    }
+                    className="max-w-[30%]"
+                  />
+                </div>
+                <p className="text-center mt-5 text-2xl font-medium">
+                  Uh oh! Couldn&apos;t fetch posts.
+                </p>
               </div>
             )}
 
-            {/* Fetch Next page div - infinite loading */}
-            {data && <div ref={ref}></div>}
-          </div>
-        )}
-      </div>
-      <div className="pt-20 dark:bg-darkbg">
-        <Footer />
-      </div>
+          {(isLoading || fetchingRecentPosts) && (
+            <div className="h-96 flex justify-center items-center">
+              <HashLoader
+                color={"#9b0ced"}
+                loading={isLoading || fetchingRecentPosts}
+                size={100}
+                aria-label="Loading Spinner"
+                data-testid="loader"
+              />
+            </div>
+          )}
+
+          {/* Fetch Next page div - infinite loading */}
+          {data && <div ref={ref}></div>}
+        </div>
+      )}
     </>
   );
 };

@@ -26,7 +26,7 @@ const Navbar = () => {
   return (
     <>
       <div
-        className={`sticky top-0 w-full font-inter shadow-md overflow-hidden bg-white dark:bg-darkbg dark:text-darkmodetext flex justify-between items-center px-5 lg:px-10 py-5 z-10 max-w-screen`}
+        className={`sticky top-0 w-full font-inter border-b-2 border-darkbg/5 dark:border-white/5 overflow-hidden bg-white dark:bg-darkbg dark:text-darkmodetext flex justify-between items-center px-5 lg:px-10 py-5 z-10 max-w-screen`}
       >
         {/* Logo on the left side - linked to home page */}
         <Link className="flex items-center gap-x-2" to="/">
@@ -49,9 +49,9 @@ const Navbar = () => {
             className="hidden lg:block outline-none"
           >
             {isDarkMode ? (
-              <IoSunnySharp className="text-3xl hover:text-cta transition-all" />
+              <IoSunnySharp className="text-[1.65rem] hover:text-cta transition-all" />
             ) : (
-              <IoMoon className="text-3xl hover:text-cta transition-all" />
+              <IoMoon className="text-[1.65rem] hover:text-cta transition-all" />
             )}
           </button>
 

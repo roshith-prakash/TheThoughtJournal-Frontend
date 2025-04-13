@@ -87,7 +87,7 @@ const Comment = ({
   };
 
   return (
-    <div className="my-5 py-3 px-4 rounded-xl shadow-lg dark:border-2 relative">
+    <div className="my-5 py-3 px-4 rounded-xl overflow-hidden shadow-lg dark:border-2 relative">
       <div className="flex justify-between">
         {/* Link to user's account */}
         <Link to={`/user/${comment?.User?.username}`} className="flex gap-x-4">
@@ -570,7 +570,7 @@ const Post = () => {
       {/* When post is available */}
       {data && data?.data?.post && (
         <div className="p-10">
-          <div className="pb-10 m-2 md:m-5  bg-white shadow-xl border-[1px] dark:border-darkgrey dark:bg-darkgrey dark:text-darkmodetext rounded-xl">
+          <div className="pb-10 m-2 md:m-5  bg-white shadow-xl border-[1px] dark:border-darkgrey dark:bg-darkgrey dark:text-darkmodetext overflow-hidden rounded-2xl">
             {/* Thumbnail Image */}
             <div>
               <img

@@ -184,7 +184,7 @@ const EditProfile = () => {
   return (
     <>
       <div className="min-h-[70vh] md:min-h-[65vh] lg:min-h-[60vh] flex items-center justify-center pt-12 pb-32">
-        <div className="bg-white dark:bg-darkgrey border-[1px] px- w-[90%] md:w-[65%] md:mt-5 lg:mt-5 p-5 md:px-20 shadow-xl rounded-xl pb-10">
+        <div className="bg-white dark:bg-darkgrey border-[1px] px- w-[90%] md:w-[65%] md:mt-5 lg:mt-5 p-5 md:px-20 shadow-xl rounded-2xl pb-10">
           {/* Title */}
           <h1 className="text-ink dark:text-darkmodetext pt-5 font-bold text-2xl text-center">
             Edit your Journal Account!

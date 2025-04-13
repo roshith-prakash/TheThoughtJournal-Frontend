@@ -28,7 +28,7 @@ const PostCard = ({
       {/* Entire card is a link to post page to view the post */}
       <Link
         to={`/post/${post?.id}`}
-        className="my-5 mx-5 w-full max-w-lg  overflow-hidden rounded-2xl cursor-pointer shadow-lg hover:shadow-xl hover:scale-105 transition-all border-2 border-transparent dark:border-white/15"
+        className="my-5 mx-5 w-full max-w-lg overflow-hidden rounded-2xl cursor-pointer shadow-lg hover:shadow-xl hover:scale-105 transition-all border-2 border-transparent dark:border-white/15"
       >
         {/* Thumbnail for post card. */}
         <img

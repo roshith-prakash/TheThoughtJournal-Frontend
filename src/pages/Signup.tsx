@@ -148,7 +148,7 @@ const Signup = () => {
       {/* Left Div */}
       <div className="min-h-[95vh] lg:h-full lg:min-h-[88vh] pb-10 bg-cover  flex-1 flex justify-center items-center">
         {/* Signup Form Div */}
-        <div className="bg-white dark:bg-darkgrey dark:text-darkmodetext border-[1px] px-8 w-[85%] md:w-[65%] md:mt-5 lg:mt-5 p-5 md:px-20 shadow-xl rounded-xl pb-10">
+        <div className="bg-white dark:bg-darkgrey dark:text-darkmodetext border-[1px] px-8 w-[85%] md:w-[65%] md:mt-5 lg:mt-5 p-5 md:px-20 shadow-xl rounded-2xl pb-10">
           {/* Title */}
           <h1 className="text-ink dark:text-darkmodetext pt-5 font-bold text-2xl italic text-center">
             Sign Up to The Journal

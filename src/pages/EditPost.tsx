@@ -242,7 +242,7 @@ const EditPost = () => {
         {/* Editor box */}
         <div
           ref={inputRef}
-          className="p-10 pb-20 bg-white dark:bg-darkgrey dark:text-darkmodetext shadow-xl border-[1px] rounded-xl"
+          className="p-10 pb-20 bg-white dark:bg-darkgrey dark:text-darkmodetext shadow-xl border-[1px] rounded-2xl"
         >
           {/* Title */}
           <h1 className="text-2xl lg:text-4xl text-center font-medium">
@@ -404,7 +404,7 @@ const EditPost = () => {
         </h1>
 
         {/* Preview Post */}
-        <div className="mt-5 overflow-hidden pb-20  bg-white dark:bg-darkgrey dark:text-darkmodetext shadow-xl border-[1px] rounded-xl">
+        <div className="mt-5 overflow-hidden pb-20  bg-white dark:bg-darkgrey dark:text-darkmodetext shadow-xl border-[1px] rounded-2xl">
           {/* Thumbnail Image */}
           <div>
             {imageFile && (

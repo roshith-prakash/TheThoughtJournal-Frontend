@@ -433,14 +433,14 @@ const EditPost = () => {
           <div className="p-5 max-w-5xl mx-auto md:p-10 md:pt-0 mt-8">
             {/* Badge */}
             {category && category != "OTHER" && (
-              <p className="bg-cta ml-3 text-white dark:text-darkmodetext text-lg lg:text-xl rounded-full px-3 py-1 w-fit">
-                {category}
+              <p className="bg-cta ml-3 text-white dark:text-darkmodetext text-lg rounded-full px-3 py-1 w-fit">
+                {category?.toUpperCase()}
               </p>
             )}
 
             {category == "OTHER" && otherCategory && (
-              <p className="bg-cta ml-3 text-white text-lg lg:text-xl rounded-full px-3 py-1 w-fit">
-                {otherCategory}
+              <p className="bg-cta ml-3 text-white text-lg rounded-full px-3 py-1 w-fit">
+                {otherCategory?.toUpperCase()}
               </p>
             )}
 

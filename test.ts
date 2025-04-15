@@ -1,1 +1,0 @@
-// File created to stop tsconfig.json error.

@@ -25,8 +25,8 @@ const Navbar = () => {
 
   return (
     <>
-      <div
-        className={`sticky top-0 w-full font-inter border-b-2 border-darkbg/5 dark:border-white/5 overflow-hidden bg-white dark:bg-darkbg dark:text-darkmodetext flex justify-between items-center px-5 lg:px-10 py-5 z-10 max-w-screen`}
+      <nav
+        className={`sticky top-0 w-full font-navigation border-b-2 border-darkbg/5 dark:border-white/5 overflow-hidden bg-white dark:bg-darkbg dark:text-darkmodetext flex justify-between items-center px-5 lg:px-10 py-5 z-10 max-w-screen`}
       >
         {/* Logo on the left side - linked to home page */}
         <Link className="flex items-center gap-x-2" to="/">
@@ -244,11 +244,11 @@ const Navbar = () => {
             </div>
           </div>
         </div>
-      </div>
+      </nav>
 
       {/* Pop out div - displayed when hamburger is clicked  */}
       <div
-        className={`lg:hidden h-screen w-full text-xl md:text-lg fixed top-0 right-0 z-10 bg-white dark:bg-darkbg dark:text-darkmodetext pb-6 text-center shadow-md ${
+        className={`font-navigation lg:hidden flex flex-col overflow-y-scroll noscroller h-screen w-full text-xl md:text-lg fixed top-0 right-0 z-10 bg-white dark:bg-darkbg dark:text-darkmodetext pb-6 text-center shadow-md ${
           open ? "translate-x-0" : "translate-x-[100%]"
         } transition-all duration-500`}
       >
@@ -272,7 +272,7 @@ const Navbar = () => {
             className="cursor-pointer text-2xl text-ink dark:text-darkmodetext"
           />
         </div>
-        <div className="px-8 mt-20 text-2xl flex flex-col gap-y-3">
+        <div className="flex-1 px-8 mt-20 text-2xl flex flex-col gap-y-3">
           {/* Link to Home */}
           <p className="my-2">
             <Link

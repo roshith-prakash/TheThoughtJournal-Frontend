@@ -33,17 +33,19 @@ const PostCard = ({
         {/* Thumbnail for post card. */}
         <img
           src={post?.thumbnail}
-          className="h-60 w-full rounded-t-x object-top object-cover"
+          className="h-60 bg-white dark:bg-secondarydarkbg/25 w-full rounded-t-x object-top object-cover"
         />
         {/* Card Content Section */}
         <div className="bg-white dark:bg-secondarydarkbg/25 dark:text-darkmodetext p-5">
           {/* Badge for post category */}
           <p className="bg-cta text-white dark:text-darkmodetext text-xs rounded-full px-3 py-1 w-fit">
-            {post?.category != "OTHER" ? post?.category : post?.otherCategory}
+            {post?.category != "OTHER"
+              ? post?.category?.toUpperCase()
+              : post?.otherCategory?.toUpperCase()}
           </p>
 
           {/* Post title - ellipsized if too long. */}
-          <p className="ml-1 mt-5 text-2xl font-medium h-16 line-clamp-2 overflow-hidden">
+          <p className="ml-1 mt-5 font-blogTitle tracking-[0.015em] text-2xl font-medium h-16 line-clamp-2 overflow-hidden">
             {post?.title}
           </p>
 

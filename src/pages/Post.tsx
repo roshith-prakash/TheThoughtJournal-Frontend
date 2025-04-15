@@ -285,7 +285,11 @@ const Post = () => {
 
   // Set window title.
   useEffect(() => {
-    document.title = `${data?.data?.post?.title} | The Thought Journal`;
+    if (data?.data) {
+      document.title = `${data?.data?.post?.title} | The Thought Journal`;
+    } else {
+      document.title = `Post | The Thought Journal`;
+    }
   }, [data]);
 
   //To set liked if post is already liked
@@ -573,22 +577,32 @@ const Post = () => {
           <div className="pb-10 m-2 md:m-5  bg-white shadow-xl border-[1px] dark:border-darkgrey dark:bg-darkgrey dark:text-darkmodetext overflow-hidden rounded-2xl">
             {/* Thumbnail Image */}
             <div>
-              <img
-                src={data?.data?.post?.thumbnail}
-                className="max-h-96 lg:max-h-[30rem] w-full rounded-t object-cover object-center"
-              ></img>
+              {data?.data?.post?.thumbnailContain ? (
+                <img
+                  key={`${data?.data?.post?.title}-contain`}
+                  src={data?.data?.post?.thumbnail}
+                  className="max-h-96 lg:max-h-[30rem] w-full rounded-t object-contain object-center"
+                ></img>
+              ) : (
+                <img
+                  key={`${data?.data?.post?.title}-cover`}
+                  src={data?.data?.post?.thumbnail}
+                  className="max-h-96 lg:max-h-[30rem] w-full rounded-t object-cover object-center"
+                ></img>
+              )}
             </div>
 
             {/* Content */}
             <div className="p-5 max-w-5xl mx-auto md:p-10 md:pt-0 mt-8">
               {/* Badge */}
               <div className="flex justify-between items-center">
-                <p className="bg-cta text-white dark:text-darkmodetext text-lg lg:text-xl rounded-full px-3 ml-3 py-1 w-fit">
+                <p className="bg-cta text-white dark:text-darkmodetext text-lg  rounded-full px-3 ml-3 py-1 w-fit">
                   {data?.data?.post?.category != "OTHER"
-                    ? data?.data?.post?.category
-                    : data?.data?.post?.otherCategory}
+                    ? data?.data?.post?.category?.toUpperCase()
+                    : data?.data?.post?.otherCategory?.toUpperCase()}
                 </p>
 
+                {/* Edit Post Button */}
                 {data?.data?.post?.User?.username == dbUser?.username && (
                   <div className="lg:hidden flex items-center gap-x-5">
                     <Link
@@ -633,6 +647,7 @@ const Post = () => {
                   </div>
                 )}
 
+                {/* Delete Post button */}
                 {data?.data?.post?.User?.username == dbUser?.username && (
                   <div className="hidden lg:flex gap-x-8">
                     <Link
@@ -690,7 +705,7 @@ const Post = () => {
               </div>
 
               {/* Post Title */}
-              <h1 className="mt-10 text-4xl px-3 tracking-tight lg:text-6xl font-bold text-ink dark:text-darkmodeCTA">
+              <h1 className="mt-10 font-blogTitle tracking-wide text-4xl px-3 lg:text-6xl font-bold ">
                 {data?.data?.post?.title}
               </h1>
 

@@ -184,7 +184,7 @@ const EditProfile = () => {
   return (
     <>
       <div className="min-h-[70vh] md:min-h-[65vh] lg:min-h-[60vh] flex items-center justify-center pt-12 pb-32">
-        <div className="bg-white dark:bg-darkgrey border-[1px] px- w-[90%] md:w-[65%] md:mt-5 lg:mt-5 p-5 md:px-20 shadow-xl rounded-2xl pb-10">
+        <div className="bg-white dark:bg-darkgrey dark:border-white/25 border-[1px] px- w-[90%] md:w-[65%] md:mt-5 lg:mt-5 p-5 md:px-20 shadow-xl rounded-2xl pb-10">
           {/* Title */}
           <h1 className="text-ink dark:text-darkmodetext pt-5 font-bold text-2xl text-center">
             Edit your Journal Account!
@@ -224,7 +224,7 @@ const EditProfile = () => {
             {/* Button to select an image */}
             <button
               onClick={() => fileRef.current.click()}
-              className="flex justify-center items-center gap-x-2"
+              className="cursor-pointer w-fit mx-auto my-3 hover:bg-hovercta dark:hover:bg-cta hover:border-hovercta hover:text-white dark:hover:border-cta border-darkbg/25 dark:border-white/25 border-[1px] flex gap-x-2 py-2 justify-center items-center px-14 shadow rounded-lg font-medium active:shadow transition-all disabled:text-greyText"
             >
               Upload <IoCloudUploadOutline className="translate-y-0.5" />
             </button>
@@ -282,7 +282,7 @@ const EditProfile = () => {
             <p className="font-medium">Bio</p>
             <textarea
               value={bio}
-              className="bg-transparent w-full border-2 h-36 rounded-lg p-4"
+              className="bg-transparent w-full border-2 dark:border-white/25 h-36 rounded-lg p-4 focus:outline-none"
               onChange={(e) => setBio(e.target.value)}
             ></textarea>
           </div>

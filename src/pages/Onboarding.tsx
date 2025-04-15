@@ -294,7 +294,7 @@ const Onboarding = () => {
           </div>
           <button
             onClick={() => fileRef.current.click()}
-            className="flex justify-center items-center gap-x-2"
+            className="cursor-pointer w-fit mx-auto my-3 hover:bg-hovercta dark:hover:bg-cta hover:border-hovercta hover:text-white dark:hover:border-cta border-darkbg/25 dark:border-white/25 border-[1px] flex gap-x-2 py-2 justify-center items-center px-14 shadow rounded-lg font-medium active:shadow transition-all disabled:text-greyText"
           >
             Upload <IoCloudUploadOutline className="translate-y-0.5" />
           </button>

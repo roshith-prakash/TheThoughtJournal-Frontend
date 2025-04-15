@@ -52,6 +52,11 @@ module.exports = {
         darkmodetext: "#E4E4E4",
         darkmodeCTA: "#b458ff",
       },
+      fontFamily: {
+        blogTitle: ["Bebas Neue", "sans-serif"],
+        body: ["Roboto", "sans-serif"],
+        navigation: ["Nunito", "sans-serif"],
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],

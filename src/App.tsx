@@ -49,7 +49,7 @@ function App() {
               <SecurityHeaders />
               <BrowserRouter>
                 <Navbar />
-                <main className="min-h-screen bg-bgwhite dark:bg-black/90 dark:text-darkmodetext">
+                <main className="min-h-screen font-body bg-bgwhite dark:bg-black/90 dark:text-darkmodetext">
                   <Routes>
                     {/* Home Page */}
                     <Route path="/" element={<Home />} />

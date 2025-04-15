@@ -29,7 +29,7 @@ const CreatePost = () => {
   // Ref for file input
   const fileRef = useRef<HTMLInputElement | null>();
   // State for text editor input
-  const [value, setValue] = useState<string>();
+  const [value, setValue] = useState<string>("");
   // State for disabling button
   const [disabled, setDisabled] = useState(false);
   // State for adding image
@@ -40,6 +40,8 @@ const CreatePost = () => {
   const [category, setCategory] = useState<string>("");
   // State for adding category if "other" was selected
   const [otherCategory, setOtherCategory] = useState<string>("");
+  // If image should be contained
+  const [imageContain, setImageContain] = useState<boolean>(false);
   // Error states
   const [error, setError] = useState({
     title: 0,
@@ -92,7 +94,11 @@ const CreatePost = () => {
       return;
     }
     // Check if category has been selected
-    else if (category == null || category == undefined) {
+    else if (
+      category == null ||
+      category == undefined ||
+      category?.length <= 0
+    ) {
       setError((prev) => ({ ...prev, category: 1 }));
       inputRef.current.scrollIntoView({ behavior: "smooth" });
       return;
@@ -258,28 +264,52 @@ const CreatePost = () => {
         </div>
 
         {/* Category select */}
-        <div className="my-8 flex flex-col gap-y-5 lg:gap-y-0 lg:flex-row lg:items-center lg:gap-x-5">
-          <p className="font-medium">Post Category</p>
-          <Select
-            onValueChange={(selectedCategory) => setCategory(selectedCategory)}
-          >
-            <SelectTrigger className="md:w-[180px] dark:bg-darkgrey dark:border-2">
-              <SelectValue placeholder="Select a Category" />
-            </SelectTrigger>
-            <SelectContent className="dark:bg-darkgrey">
-              {categories.map((category) => {
-                return (
-                  <SelectItem key={category} value={category}>
-                    {category}
-                  </SelectItem>
-                );
-              })}
-            </SelectContent>
-          </Select>
+        <div className="my-8 flex flex-col gap-y-5 lg:gap-y-0 lg:flex-row lg:items-start lg:gap-x-5">
+          <div>
+            <p className="font-medium mb-2">Post Category</p>
+            <Select
+              onValueChange={(selectedCategory) =>
+                setCategory(selectedCategory)
+              }
+            >
+              <SelectTrigger className="md:w-[180px] dark:bg-darkgrey dark:border-2">
+                <SelectValue placeholder="Select a Category" />
+              </SelectTrigger>
+              <SelectContent className="dark:bg-darkgrey">
+                {categories.map((category) => {
+                  return (
+                    <SelectItem key={category} value={category}>
+                      {category}
+                    </SelectItem>
+                  );
+                })}
+              </SelectContent>
+            </Select>
 
-          {error.category == 1 && (
-            <ErrorStatement text={"Please select a category for your post."} />
-          )}
+            {error.category == 1 && (
+              <ErrorStatement
+                text={"Please select a category for your post."}
+              />
+            )}
+          </div>
+
+          <div>
+            <p className="font-medium mb-2">Fit Image Within Frame</p>
+            <Select
+              value={imageContain}
+              onValueChange={(selectedData: boolean) =>
+                setImageContain(selectedData)
+              }
+            >
+              <SelectTrigger className="md:w-[180px] dark:bg-darkgrey dark:border-2">
+                <SelectValue placeholder="Choose fit mode" />
+              </SelectTrigger>
+              <SelectContent className="dark:bg-darkgrey">
+                <SelectItem value={false}>Cover (Fill & Crop)</SelectItem>
+                <SelectItem value={true}>Contain (Show Full Image)</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
 
         {/* Other Category */}
@@ -334,7 +364,7 @@ const CreatePost = () => {
         </div>
       </div>
 
-      {/* Preview */}
+      {/* Preview text */}
       <h1 className="py-5 text-2xl lg:text-4xl text-center font-medium flex justify-center gap-x-2 items-center">
         Preview your Journal post! <FaArrowDown />
       </h1>
@@ -343,12 +373,20 @@ const CreatePost = () => {
       <div className="mt-5 overflow-hidden pb-20  bg-white dark:bg-darkgrey dark:text-darkmodetext shadow-xl border-[1px] rounded-2xl">
         {/* Thumbnail Image */}
         <div>
-          {imageFile && (
-            <img
-              src={URL.createObjectURL(imageFile as Blob)}
-              className="h-96 lg:h-[30rem] w-full rounded-t object-cover object-center"
-            ></img>
-          )}
+          {imageFile &&
+            (imageContain ? (
+              <img
+                key={"create-post-contain"}
+                src={URL.createObjectURL(imageFile as Blob)}
+                className="max-h-96 lg:max-h-[30rem] w-full rounded-t object-contain object-center"
+              ></img>
+            ) : (
+              <img
+                key={"create-post-cover"}
+                src={URL.createObjectURL(imageFile as Blob)}
+                className="max-h-96 lg:max-h-[30rem] w-full rounded-t object-cover object-center"
+              ></img>
+            ))}
         </div>
 
         {/* If nothing is added */}
@@ -365,20 +403,20 @@ const CreatePost = () => {
         <div className="p-5 max-w-5xl mx-auto md:p-10 md:pt-0 mt-8">
           {/* Badge */}
           {category && category != "OTHER" && (
-            <p className="bg-cta ml-3 text-white dark:text-darkmodetext text-lg lg:text-xl rounded-full px-3 py-1 w-fit">
-              {category}
+            <p className="bg-cta ml-3 text-white dark:text-darkmodetext text-lg rounded-full px-3 py-1 w-fit">
+              {category?.toUpperCase()}
             </p>
           )}
 
           {category == "OTHER" && otherCategory && (
-            <p className="bg-cta ml-3 text-white text-lg lg:text-xl rounded-full px-3 py-1 w-fit">
-              {otherCategory}
+            <p className="bg-cta ml-3 text-white text-lg rounded-full px-3 py-1 w-fit">
+              {otherCategory?.toUpperCase()}
             </p>
           )}
 
           {/* Post Title */}
           {title && (
-            <h1 className="mt-10 text-4xl px-3.5 lg:text-6xl font-bold text-ink dark:text-darkmodeCTA">
+            <h1 className="mt-10 text-4xl px-3.5 lg:text-6xl font-bold text-hovercta dark:text-darkmodeCTA">
               {title}
             </h1>
           )}

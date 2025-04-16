@@ -2,6 +2,8 @@ import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa6";
 import { Link, useNavigate } from "react-router-dom";
 import { BsPen } from "react-icons/bs";
 import { useAuth } from "../context/authContext";
+// @ts-expect-error import image
+import footerlogo from "../assets/footerlogo.png";
 
 const Footer = () => {
   const { currentUser } = useAuth();
@@ -104,9 +106,10 @@ const Footer = () => {
           <div className="hidden flex-1 lg:flex justify-center items-center">
             <img
               src={
-                "https://res.cloudinary.com/do8rpl9l4/image/upload/v1736738810/footer_yoppab.svg"
+                // "https://res.cloudinary.com/do8rpl9l4/image/upload/v1736738810/footer_yoppab.svg"
+                footerlogo
               }
-              className="h-60 pointer-events-none"
+              className="h-96 pointer-events-none"
             />
           </div>
         </div>

@@ -77,9 +77,7 @@ export const QuillToolbar = () => (
       {/* Select tab for font sizes */}
       <select className="ql-size">
         <option value="small">Small</option>
-        <option selected value="medium">
-          Medium
-        </option>
+        <option value="medium">Medium</option>
         <option value="large">Large</option>
       </select>
       {/* Select tab for text format */}

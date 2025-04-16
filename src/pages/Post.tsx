@@ -573,8 +573,8 @@ const Post = () => {
 
       {/* When post is available */}
       {data && data?.data?.post && (
-        <div className="p-10">
-          <div className="pb-10 m-2 md:m-5  bg-white shadow-xl border-[1px] dark:border-darkgrey dark:bg-darkgrey dark:text-darkmodetext overflow-hidden rounded-2xl">
+        <div className="py-10">
+          <div className="pb-10 mx-auto max-w-[95%] lg:max-w-[90%] w-full bg-white shadow-xl border-[1px] dark:border-darkgrey dark:bg-darkgrey dark:text-darkmodetext overflow-hidden rounded-2xl">
             {/* Thumbnail Image */}
             <div>
               {data?.data?.post?.thumbnailContain ? (
@@ -593,10 +593,10 @@ const Post = () => {
             </div>
 
             {/* Content */}
-            <div className="p-5 max-w-5xl mx-auto md:p-10 md:pt-0 mt-8">
+            <div className="p-5 max-w-4xl mx-auto md:p-10 md:pt-0 mt-8">
               {/* Badge */}
               <div className="flex justify-between items-center">
-                <p className="bg-cta text-white dark:text-darkmodetext text-lg  rounded-full px-3 ml-3 py-1 w-fit">
+                <p className="bg-cta text-white dark:text-darkmodetext text-md rounded-full px-4 ml-3 py-1.5 w-fit">
                   {data?.data?.post?.category != "OTHER"
                     ? data?.data?.post?.category?.toUpperCase()
                     : data?.data?.post?.otherCategory?.toUpperCase()}
@@ -754,7 +754,7 @@ const Post = () => {
 
               {/* Like + Share */}
               <div className="mt-10 border-t-2 px-3 py-10 ">
-                <p className="mb-8 text-xl font-medium">
+                <p className=" mb-8 text-xl font-semibold">
                   Enjoyed the post? Like & Share it!
                 </p>
                 <div className="flex gap-x-5">
@@ -816,11 +816,13 @@ const Post = () => {
               </div>
             </div>
 
+            <div ref={replyRef}></div>
+
             {/* Comments section */}
-            <div ref={replyRef} className="max-w-5xl mx-auto">
+            <div className="max-w-4xl mx-auto">
               <div className="p-5 md:p-10 md:pt-0 mt-8">
                 {/* Title */}
-                <p className="text-xl font-semibold">Comments</p>
+                <p className="text-xl pl-3 font-semibold">Comments</p>
                 {/* Input box */}
                 <div className="p-4">
                   {/* If replying to a comment, display the comment */}

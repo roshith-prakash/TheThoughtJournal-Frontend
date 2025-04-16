@@ -162,7 +162,7 @@ const Search = () => {
             {/* Posts div */}
             <TabsContent value="posts">
               {posts && posts?.pages?.[0]?.data?.posts.length > 0 && (
-                <div className="py-10 lg:px-5 grid grid-cols-1 md:grid-cols-2">
+                <div className="py-10 grid md:grid-cols-2 lg:grid-cols-4">
                   {/* Map posts if posts are found */}
                   {posts &&
                     posts?.pages?.map((page) => {

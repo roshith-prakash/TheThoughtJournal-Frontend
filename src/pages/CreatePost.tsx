@@ -142,6 +142,7 @@ const CreatePost = () => {
     formData.append("category", category);
     formData.append("otherCategory", otherCategory);
     formData.append("content", String(value));
+    formData.append("imageContain", String(imageContain));
     formData.append("user", JSON.stringify(dbUser));
 
     // Sending request to server
@@ -370,7 +371,7 @@ const CreatePost = () => {
       </h1>
 
       {/* Preview Post */}
-      <div className="mt-5 overflow-hidden pb-20  bg-white dark:bg-darkgrey dark:text-darkmodetext shadow-xl border-[1px] rounded-2xl">
+      <div className="mt-5 overflow-hidden pb-20 bg-white dark:bg-darkgrey dark:text-darkmodetext shadow-xl border-[1px] rounded-2xl">
         {/* Thumbnail Image */}
         <div>
           {imageFile &&
@@ -394,29 +395,29 @@ const CreatePost = () => {
           !title &&
           !category &&
           (!value || isEditorEmpty(value)) && (
-            <div className="flex justify-center h-max  items-center pt-48 text-2xl">
+            <div className="flex justify-center h-max items-center pt-48 text-2xl">
               Create your Post Above!
             </div>
           )}
 
         {/* Title + Content Section */}
-        <div className="p-5 max-w-5xl mx-auto md:p-10 md:pt-0 mt-8">
+        <div className="p-5 max-w-4xl mx-auto md:p-10 md:pt-0 mt-8">
           {/* Badge */}
           {category && category != "OTHER" && (
-            <p className="bg-cta ml-3 text-white dark:text-darkmodetext text-lg rounded-full px-3 py-1 w-fit">
+            <p className="bg-cta ml-3 text-white dark:text-darkmodetext text-md rounded-full px-4 py-1.5 w-fit">
               {category?.toUpperCase()}
             </p>
           )}
 
           {category == "OTHER" && otherCategory && (
-            <p className="bg-cta ml-3 text-white text-lg rounded-full px-3 py-1 w-fit">
+            <p className="bg-cta ml-3 text-white text-md rounded-full px-4 py-1.5 w-fit">
               {otherCategory?.toUpperCase()}
             </p>
           )}
 
           {/* Post Title */}
           {title && (
-            <h1 className="mt-10 text-4xl px-3.5 lg:text-6xl font-bold text-hovercta dark:text-darkmodeCTA">
+            <h1 className="mt-10 font-blogTitle tracking-wide text-4xl px-3 lg:text-6xl font-bold ">
               {title}
             </h1>
           )}

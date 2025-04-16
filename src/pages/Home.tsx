@@ -104,6 +104,7 @@ const Home = () => {
           Let&apos;s start reading!
         </h3>
       </div>
+
       {dbUser?.following?.length > 0 &&
       posts?.pages?.[0]?.data?.posts.length > 0 ? (
         <div>
@@ -190,7 +191,7 @@ const Home = () => {
           {/* Loading indicator */}
           {/* Mapping posts if available */}
           {data && (
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 ">
+            <div className="grid md:grid-cols-2 lg:grid-cols-4">
               {data &&
                 data?.pages?.map((page) => {
                   return page?.data?.posts?.map((post) => {

@@ -110,12 +110,12 @@ body::-webkit-scrollbar-thumb {
 
 /* Actual content size in editor */
 .ql-size-small {
-  font-size: 0.75rem !important; /* 12px */
+  font-size: 1rem !important; /* 12px */
   line-height: 1.25rem !important; /* 20px */
 }
 
 .ql-size-medium {
-  font-size: 1.125rem !important; /* 18px */
+  font-size: 1.25rem !important; /* 18px */
   line-height: 1.75rem !important; /* 28px */
 }
 

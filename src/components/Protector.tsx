@@ -1,6 +1,6 @@
 import { useAuth } from "../context/authContext";
 import { useDBUser } from "../context/userContext";
-import { Navbar, OutlineButton } from ".";
+import { OutlineButton } from ".";
 import { useNavigate } from "react-router-dom";
 import { toast, Toaster } from "react-hot-toast";
 import { sendEmailVerification } from "firebase/auth";
@@ -60,29 +60,26 @@ const Protector = ({ children }) => {
   // If user hasn't signed in using firebase
   if (!currentUser) {
     return (
-      <div className="dark:bg-darkbg dark:text-darkmodetext h-screen">
-        <Navbar />
-        <div className=" min-h-[70vh] md:min-h-[65vh] lg:min-h-[65vh] flex items-center justify-center pt-12 pb-32">
-          <div>
-            {/* Title for page */}
-            <p className="text-3xl lg:text-4xl px-5 text-center mt-14">
-              You have not signed in!
-            </p>
-            <div className="mt-10 flex flex-col gap-10 justify-center items-center">
-              {/* Image */}
-              <img
-                src={
-                  "https://res.cloudinary.com/do8rpl9l4/image/upload/v1736738810/notfound_eqfykw.svg"
-                }
-                className="max-w-[50%] lg:max-w-[40%] pointer-events-none"
+      <div className=" min-h-[70vh] md:min-h-[65vh] lg:min-h-[65vh] flex items-center justify-center pt-12 pb-32">
+        <div>
+          {/* Title for page */}
+          <p className="text-3xl lg:text-4xl px-5 text-center mt-14">
+            You have not signed in!
+          </p>
+          <div className="mt-10 flex flex-col gap-10 justify-center items-center">
+            {/* Image */}
+            <img
+              src={
+                "https://res.cloudinary.com/do8rpl9l4/image/upload/v1736738810/notfound_eqfykw.svg"
+              }
+              className="max-w-[50%] lg:max-w-[40%] pointer-events-none"
+            />
+            {/* Button to navigate back to home page */}
+            <div className="w-[40%] lg:w-[30%]">
+              <OutlineButton
+                onClick={() => navigate("/signup")}
+                text="Sign Up"
               />
-              {/* Button to navigate back to home page */}
-              <div className="w-[40%] lg:w-[30%]">
-                <OutlineButton
-                  onClick={() => navigate("/signup")}
-                  text="Sign Up"
-                />
-              </div>
             </div>
           </div>
         </div>
@@ -93,8 +90,7 @@ const Protector = ({ children }) => {
   // If user has signed up via email but has not verified their email.
   if (!currentUser?.emailVerified) {
     return (
-      <div className="dark:bg-darkbg dark:text-darkmodetext h-screen">
-        <Navbar />
+      <>
         <Toaster />
         <div className="min-h-[70vh] md:min-h-[65vh] lg:min-h-[60vh] flex items-center justify-center pt-12 pb-32">
           <div>
@@ -131,36 +127,33 @@ const Protector = ({ children }) => {
             </div>
           </div>
         </div>
-      </div>
+      </>
     );
   }
 
   // If user hasn't onboarded to the site
   if (currentUser && !dbUser) {
     return (
-      <div className="dark:bg-darkbg dark:text-darkmodetext h-screen">
-        <Navbar />
-        <div className="min-h-[70vh] md:min-h-[65vh] lg:min-h-[60vh] flex items-center justify-center pt-12 pb-32">
-          <div>
-            {/* Title for page */}
-            <p className="text-3xl lg:text-4xl px-5 text-center mt-14">
-              You have not finished creating your account!
-            </p>
-            <div className="mt-10 flex flex-col gap-10 justify-center items-center">
-              {/* Image */}
-              <img
-                src={
-                  "https://res.cloudinary.com/do8rpl9l4/image/upload/v1736738810/notfound_eqfykw.svg"
-                }
-                className="max-w-[50%] lg:max-w-[40%] pointer-events-none"
+      <div className="min-h-[70vh] md:min-h-[65vh] lg:min-h-[60vh] flex items-center justify-center pt-12 pb-32">
+        <div>
+          {/* Title for page */}
+          <p className="text-3xl lg:text-4xl px-5 text-center mt-14">
+            You have not finished creating your account!
+          </p>
+          <div className="mt-10 flex flex-col gap-10 justify-center items-center">
+            {/* Image */}
+            <img
+              src={
+                "https://res.cloudinary.com/do8rpl9l4/image/upload/v1736738810/notfound_eqfykw.svg"
+              }
+              className="max-w-[50%] lg:max-w-[40%] pointer-events-none"
+            />
+            {/* Button to navigate back to home page */}
+            <div className="w-[40%] lg:w-[30%]">
+              <OutlineButton
+                onClick={() => navigate("/onboarding")}
+                text="Complete your Profile"
               />
-              {/* Button to navigate back to home page */}
-              <div className="w-[40%] lg:w-[30%]">
-                <OutlineButton
-                  onClick={() => navigate("/onboarding")}
-                  text="Complete your Profile"
-                />
-              </div>
             </div>
           </div>
         </div>

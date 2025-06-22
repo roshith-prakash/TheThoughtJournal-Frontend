@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import Navbar from "../components/Navbar";
 import { axiosInstance } from "../utils/axios";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useDBUser } from "../context/userContext";
@@ -114,7 +113,7 @@ const Home = () => {
               <p className="px-7 text-2xl font-medium text-hovercta dark:text-darkmodeCTA">
                 From the people you follow:
               </p>
-              <div className="mt-5 grid md:grid-cols-2 lg:grid-cols-4 ">
+              <div className="mt-5 grid md:grid-cols-2 lg:grid-cols-4 gap-8 px-5 ">
                 {posts &&
                   posts?.pages?.map((page) => {
                     return page?.data?.posts?.map((post) => {
@@ -191,7 +190,7 @@ const Home = () => {
           {/* Loading indicator */}
           {/* Mapping posts if available */}
           {data && (
-            <div className="grid md:grid-cols-2 lg:grid-cols-4">
+            <div className="mt-5 grid md:grid-cols-2 lg:grid-cols-4 gap-8 px-5 ">
               {data &&
                 data?.pages?.map((page) => {
                   return page?.data?.posts?.map((post) => {

@@ -26,7 +26,7 @@ const Navbar = () => {
   return (
     <>
       <nav
-        className={`sticky top-0 w-full font-blogTitle border-b-2 border-darkbg/5 dark:border-white/5 overflow-hidden bg-white dark:bg-darkbg dark:text-darkmodetext flex justify-between items-center px-5 lg:px-10 py-3 md:py-5 z-10 max-w-screen`}
+        className={`relative w-full font-blogTitle border-b-2 border-darkbg/5 dark:border-white/5 overflow-hidden bg-white dark:bg-darkbg dark:text-darkmodetext flex justify-between items-center px-5 lg:px-10 py-3 md:py-5 z-10 max-w-screen`}
       >
         {/* Logo on the left side - linked to home page */}
         <Link className="flex items-center gap-x-2" to="/">
@@ -254,7 +254,7 @@ const Navbar = () => {
 
       {/* Pop out div - displayed when hamburger is clicked  */}
       <div
-        className={`font-blogTitle lg:hidden flex flex-col overflow-y-scroll noscroller h-screen w-full text-xl md:text-lg fixed top-0 right-0 z-10 bg-white dark:bg-darkbg dark:text-darkmodetext pb-6 text-center shadow-md ${
+        className={`font-blogTitle lg:hidden flex flex-col overflow-y-scroll noscroller h-screen w-full text-xl md:text-lg fixed top-0 right-0 z-20 bg-white dark:bg-darkbg dark:text-darkmodetext pb-6 text-center shadow-md ${
           open ? "translate-x-0" : "translate-x-[100%]"
         } transition-all duration-500`}
       >

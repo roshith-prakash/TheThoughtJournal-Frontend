@@ -368,7 +368,7 @@ const User = () => {
 
           {/* If posts are present - map the posts */}
           {posts?.pages?.[0]?.data?.posts.length > 0 && (
-            <div className="mt-10 grid md:grid-cols-2 lg:grid-cols-4 mx-5 md:mx-10 lg:mx-10">
+            <div className="mt-10 grid md:grid-cols-2 lg:grid-cols-4 mx-5 md:mx-10 lg:mx-10 gap-8 px-5">
               {posts?.pages?.map((page) => {
                 return page?.data?.posts?.map((post) => {
                   return (

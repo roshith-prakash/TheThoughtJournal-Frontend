@@ -17,7 +17,7 @@ import { toast, Toaster } from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { useDBUser } from "../context/userContext";
 import { getMinsToRead } from "../functions/mathFunctions";
-import { modules, formats, QuillToolbar } from "../components/QuillToolbar";
+import QuillToolbar, { modules, formats } from "../components/QuillToolbar";
 import Avvvatars from "avvvatars-react";
 import { useQueryClient } from "@tanstack/react-query";
 import { compressImage } from "@/functions/compressImage";
@@ -338,17 +338,20 @@ const CreatePost = () => {
 
         {/* Quill Editor */}
         <div className="mt-10">
-          {error.content == 1 && (
-            <ErrorStatement text={"Please add the content for your post."} />
-          )}
-          <QuillToolbar />
+          {/* Sticky Toolbar */}
+          <div className="sticky z-10 py-1 pb-3 border-b-2 bg-white dark:bg-secondarydarkbg top-0">
+            <QuillToolbar />
+          </div>
+
+          {/* Quill Editor */}
           <ReactQuill
             theme="snow"
-            className="h-[30rem] mt-2"
             value={value}
             onChange={setValue}
             modules={modules}
             formats={formats}
+            placeholder="Start typing..."
+            className="min-h-[300px] mt-5 custom-quill-editor border-2 rounded-xl" // Remove border here
           />
         </div>
 
@@ -457,11 +460,10 @@ const CreatePost = () => {
           {!isEditorEmpty(value) && (
             <div className="mt-10">
               <ReactQuill
+                theme="bubble"
                 value={value}
-                className="border-none postdisplay"
-                theme="snow"
-                readOnly
-                modules={{ toolbar: null }}
+                readOnly={true}
+                className="min-h-[300px] custom-quill-editor" // Remove border here
               />
             </div>
           )}

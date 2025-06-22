@@ -285,7 +285,7 @@ const Post = () => {
 
   // Set window title.
   useEffect(() => {
-    if (data?.data) {
+    if (data?.data?.post) {
       document.title = `${data?.data?.post?.title} | The Thought Journal`;
     } else {
       document.title = `Post | The Thought Journal`;
@@ -602,12 +602,12 @@ const Post = () => {
                     : data?.data?.post?.otherCategory?.toUpperCase()}
                 </p>
 
-                {/* Edit Post Button */}
+                {/* Action buttons Small Screen */}
                 {data?.data?.post?.User?.username == dbUser?.username && (
                   <div className="lg:hidden flex items-center gap-x-5">
                     <Link
                       to="/editPost"
-                      state={{ postId: data?.data?.post?.id }}
+                      state={{ postId: data?.data?.post?.uid }}
                     >
                       <BsPen className="text-xl" />
                     </Link>
@@ -647,12 +647,12 @@ const Post = () => {
                   </div>
                 )}
 
-                {/* Delete Post button */}
+                {/* Action buttons Large Screen */}
                 {data?.data?.post?.User?.username == dbUser?.username && (
                   <div className="hidden lg:flex gap-x-8">
                     <Link
                       to="/editPost"
-                      state={{ postId: data?.data?.post?.id }}
+                      state={{ postId: data?.data?.post?.uid }}
                       className="min-w-14 flex justify-center font-medium shadow-md py-2 px-5 rounded-lg w-full text-ink dark:text-darkmodetext dark:border-2 active:shadow transition-all disabled:text-greyText hover:scale-105"
                     >
                       <div className="flex items-center gap-x-2">
@@ -744,11 +744,11 @@ const Post = () => {
               {/* Post Content */}
               <div className="mt-10">
                 <ReactQuill
+                  theme="bubble"
                   value={data?.data?.post?.content}
-                  className="border-none postdisplay"
-                  theme="snow"
-                  readOnly
-                  modules={{ toolbar: null }}
+                  readOnly={true}
+                  placeholder="Start typing..."
+                  className="min-h-[300px] custom-quill-editor" // Remove border here
                 />
               </div>
 

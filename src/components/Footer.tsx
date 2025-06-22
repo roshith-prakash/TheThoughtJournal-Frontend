@@ -8,113 +8,166 @@ import footerlogo from "../assets/footerlogo.png";
 const Footer = () => {
   const { currentUser } = useAuth();
   const navigate = useNavigate();
+
+  const year = new Date().getFullYear();
+
   return (
-    <>
-      <div className="bg-darkbg/95 dark:border-t-2 font-navigation pb-20 min-h-50vh relative text-white">
-        <div className="absolute border-2 border-white/50 dark:border-2 -top-16 w-[90vw] lg:w-[80vw] left-1/2 -translate-x-1/2 rounded-lg h-32 flex flex-col py-2 lg:flex-row justify-around items-center bg-darkgrey text-white">
-          <p className="text-xl font-medium">Have a thought to share?</p>
+    <footer className="relative font-navigation text-white">
+      {/* Floating CTA Card */}
+      <div className="absolute -top-16 left-1/2 -translate-x-1/2 w-[90vw] md:w-[85vw] lg:w-[80vw] bg-gradient-to-r from-darkgrey to-darkgrey/90 rounded-xl shadow-lg border border-white/20 backdrop-blur-md">
+        <div className="flex flex-col md:flex-row items-center justify-between p-6 md:p-8">
+          <div className="mb-4 md:mb-0">
+            <h3 className="text-xl md:text-2xl font-semibold">
+              Have a thought to share?
+            </h3>
+            <p className="text-white/70 mt-1 text-sm">
+              Join the conversation and express yourself
+            </p>
+          </div>
           <button
             onClick={() => navigate("/addPost")}
-            className="px-5 flex items-center gap-x-2 py-2 font-medium text-white hover:bg-white hover:text-black transition-all cursor-pointer rounded-full border-2 border-white"
+            className="px-6 py-3 flex items-center gap-x-2 font-medium text-white bg-gradient-to-r from-cta/80 to-cta hover:from-cta hover:to-cta/90 transition-all rounded-full shadow-md"
           >
             <BsPen className="text-lg" />
             Create a Post!
           </button>
         </div>
+      </div>
 
-        <div className="pt-32 font-medium flex">
-          <div className="flex-1">
-            {/* Logo */}
-            <div className="flex justify-center items-center gap-x-3">
-              <img
-                src={
-                  "https://res.cloudinary.com/do8rpl9l4/image/upload/v1736738811/logo_wbqnwt.png"
-                }
-                className="h-16"
-              />
+      {/* Main Footer Content */}
+      <div className="bg-darkbg/95 pt-28 pb-8 border-t border-white/10">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            {/* Brand Section */}
+            <div className="flex flex-col items-center md:items-start">
+              <div className="flex items-center gap-x-3 mb-4">
+                <img
+                  src="https://res.cloudinary.com/do8rpl9l4/image/upload/v1736738811/logo_wbqnwt.png"
+                  alt="The Thought Journal Logo"
+                  className="h-14"
+                />
+              </div>
+              <h2 className="text-2xl font-semibold mb-2 font-blogTitle tracking-wider">
+                The Thought Journal
+              </h2>
+              <p className="text-white/70 text-sm mb-6">
+                "Thoughts That Inspire and Enlighten"
+              </p>
+              <p className="text-sm text-white/80 max-w-xs text-center md:text-left">
+                A platform dedicated to sharing meaningful thoughts, ideas, and
+                perspectives that spark conversation and inspire change.
+              </p>
             </div>
-            {/* Title */}
-            <p className="mt-5 text-3xl text-center">The Thought Journal</p>
-            {/* Subtitle */}
-            <p className="text-center mt-3 text-sm">
-              &quot;Thoughts That Inspire and Enlighten&quot;
-            </p>
 
-            <div className="mt-14 flex justify-center">
-              <div className="flex gap-x-5">
-                <Link to="/" className="hover:scale-110 transition-all">
+            {/* Navigation Links */}
+            <div className="flex flex-col items-center md:items-start">
+              <h3 className="text-lg font-semibold mb-4 border-b border-white/20 pb-2 w-full text-center md:text-left">
+                Quick Links
+              </h3>
+              <nav className="flex flex-col space-y-3">
+                <Link to="/" className="hover:text-darkmodeCTA transition-all">
                   Home
                 </Link>
-                {currentUser && (
-                  <Link
-                    to="/addPost"
-                    className="hover:scale-110 transition-all"
-                  >
-                    Create Post
-                  </Link>
+                <Link
+                  to="/search"
+                  className="hover:text-darkmodeCTA transition-all"
+                >
+                  Search
+                </Link>
+                {currentUser ? (
+                  <>
+                    <Link
+                      to="/profile"
+                      className="hover:text-darkmodeCTA transition-all"
+                    >
+                      My Profile
+                    </Link>
+                    <Link
+                      to="/addPost"
+                      className="hover:text-darkmodeCTA transition-all"
+                    >
+                      Create Post
+                    </Link>
+                    <Link
+                      to="/signout"
+                      className="hover:text-darkmodeCTA transition-all"
+                    >
+                      Log Out
+                    </Link>
+                  </>
+                ) : (
+                  <>
+                    <Link
+                      to="/signup"
+                      className="hover:text-darkmodeCTA transition-all"
+                    >
+                      Sign Up
+                    </Link>
+                    <Link
+                      to="/login"
+                      className="hover:text-darkmodeCTA transition-all"
+                    >
+                      Login
+                    </Link>
+                  </>
                 )}
+              </nav>
+            </div>
 
-                {!currentUser && (
-                  <Link to="/signup" className="hover:scale-110 transition-all">
-                    Sign Up
-                  </Link>
-                )}
-                {!currentUser && (
-                  <Link to="/login" className="hover:scale-110 transition-all">
-                    Login
-                  </Link>
-                )}
-                {currentUser && (
-                  <Link
-                    to="/signout"
-                    className="hover:scale-110 transition-all"
-                  >
-                    Log Out
-                  </Link>
-                )}
+            {/* Connect Section */}
+            <div className="flex flex-col items-center md:items-start">
+              <h3 className="text-lg font-semibold mb-4 border-b border-white/20 pb-2 w-full text-center md:text-left">
+                Connect With Us
+              </h3>
+              <div className="flex gap-4 mb-6">
+                <a
+                  href="https://github.com/roshith-prakash"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="p-3 bg-darkgrey/50 hover:bg-white text-white hover:text-darkgrey transition-all rounded-full border border-white/20"
+                  aria-label="GitHub"
+                >
+                  <FaGithub className="text-xl" />
+                </a>
+                <a
+                  href="https://www.linkedin.com/in/roshith-prakash/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="p-3 bg-darkgrey/50 hover:bg-white text-white hover:text-darkgrey transition-all rounded-full border border-white/20"
+                  aria-label="LinkedIn"
+                >
+                  <FaLinkedin className="text-xl" />
+                </a>
+                <a
+                  href="mailto:roshithprakash07@gmail.com"
+                  className="p-3 bg-darkgrey/50 hover:bg-white text-white hover:text-darkgrey transition-all rounded-full border border-white/20"
+                  aria-label="Email"
+                >
+                  <FaEnvelope className="text-xl" />
+                </a>
+              </div>
+              <div className="hidden lg:block">
+                <img
+                  src={footerlogo || "/placeholder.svg"}
+                  alt="Footer illustration"
+                  className="h-40 opacity-80"
+                />
               </div>
             </div>
-
-            {/* Link */}
-            <div className="flex justify-center gap-x-8 mt-14">
-              <a
-                href="https://github.com/roshith-prakash"
-                target="_blank"
-                rel="noreferrer"
-                className="p-3 text-white hover:bg-white hover:text-cta transition-all cursor-pointer rounded-full border-2 border-white"
-              >
-                <FaGithub className="text-2xl" />
-              </a>
-              <a
-                href="https://www.linkedin.com/in/roshith-prakash/"
-                target="_blank"
-                rel="noreferrer"
-                className="p-3 text-white hover:bg-white hover:text-cta transition-all cursor-pointer rounded-full border-2 border-white"
-              >
-                <FaLinkedin className="text-2xl" />
-              </a>
-              <a
-                href="mailto:roshithprakash07@gmail.com"
-                className="p-3 text-white hover:bg-white hover:text-cta transition-all cursor-pointer rounded-full border-2 border-white"
-              >
-                <FaEnvelope className="text-2xl" />
-              </a>
-            </div>
-
-            <p className="mt-5 text-center">Developed by Roshith Prakash.</p>
           </div>
-          <div className="hidden flex-1 lg:flex justify-center items-center">
-            <img
-              src={
-                // "https://res.cloudinary.com/do8rpl9l4/image/upload/v1736738810/footer_yoppab.svg"
-                footerlogo
-              }
-              className="h-96 pointer-events-none"
-            />
+
+          {/* Footer Bottom */}
+          <div className="mt-12 pt-6 border-t border-white/10 flex flex-col md:flex-row justify-between items-center">
+            <p className="text-sm text-white/80">
+              © {year} The Thought Journal. All rights reserved.
+            </p>
+            <p className="text-sm text-white/80 mt-2 md:mt-0">
+              Developed with 💜 by Roshith Prakash.
+            </p>
           </div>
         </div>
       </div>
-    </>
+    </footer>
   );
 };
 

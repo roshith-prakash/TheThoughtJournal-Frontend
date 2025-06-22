@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 import { Quill } from "react-quill";
 
 // Custom Undo button icon component for Quill editor.
@@ -72,7 +74,7 @@ export const formats = [
 
 // Quill Toolbar component
 export const QuillToolbar = () => (
-  <div id="toolbar" className="rounded-lg">
+  <div id="toolbar" className="rounded-lg border-none">
     <span className="ql-formats">
       {/* Select tab for font sizes */}
       <select className="ql-size">
@@ -114,7 +116,6 @@ export const QuillToolbar = () => (
       <select className="ql-color" />
       <select className="ql-background" />
     </span>
-
     {/* Buttons to add formulas & code*/}
     <span className="ql-formats">
       <button className="ql-formula" />

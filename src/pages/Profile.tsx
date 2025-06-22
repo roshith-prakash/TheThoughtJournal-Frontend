@@ -536,7 +536,7 @@ const Profile = () => {
 
           {/* If posts are present - map the posts */}
           {data?.pages?.[0]?.data?.posts.length > 0 && (
-            <div className="mt-10 grid md:grid-cols-2 lg:grid-cols-4 mx-5 md:mx-10 lg:mx-10">
+            <div className="mt-10 grid md:grid-cols-2 lg:grid-cols-4 mx-5 md:mx-10 lg:mx-10 gap-8 px-5">
               {data?.pages?.map((page) => {
                 return page?.data?.posts?.map((post) => {
                   return (
@@ -604,7 +604,7 @@ const Profile = () => {
           {/* If posts are present - map the posts */}
           {likedPosts?.pages?.[0]?.data?.posts.length > 0 &&
             likedPosts?.pages?.[0]?.data?.posts[0] != null && (
-              <div className="mt-10 grid md:grid-cols-2 lg:grid-cols-4 mx-5 md:mx-10 lg:mx-10">
+              <div className="mt-10 grid md:grid-cols-2 lg:grid-cols-4 mx-5 md:mx-10 lg:mx-10 gap-8 px-5 ">
                 {likedPosts?.pages?.map((page) => {
                   return page?.data?.posts?.map((post) => {
                     if (post) {

@@ -22,14 +22,20 @@ body::-webkit-scrollbar-thumb {
   width: 0px;
 }
 
-/* ================================================== */
+/* ----------------------------------------- QUILL EDITOR CSS ------------------------------------------- */
 
-/* React Quill Styling */
+.custom-quill-editor .ql-container {
+  border: none !important; /* Remove the border from the container */
+  box-shadow: none !important; /* Remove any shadow from the container */
+  background-color: transparent !important; /* Ensure the background is transparent */
+}
 
-/* To remove editor border in post display component */
-.postdisplay > .ql-container.ql-snow {
-  border: none !important;
-  font-family: "Roboto" !important;
+.custom-quill-editor .ql-editor {
+  padding: 15px; /* Optional: Add padding if you need space inside the editor */
+  border: none !important; /* Ensure no border in the editor area */
+  box-shadow: none !important; /* Remove shadow */
+  background-color: transparent !important; /* Ensure no background */
+  outline: none !important; /* Remove focus outline */
 }
 
 .dark #toolbar {
@@ -123,3 +129,5 @@ body::-webkit-scrollbar-thumb {
   font-size: 1.5rem !important; /* 24px */
   line-height: 2.25rem !important; /* 36px */
 }
+
+/* ----------------------------------------- ------------------------------------------- */

@@ -1,4 +1,6 @@
-import { ChangeEventHandler } from "react";
+import { InputHTMLAttributes } from "react";
+
+type InputProps = InputHTMLAttributes<HTMLInputElement>;
 
 // Styled Text input
 const Input = ({
@@ -6,12 +8,9 @@ const Input = ({
   placeholder,
   onChange,
   className = "",
-}: {
-  value: string;
-  placeholder: string;
-  onChange: ChangeEventHandler<HTMLInputElement>;
-  className?: string;
-}) => {
+  disabled,
+  ...rest
+}: InputProps) => {
   return (
     <input
       type="text"

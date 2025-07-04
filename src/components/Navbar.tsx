@@ -9,7 +9,6 @@ import Avvvatars from "avvvatars-react";
 import { CgProfile, CgLogOut } from "react-icons/cg";
 import { BsPen } from "react-icons/bs";
 import { RiAccountPinCircleLine } from "react-icons/ri";
-// import defaultAccount from "../assets/account.png";
 import { MdOutlineAccountCircle } from "react-icons/md";
 import { FaUserPlus } from "react-icons/fa6";
 import { RxCross2, RxHamburgerMenu } from "react-icons/rx";
@@ -179,7 +178,7 @@ const Navbar = () => {
                       <NavLink
                         to="/onboarding"
                         className={({ isActive }) =>
-                          `flex gap-x-5 items-center font-medium bg-purple-100 dark:bg-darkgrey text-lg py-2 px-5 rounded w-full transition-all ${
+                          `flex gap-x-5 items-center font-medium bg-purple-100 text-black dark:bg-darkgrey text-lg py-2 px-5 rounded w-full transition-all ${
                             isActive && "bg-slate-100 dark:bg-darkgrey"
                           }`
                         }

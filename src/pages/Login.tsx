@@ -11,7 +11,7 @@ import {
   GoogleAuthProvider,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { isValidEmail, isValidPassword } from "../functions/regexFunctions";
 import toast, { Toaster } from "react-hot-toast";
 import { axiosInstance } from "../utils/axios";
@@ -212,6 +212,13 @@ const Login = () => {
                 />
               )}
             </div>
+
+            <Link
+              className="ml-4 text-sm text-cta dark:text-darkmodeCTA font-medium"
+              to="/forgot-password"
+            >
+              Forgot your password?
+            </Link>
 
             {/* Submit Button */}
             <div className="mt-12">

@@ -16,6 +16,8 @@ import {
   EditProfile,
   Search,
   EditPost,
+  ForgotPassword,
+  AuthAction,
 } from "./pages";
 import { useEffect } from "react";
 import { Footer, Navbar, Protector } from "./components";
@@ -65,6 +67,12 @@ function App() {
 
                     {/* Log out route */}
                     <Route path="/signout" element={<Signout />} />
+
+                    <Route
+                      path="/forgot-password"
+                      element={<ForgotPassword />}
+                    />
+                    <Route path="/auth-action" element={<AuthAction />} />
 
                     {/* Route to create a new post. */}
                     <Route

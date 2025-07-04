@@ -1,16 +1,18 @@
-import { ChangeEventHandler, useState } from "react";
+import { InputHTMLAttributes, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
+import { cn } from "@/lib/utils";
 
-// Styled Password input field.
+type InputProps = InputHTMLAttributes<HTMLInputElement>;
+
+// Styled Text input
 const PasswordInput = ({
   value,
   placeholder,
   onChange,
-}: {
-  value: string;
-  placeholder: string;
-  onChange: ChangeEventHandler<HTMLInputElement>;
-}) => {
+  className = "",
+  disabled,
+  ...rest
+}: InputProps) => {
   // State to convert field to text or password field
   const [display, setDisplay] = useState(false);
   return (
@@ -19,7 +21,9 @@ const PasswordInput = ({
       {/* Input field - can be text or password field depending on state */}
       <input
         type={display ? "text" : "password"}
-        className="border-b-2 bg-transparent placeholder:text-greyText w-full py-2 min-h-8 mt-3 focus:outline-none"
+        className={cn(
+          `border-b-2 bg-transparent placeholder:text-greyText w-full py-2 min-h-8 mt-3 focus:outline-none ${className}`
+        )}
         value={value}
         placeholder={placeholder}
         onChange={onChange}
